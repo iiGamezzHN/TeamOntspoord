@@ -19,3 +19,5 @@ import import_data as imp
 nw.import_other_func()
 
 imp.open_connections('data','ConnectiesHolland.csv')
+
+imp.open_stations('data','StationsHolland.csv')
