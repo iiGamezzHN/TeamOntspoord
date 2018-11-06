@@ -7,14 +7,14 @@ def open_stations(location,file):
     """
     df= pd.read_csv(location+"/"+file,names=["Station","Latitude","Longitude","Critical"])
 
-    stations= df['Stations']
+    stations= df['Station']
     stations_critical= df[df.Critical=='Kritiek']["Station"].tolist()
     stations_ncritical= df[df.Critical!='Kritiek']["Station"].tolist()
 
-    for i in range(len(df)):
-        station= df["Station"][i]
-        station_loc_dict[station]
-        print(df['Station'][i])
+    # for i in range(len(df)):
+    #     station= df["Station"][i]
+    #     station_loc_dict[station]
+    #     print(df['Station'][i])
 
 
 
@@ -23,4 +23,6 @@ def open_connections(location,file):
     connection_list=[]
 
     for i in range(len(df)):
-        connection_list.append(df)
+        connection_list.append([df['StationA'][i],df['StationB'][i]])
+
+    print(connection_list)
