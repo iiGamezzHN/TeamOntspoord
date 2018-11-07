@@ -2,8 +2,7 @@ import networkx as nx
 import random
 
 # Creates random route with given starting point and length
-def random_route(start, max_length):
-    station = start
+def random_route(station, max_length):
     tot_length = 0
 
     # List of stations in route
