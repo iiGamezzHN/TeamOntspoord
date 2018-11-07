@@ -8,7 +8,7 @@ located_map="TeamOntspoord"
 parent_dir_name = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 sys.path.append(parent_dir_name+"\\"+located_map+"\\code")
 
-# test 
+# test
 print(parent_dir_name)
 print(parent_dir_name+"\\"+located_map+"\\code" )
 
@@ -18,4 +18,6 @@ import import_data as imp
 
 nw.import_other_func()
 
-#imp.functionA()
+imp.open_connections('data','ConnectiesHolland.csv')
+
+imp.open_stations('data','StationsHolland.csv')
