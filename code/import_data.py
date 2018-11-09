@@ -10,6 +10,11 @@ def open_stations(location,file):
     stations= df['Station']
     stations_critical= df[df.Critical=='Kritiek']["Station"].tolist()
     stations_ncritical= df[df.Critical!='Kritiek']["Station"].tolist()
+    # set the column 'Station' as index, then create a dict with the index (station) as key
+    # and the other columns as values
+    # example > {'stationA': {'Latitude': 52.63777924, 'Longitude': 4.739722252, 'Critical': 'Kritiek'}, ...}
+    station_dict= df.set_index('Station').to_dict('index')
+    return station_dict
 
     # for i in range(len(df)):
     #     station= df["Station"][i]
@@ -23,6 +28,19 @@ def open_connections(location,file):
     connection_list=[]
 
     for i in range(len(df)):
-        connection_list.append([df['StationA'][i],df['StationB'][i]])
+        connection_list.append([df['StationA'][i],df['StationB'][i],df['Minutes'][i]])
 
     print(connection_list)
+    return connection_list
+
+def add_connections_dict(dict,list):
+    neighboursDict={}
+    for station in dict:
+        for y in list:
+			if station==y[0]:
+				station_neighbours.append([y[1],y[2]])
+			elif station==y[1]:
+				station_neighbours.append([y[0],y[2]])
+		neighboursDict[station]=station_neighbours
+
+        #nog mee bezig
