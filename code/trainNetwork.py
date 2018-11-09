@@ -1,9 +1,9 @@
 import networkx as nx
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import pandas as pd
 
-df= pd.read_csv('StationsHolland.csv', header=None) #Load the Parkline data into a dataframe
-df2= pd.read_csv("ConnectiesHolland.csv")
+df= pd.read_csv('data/StationsHolland.csv', header=None) #Load the Parkline data into a dataframe
+df2= pd.read_csv("data/ConnectiesHolland.csv")
 
 df.columns = ['Station','X','Y',"Kritiek"]
 df2.columns = ['Station_A','Station_B','Minuten']
@@ -75,9 +75,6 @@ plt.show()
 test = {}
 for index, row in df.iterrows():
     test[row['Station']] = (row['Y'],row['X'])
-
-# for x in test:
-#     print(x, test[x])
 
 G=nx.Graph()
 
