@@ -16,6 +16,9 @@ print(parent_dir_name+"\\"+located_map+"\\code" )
 import network as nw
 import import_data as imp
 
-nw.import_other_func()
-imp.open_connections('data','ConnectiesHolland.csv')
-print(imp.open_stations('data','StationsHolland.csv'))
+
+
+testdict= imp.open_stations('data','StationsHolland.csv')
+testlist= imp.open_connections('data','ConnectiesHolland.csv')
+
+print(imp.add_connections_dict(testdict,testlist))
