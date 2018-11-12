@@ -20,7 +20,3 @@ print(parent_dir_name+"\\"+located_map+"\\code" )
 #import functiesDavid as func
 import random_route as rand
 import import_data as imp
-
-testdf= imp.open_stations('data','StationsHolland.csv')[1]
-print(testdf)
-#rand.random_route(G, 'Amsterdam Centraal', 120)

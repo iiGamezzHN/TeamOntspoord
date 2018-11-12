@@ -18,9 +18,7 @@ def random_route(network, station, max_length):
         if item['Critical'] == 'Kritiek':
             L_crit_stat.append(item)
 
-    print(L_crit_stat)
     tot_length = 0
-
 
     # List of stations in route
     L_route = [station]
