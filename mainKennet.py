@@ -1,5 +1,6 @@
 # Imports
 import os, sys
+import gc
 
 # de map waarin het project staat
 located_map="TeamOntspoord"
@@ -15,26 +16,25 @@ print(parent_dir_name+"\\"+located_map+"\\code" )
 # import bestanden vanuit de map code
 import network as nw
 import import_data as imp
-# import breadth_first_search as bfs
 import station_class as st
 
+# import files using the functions from import_data.py
+import_dict= imp.open_stations('data','StationsHolland.csv')
+import_list= imp.open_connections('data','ConnectiesHolland.csv')
+station_dict=imp.add_connections_dict(import_dict,import_list)
 
 
-testdict= imp.open_stations('data','StationsHolland.csv')
-testlist= imp.open_connections('data','ConnectiesHolland.csv')
-
-station_dict=imp.add_connections_dict(testdict,testlist)
-
-
+#adding the stations as instances of the class Station
 stations={}
 for x in station_dict:
-    location= [station_dict[x]['Latitude'],station_dict[x]['Longitude']]
+    location= [station_dict[x]['Longitude'],station_dict[x]['Latitude']]
     stations[x] = st.Station(x,x,station_dict[x]['Critical'],location,station_dict[x]['Neighbours'])
 
-# d1=[x for x in station_dict if station_dict[x]['Critical']=='Critical']
-# print(len(d1),d1)
 
+
+#test the class Station
 print(stations['Alkmaar'].information());
-# adam_bfs= bfs.pathcount(L.graph,'Amsterdam Centraal',20)
-# for x in adam_bfs:
-# 	print(x,adam_bfs[x])
+
+
+# test network.py
+G = nw.Network_Graph(st.Station)
