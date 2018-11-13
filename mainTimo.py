@@ -33,5 +33,5 @@ G = nw.Network_Graph(st.Station).graph
 
 starts = cs.create_starts(G, 7)
 print(starts)
-# for x in starts:
-#     print(rand.random_route(G, x, 120))
+for x in starts:
+    print(rand.random_route(G, x, 120))
