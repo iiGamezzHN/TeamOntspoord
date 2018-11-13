@@ -47,7 +47,7 @@ for x in adam_bfs:
     print(x, adam_bfs[x])
 
 
-for x in rt.all_shortest_nodes(G.graph,'Amsterdam Centraal', 120):
+for x in rt.all_shortest_nodes(G.graph, 'Amsterdam Centraal', 120):
     print(x)
 
 G.plot_graph()

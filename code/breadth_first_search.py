@@ -1,13 +1,13 @@
 def ndict(graph,all_nodes,dict,step):
-    list=[]
-    for x in dict[step]:
-        for y in graph[x]:
-            if y not in all_nodes:
-                list.append(y)
-                all_nodes.append(y)
-                dict[step+1]=list
-    step += 1
-    return all_nodes,dict,step
+	list=[]
+	for x in dict[step]:
+		for y in graph[x]:
+			if y not in all_nodes:
+				list.append(y)
+				all_nodes.append(y)
+	dict[step+1]=list
+	step += 1
+	return all_nodes,dict,step
 
 def pathcount(graph,node,nrange):
 	dict={}
