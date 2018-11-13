@@ -1,22 +1,22 @@
 import pandas as pd
 
-def open_stations(location,file):
+def open_stations(location, file):
     """ Deze functie heeft de locatie en de naam van de databestand als input
     en geeft als output ...
     """
-    df= pd.read_csv(location+"/"+file,names=["Station","Latitude","Longitude","Critical"])
-    stations= df['Station'].tolist() #Veranderd bv 'Amsterdam' naar A.
-    for i in range( len (stations)):
+    df = pd.read_csv(location+"/"+file,names=["Station", "Latitude", "Longitude", "Critical"])
+    stations = df['Station'].tolist()  # Veranderd bv 'Amsterdam' naar A.
+    for i in range(len(stations)):
         if 'Amsterdam' in stations[i]:
-            stations[i] = 'A.'+ stations[i][9:]
+            stations[i] = 'A.' + stations[i][9:]
         if 'Rotterdam' in stations[i]:
-            stations[i] = 'R.'+ stations[i][9:]
+            stations[i] = 'R.' + stations[i][9:]
     df.Station = stations
-    stations_critical= df[df.Critical=='Kritiek']["Station"].tolist()
+    stations_critical = df[df.Critical == 'Kritiek']["Station"].tolist()
     # set the column 'Station' as index, then create a dict with the index (station) as key
     # and the other columns as values
     # example > {'stationA': {'Latitude': 52.63777924, 'Longitude': 4.739722252, 'Critical': 'Kritiek'}, ...}
-    station_dict= df.set_index('Station').to_dict('index')
+    station_dict = df.set_index('Station').to_dict('index')
     return station_dict, stations, stations_critical
 
 

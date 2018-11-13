@@ -1,14 +1,7 @@
 # TeamOntspoord
 
-Hoi wij zijn TeamOntspoord en dit is een test om te kijken of dit werkt.
+Dit is het project van team TeamOntspoord voor het vak Heuristieken van de minor Programmeren aan de UvA.
+Het team bestaat uit David Arisz, Kennet Botan en Timo Koster.
 
-Lalala dit is nog een test.
-
-Test #2
-asdf;lj4444
-ik wordasdkfj;laskjdgklalg;jS
-
-tegelijk pushen2
-
-
-gaat de rest dit zien?
+Voor het project is gekozen voor het onderwerp RailNL, waarin een lijnvoering gemaakt moet worden voor de trein.
+In eerste deel van de opdracht maak je de lijnvoering alleen in Noord- en Zuid-Holland. In het tweede deel van de opdracht maak je de lijnvoering voor heel Nederland.
