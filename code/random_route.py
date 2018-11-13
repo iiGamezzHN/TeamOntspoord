@@ -7,8 +7,10 @@ import import_data as imp
 #import trainNetwork
 
 """
-Creates a random route with given network, starting point, and max_length. Returns
-list of visited stations (including starting point) and total length
+Creates a random route with given network, starting point, and max_length. Tries
+to find unvisited critical stations first, then unvisited in general, then
+random. Returns list of visited stations (including starting point) and total
+length
 """
 
 def random_route(network, station, max_length):
@@ -26,31 +28,35 @@ def random_route(network, station, max_length):
 
         # Get list of neighbours of station
         neighbors = network[station]
-        L_n= []
+        L_n_all= []
         for n in neighbors:
-            L_n.append(n)
+            L_n_all.append(n)
 
-        # Choose random neighbour and get length
         station_old = station
-        L_crit = []
+        L_n_unvisited = []
+        L_n_crit_unv = []
 
-        # Look for critical stations that not have been visited yet
-        for x in L_n:
-            if x in L_crit_stat and x not in L_route:
-                L_crit.append(x)
-                
-        # Go to random unvisited critical station if possible
-        if len(L_crit) != 0:
-            station=random.choice(L_crit)
+        # Look for critical and unvisited stations
+        for x in L_n_all:
+            if x not in L_route:
+                L_n_unvisited.append(x)
+                if x in L_crit_stat:
+                    L_n_crit_unv.append(x)
+
+        # Go to random unvisited critical station, elif unvisited, else random
+        if len(L_n_crit_unv) != 0:
+            station=random.choice(L_n_crit_unv)
+        elif len(L_n_unvisited) != 0:
+            station=random.choice(L_n_unvisited)
         else:
-            station=random.choice(L_n)
+            station=random.choice(L_n_all)
 
         weight = int(network[station][station_old]['weight'])
 
         # Make sure you don't go over max length, but try to find suitable station
         if tot_length + weight  > max_length:
             L_n2 = []
-            for station_2 in L_n:
+            for station_2 in L_n_all:
                 weight_2 = int(network[station_2][station_old]['weight'])
                 if weight_2 + tot_length < max_length:
                     L_n2.append(station_2)
