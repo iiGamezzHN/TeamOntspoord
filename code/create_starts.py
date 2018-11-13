@@ -5,7 +5,8 @@ import random
 
 """
 Creates a list of starting points for a given amount of routes. Starting points
-are determined by finding neigbours of critical stations
+are determined by finding neigbours of critical stations, and seeing which
+ones have the fewest connections. Returns a list with starting locations.
 """
 
 
@@ -17,10 +18,10 @@ def create_starts(network, n_routes):
     for item in dict_stat:
         if dict_stat[item]['Critical'] == 'Kritiek':
             L_crit_stat.append(item)
+
     start_list = []
 
-    # Search for starting points, prefer stations with 1 connection to critical,
-    # doesn't choose critical stations
+    # Search for starting points
 
     for i in range(0, n_routes):
         station = L_crit_stat[i]
@@ -28,22 +29,24 @@ def create_starts(network, n_routes):
         L_n = []
         L_n_fewest = []
         i = 0
+        # Look for neighbouring stations of criticals, exclude criticals
+        # themselves and choose one with fewest connections
         for item in neighbours:
             if item not in L_crit_stat:
                 L_n.append(item)
-                x = network[item]
+                L_n_neighbours = network[item]
                 if i == 0:
-                    length_shortest = len(x)
+                    length_shortest = len(L_n_neighbours)
                     L_n_fewest.append(item)
                 else:
-                    if len(x) < length_shortest:
+                    if len(L_n_neighbours) < length_shortest:
                         L_n_fewest = [item]
-                        length_shortest = len(x)
-                    elif len(x) == length_shortest:
+                        length_shortest = len(L_n_neighbours)
+                    elif len(L_n_neighbours) == length_shortest:
                         L_n_fewest.append(item)
 
             i += 1
-        print(L_n_fewest)
+
         if len(L_n_fewest) != 0:
             start_list.append(random.choice(L_n_fewest))
         else:
