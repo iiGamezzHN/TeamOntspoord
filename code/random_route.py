@@ -37,11 +37,11 @@ def random_route(network, station, max_length):
         L_n_crit_unv = []
 
         # Look for critical and unvisited stations
-        for x in L_n_all:
-            if x not in L_route:
-                L_n_unvisited.append(x)
-                if x in L_crit_stat:
-                    L_n_crit_unv.append(x)
+        for item in L_n_all:
+            if item not in L_route:
+                L_n_unvisited.append(item)
+                if item in L_crit_stat:
+                    L_n_crit_unv.append(item)
 
         # Go to random unvisited critical station, elif unvisited, else random
         if len(L_n_crit_unv) != 0:
