@@ -9,13 +9,15 @@ parent_dir_name = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 sys.path.append(parent_dir_name+"\\"+located_map+"\\code")
 
 # test
-print(parent_dir_name)
-print(parent_dir_name+"\\"+located_map+"\\code" )
+#print(parent_dir_name)
+#print(parent_dir_name+"\\"+located_map+"\\code" )
 
 # import bestanden vanuit de map code
-import network as nw
-import functies as func
+import functiesDavid as fd
+import station_class as sc
 
-nw.import_other_func()
-func.open_connections2('data','ConnectiesHolland.csv')
-print(func.open_stations2('data','StationsHolland.csv'))
+connections = fd.open_connections('data','ConnectiesHolland.csv')
+stations = fd.open_stations('data','StationsHolland.csv')[1]
+stations_crit = fd.open_stations('data','StationsHolland.csv')[2]
+con_dict = fd.add_connections_dict(stations, connections)
+print(con_dict)

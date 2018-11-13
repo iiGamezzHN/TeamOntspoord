@@ -9,7 +9,7 @@ class Station():
 		self.neighbours = neighbours
 
 	def information(self):
-		return '{} {} {} {}'.format(self.name, self.label, self.importance, self.location, self.neighbours)
+		return '{} {} {} {} {}'.format(self.name, self.label, self.importance, self.location, self.neighbours)
 
 
 

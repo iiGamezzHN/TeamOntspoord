@@ -58,20 +58,6 @@ for x in train_links_kritiek:
 
 stations_kritiek = set(stations_kritiek)
 
-all_graph = nx.Graph()
-all_graph.add_edges_from(train_links)
-all_graph.add_nodes_from(stations)
-
-nx.draw(all_graph, with_labels=True)
-plt.show()
-
-kritiek_graph = nx.Graph()
-kritiek_graph.add_nodes_from(stations_kritiek)
-kritiek_graph.add_edges_from(train_links_kritiek)
-
-nx.draw(kritiek_graph, with_labels=True)
-plt.show()
-
 test = {}
 for index, row in df.iterrows():
     test[row['Station']] = (row['Y'],row['X'])
@@ -97,7 +83,7 @@ for x in list(stations_kritiek):
 H=nx.Graph()
 
 for x in test2:
-    H.add_node(x, pos=test[x])
+    H.add_node(x, pos=test[x], node_color = "light salmon")
 
 H.add_edges_from(train_links_kritiek)
 pos = nx.get_node_attributes(H,'pos')
