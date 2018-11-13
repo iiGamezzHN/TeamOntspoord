@@ -7,16 +7,15 @@ def open_stations(location,file):
     example > {'stationA': {'Latitude': 52.63777924, 'Longitude': 4.739722252, 'Critical': 'Kritiek'}, ...}
 
     """
-    df= pd.read_csv(location+"/"+file,names=["Station","Latitude","Longitude","Critical"])
-    stations= df['Station']
-    stations_critical= df[df.Critical=='Kritiek']["Station"].tolist()
-    stations_ncritical= df[df.Critical!='Kritiek']["Station"].tolist()
+    df = pd.read_csv(location+"/"+file, names=["Station", "Latitude", "Longitude", "Critical"])
+    stations = df['Station']
+    # stations_critical= df[df.Critical=='Kritiek']["Station"].tolist()
+    # stations_ncritical= df[df.Critical!='Kritiek']["Station"].tolist()
     # set the column 'Station' as index, then create a dict with the index (station) as key
     # and the other columns as values
     # example > {'stationA': {'Latitude': 52.63777924, 'Longitude': 4.739722252, 'Critical': 'Kritiek'}, ...}
     station_dict= df.set_index('Station').to_dict('index')
     return station_dict
-
 
 
 def open_connections(location,file):
