@@ -30,10 +30,8 @@ for x in station_dict:
 print(stations['Alkmaar'].information());
 
 G = nw.Network_Graph(st.Station).graph
-print(G.nodes())
-
 
 starts = cs.create_starts(G, 7)
 print(starts)
-for x in starts:
-    print(rand.random_route(G, x, 120))
+# for x in starts:
+#     print(rand.random_route(G, x, 120))
