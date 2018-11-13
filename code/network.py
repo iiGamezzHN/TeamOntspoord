@@ -16,6 +16,7 @@ class Network_Graph():
     """docstring for ClassName"""
 
     def __init__(self, station_class):
+
         """ Deze init heeft een class als input, in ons geval gaat het hier om de class Station. De init zal
         aan de hand van deze class een netwerk opbouwen mbv networkx. Het netwerk bevat de stations als nodes,
         de verbindingen tussen stations als edges en de reistijd als weight van de edges. """
@@ -30,6 +31,7 @@ class Network_Graph():
 
         self.graph = nx.Graph()
         self.graph.add_nodes_from(stations)
+
 
         for a,b,w in double_connections:
             if self.graph.has_edge(a,b)==False:
@@ -48,6 +50,8 @@ class Network_Graph():
         edge_labels = nx.get_edge_attributes(self.graph,'weight')
         nx.draw_networkx_edges(self.graph, node_loc_dict, edge_labels=edge_labels, width=0.1, edge_color='k', style='solid')
         nx.draw_networkx_edge_labels(self.graph, node_loc_dict,edge_labels=edge_labels,font_size=6)
+
+    def plot_graph(self):
         plt.show(self.graph)
 
     def information(self):
