@@ -26,15 +26,26 @@ def create_starts(network, n_routes):
         station = L_crit_stat[i]
         neighbours = network[station]
         L_n = []
-        L_n_single = []
+        L_n_fewest = []
+        i = 0
         for item in neighbours:
             if item not in L_crit_stat:
                 L_n.append(item)
-            x = network[item]
-            if len(x) == 1:
-                L_n_single.append(item)
-        if len(L_n_single) != 0:
-            start_list.append(random.choice(L_n_single))
+                x = network[item]
+                if i == 0:
+                    length_shortest = len(x)
+                    L_n_fewest.append(item)
+                else:
+                    if len(x) < length_shortest:
+                        L_n_fewest = [item]
+                        length_shortest = len(x)
+                    elif len(x) == length_shortest:
+                        L_n_fewest.append(item)
+
+            i += 1
+        print(L_n_fewest)
+        if len(L_n_fewest) != 0:
+            start_list.append(random.choice(L_n_fewest))
         else:
             start_list.append(random.choice(L_n))
 
