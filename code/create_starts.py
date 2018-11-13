@@ -12,7 +12,7 @@ are determined by finding neigbours of critical stations
 def create_starts(network, n_routes):
 
     # Create list of critical stations
-    dict_stat = imp.open_stations('data','StationsHolland.csv')
+    dict_stat = imp.open_stations('data', 'StationsHolland.csv')
     L_crit_stat = []
     for item in dict_stat:
         if dict_stat[item]['Critical'] == 'Kritiek':
