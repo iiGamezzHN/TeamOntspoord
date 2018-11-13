@@ -19,14 +19,23 @@ def create_starts(network, n_routes):
             L_crit_stat.append(item)
     start_list = []
 
-    # Search for starting points, still needs to be improved
+    # Search for starting points, prefer stations with 1 connection to critical,
+    # doesn't choose critical stations
 
     for i in range(0, n_routes):
         station = L_crit_stat[i]
         neighbours = network[station]
         L_n = []
+        L_n_single = []
         for item in neighbours:
-            L_n.append(item)
-        start_list.append(random.choice(L_n))
+            if item not in L_crit_stat:
+                L_n.append(item)
+            x = network[item]
+            if len(x) == 1:
+                L_n_single.append(item)
+        if len(L_n_single) != 0:
+            start_list.append(random.choice(L_n_single))
+        else:
+            start_list.append(random.choice(L_n))
 
     return start_list
