@@ -1,5 +1,6 @@
 # Imports
-import os, sys
+import os
+import sys
 import networkx as nx
 import csv
 import matplotlib.pyplot as plt
@@ -17,21 +18,24 @@ import create_starts as cs
 import network as nw
 import station_class as st
 import import_data as imp
+import route2
 
-import_dict= imp.open_stations('data','StationsHolland.csv')
-import_list= imp.open_connections('data','ConnectiesHolland.csv')
-station_dict=imp.add_connections_dict(import_dict,import_list)
+import_dict = imp.open_stations('data', 'StationsHolland.csv')
+import_list = imp.open_connections('data', 'ConnectiesHolland.csv')
+station_dict = imp.add_connections_dict(import_dict, import_list)
 
-stations={}
+stations = {}
 for x in station_dict:
-    location= [station_dict[x]['Longitude'],station_dict[x]['Latitude']]
-    stations[x] = st.Station(x,x,station_dict[x]['Critical'],location,station_dict[x]['Neighbours'])
-
-print(stations['Alkmaar'].information());
+    location = [station_dict[x]['Longitude'], station_dict[x]['Latitude']]
+    stations[x] = st.Station(x, x, station_dict[x]['Critical'], location, station_dict[x]['Neighbours'])
 
 G = nw.Network_Graph(st.Station).graph
 
-starts = cs.create_starts(G, 7)
-print(starts)
-for x in starts:
-    print(rand.random_route(G, x, 120))
+if __name__ == "__main__":
+    crit = route2.crit_tracks(G)
+    station = 'Dordrecht'
+    L_route = [station]
+    tot_weight = 0
+    max_length = 120
+    n_k = 0
+    route2.route2(G, station, L_route, tot_weight, max_length, n_k, crit)
