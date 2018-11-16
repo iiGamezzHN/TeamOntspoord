@@ -33,11 +33,12 @@ visited.
 
 L_route: list of visited stations, in order
 tot_weight: total length of route
-L_crit_tracks: list of critical crit_tracks
+L_crit_tracks: list of critical tracks
 n_crit_tracks: number of critical visited
 station: current station
 neighbour: current neighbour
-child: kopie om in te voeren voor aanroepen functie
+max_length: maximal length of route
+child: copy to give as argument to function
 """
 
 
@@ -46,17 +47,28 @@ def route2(network, station, L_route, tot_weight, max_length, n_crit_tracks, L_c
     # route. If so, continue finding their neighbours. Keep track of number of
     # critical tracks visited (n_crit_tracks). Variable_child is a copy to put
     # into next level.
+
+
     for neighbour in network[station]:
+        L_crit_tracks2 = L_crit_tracks.copy()
+        n_crit_tracks_child = n_crit_tracks
         weight = int(network[station][neighbour]['weight'])
         tot_weight_child = weight + tot_weight
-        n_crit_tracks_child = n_crit_tracks
+        # Make sure you don't go over total length, don't visit station more than twice
         if tot_weight_child < max_length and L_route.count(neighbour) < 2:
             for track in L_crit_tracks:
                 if station in track and neighbour in track:
                     n_crit_tracks_child += 1
+                    L_crit_tracks2 = []
+                    for track2 in L_crit_tracks:
+                        if not (station in track2 and neighbour in track2):
+                            L_crit_tracks2.append(track2)
+                    break
             L_route_child = L_route.copy()
             L_route_child.append(neighbour)
-            route2(network, neighbour, L_route_child, tot_weight_child, max_length, n_crit_tracks_child, L_crit_tracks)
+            route2(network, neighbour, L_route_child, tot_weight_child, max_length, n_crit_tracks_child, L_crit_tracks2)
     print(L_route)
     print(n_crit_tracks)
     print(tot_weight)
+
+# Alles met L_crit_tracks2 is nog heel lelijk, maar het werkt.

@@ -34,10 +34,10 @@ G = nw.Network_Graph(st.Station).graph
 
 if __name__ == "__main__":
     crit = route2.crit_tracks(G)
-    station = 'Amsterdam Centraal'
+    station = 'Den Helder'
     L_route = [station]
     crit_tracks_visited = []
     tot_weight = 0
-    max_length = 40
+    max_length = 120
     n_k = 0
     route2.route2(G, station, L_route, tot_weight, max_length, n_k, crit)
