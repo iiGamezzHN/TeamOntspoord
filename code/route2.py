@@ -34,18 +34,20 @@ visited.
 
 
 def route2(network, station, L_route, tot_weight, max_length, n_k, crit):
-    for item in network[station]:
-        weight = int(network[station][item]['weight'])
+    # Find neighbours of given station, and see if they can be appended to
+    # route. If so, continue finding their neighbours. Keep track of number of
+    # critical tracks visited (n_k).
+    for neighbour in network[station]:
+        weight = int(network[station][neighbour]['weight'])
         tot_weight_child = weight + tot_weight
         n_k_child = n_k
-        if tot_weight_child > max_length or item in L_route:
-            print(L_route)
-            print(n_k)
-            print(tot_weight)
-        else:
+        if not tot_weight_child > max_length and L_route.count(neighbour) < 2:
             for track in crit:
-                if item in track and station in track:
+                if neighbour in track and station in track:
                     n_k_child += 1
             L_route_child = L_route.copy()
-            L_route_child.append(item)
-            route2(network, item, L_route_child, tot_weight_child, max_length, n_k_child, crit)
+            L_route_child.append(neighbour)
+            route2(network, neighbour, L_route_child, tot_weight_child, max_length, n_k_child, crit)
+    print(L_route)
+    print(n_k)
+    print(tot_weight)

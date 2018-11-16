@@ -29,11 +29,12 @@ for x in station_dict:
     location = [station_dict[x]['Longitude'], station_dict[x]['Latitude']]
     stations[x] = st.Station(x, x, station_dict[x]['Critical'], location, station_dict[x]['Neighbours'])
 
+
 G = nw.Network_Graph(st.Station).graph
 
 if __name__ == "__main__":
     crit = route2.crit_tracks(G)
-    station = 'Dordrecht'
+    station = 'Amsterdam Centraal'
     L_route = [station]
     tot_weight = 0
     max_length = 120
