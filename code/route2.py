@@ -70,6 +70,7 @@ def route2(network, station, L_route, tot_weight, max_length, n_crit_tracks, L_c
     global n_crit_opt
     global L_route_opt
     global length_opt
+    global L_crit_tracks_opt
 
     try:
         n_crit_opt
@@ -77,17 +78,26 @@ def route2(network, station, L_route, tot_weight, max_length, n_crit_tracks, L_c
         n_crit_opt = n_crit_tracks
         L_route_opt = L_route
         length_opt = tot_weight
+        L_crit_tracks_opt = L_crit_tracks
 
     # Checks if current route is better than previous optimal route
     if n_crit_tracks > n_crit_opt:
         n_crit_opt = n_crit_tracks
         L_route_opt = L_route
         length_opt = tot_weight
+        L_crit_tracks_opt = L_crit_tracks
     elif n_crit_tracks == n_crit_opt:
         if tot_weight < length_opt:
             L_route_opt = L_route
             length_opt = tot_weight
+            L_crit_tracks_opt = L_crit_tracks
 
     # If it reaches end of calculation returns optimal route values
     if len(L_route) == 1:
-        return L_route_opt, n_crit_opt, length_opt
+        n_crit_opt_copy = n_crit_opt
+        L_route_opt_copy = L_route_opt.copy()
+        length_opt_copy = length_opt
+        n_crit_opt = 0
+        L_route_opt = []
+        length_opt = max_length
+        return L_route_opt_copy, n_crit_opt_copy, length_opt_copy, L_crit_tracks_opt

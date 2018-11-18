@@ -34,10 +34,22 @@ G = nw.Network_Graph(st.Station).graph
 
 if __name__ == "__main__":
     L_crit_tracks = route2.crit_tracks(G)
-    station = 'Amsterdam Centraal'
-    L_route = [station]
+    L_station = cs.create_starts(G, 7)
     crit_tracks_visited = []
     tot_weight = 0
-    max_length = 180
+    max_length = 120
     n_crit_tracks = 0
-    print(route2.route2(G, station, L_route, tot_weight, max_length, n_crit_tracks, L_crit_tracks))
+    i = 0
+    final_length = 0
+    while len(L_crit_tracks) != 0:
+        print(i)
+        station = L_station[i]
+        L_route = [station]
+        optimal = route2.route2(G, station, L_route, tot_weight, max_length, n_crit_tracks, L_crit_tracks)
+        final_length += optimal[2]
+        print(optimal)
+        L_crit_tracks = optimal[3]
+        i += 1
+    i += 1
+    K = 10000 - (i * 20 + (final_length / 10))
+    print(K)
