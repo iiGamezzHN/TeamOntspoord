@@ -33,23 +33,24 @@ for x in station_dict:
 G = nw.Network_Graph(st.Station).graph
 
 if __name__ == "__main__":
+    # Gather relevant info
     L_crit_tracks = route2.crit_tracks(G)
     L_station = cs.create_starts(G, 7)
-    crit_tracks_visited = []
     tot_weight = 0
     max_length = 120
     n_crit_tracks = 0
-    i = 0
+    n_routes = 0
     final_length = 0
+    # Create routes until there are no more critical tracks
     while len(L_crit_tracks) != 0:
-        print(i)
-        station = L_station[i]
+        print(n_routes)
+        station = L_station[n_routes]
         L_route = [station]
         optimal = route2.route2(G, station, L_route, tot_weight, max_length, n_crit_tracks, L_crit_tracks)
         final_length += optimal[2]
         print(optimal)
         L_crit_tracks = optimal[3]
-        i += 1
-    i += 1
-    K = 10000 - (i * 20 + (final_length / 10))
+        n_routes += 1
+    print(n_routes)
+    K = 10000 - (n_routes * 20 + (final_length / 10))
     print(K)

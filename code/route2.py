@@ -28,7 +28,8 @@ def crit_tracks(network):
 
 """
 Calculates all posible routes starting from a given station, with max length.
-Doesn't visit stations twice, does keep track of amount of critical tracks
+Doesn't visit stations more than twice, does keep track of amount of critical
+tracks visited, and removes critical tracks from list of critical tracks when
 visited.
 
 L_route: list of visited stations, in order
@@ -39,6 +40,7 @@ station: current station
 neighbour: current neighbour
 max_length: maximal length of route
 child: copy to give as argument to function
+opt = values of optimal route
 """
 
 
@@ -86,13 +88,13 @@ def route2(network, station, L_route, tot_weight, max_length, n_crit_tracks, L_c
         L_route_opt = L_route
         length_opt = tot_weight
         L_crit_tracks_opt = L_crit_tracks
-    elif n_crit_tracks == n_crit_opt:
-        if tot_weight < length_opt:
-            L_route_opt = L_route
-            length_opt = tot_weight
-            L_crit_tracks_opt = L_crit_tracks
+    elif n_crit_tracks == n_crit_opt and tot_weight < length_opt:
+        L_route_opt = L_route
+        length_opt = tot_weight
+        L_crit_tracks_opt = L_crit_tracks
 
-    # If it reaches end of calculation returns optimal route values
+    # If it reaches end of calculation returns optimal route values, reset
+    # optimal values
     if len(L_route) == 1:
         n_crit_opt_copy = n_crit_opt
         L_route_opt_copy = L_route_opt.copy()
