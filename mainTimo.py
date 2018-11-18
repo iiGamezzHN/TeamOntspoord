@@ -33,11 +33,11 @@ for x in station_dict:
 G = nw.Network_Graph(st.Station).graph
 
 if __name__ == "__main__":
-    crit = route2.crit_tracks(G)
-    station = 'Den Helder'
+    L_crit_tracks = route2.crit_tracks(G)
+    station = 'Amsterdam Centraal'
     L_route = [station]
     crit_tracks_visited = []
     tot_weight = 0
-    max_length = 120
-    n_k = 0
-    route2.route2(G, station, L_route, tot_weight, max_length, n_k, crit)
+    max_length = 180
+    n_crit_tracks = 0
+    print(route2.route2(G, station, L_route, tot_weight, max_length, n_crit_tracks, L_crit_tracks))

@@ -47,10 +47,8 @@ def route2(network, station, L_route, tot_weight, max_length, n_crit_tracks, L_c
     # route. If so, continue finding their neighbours. Keep track of number of
     # critical tracks visited (n_crit_tracks). Variable_child is a copy to put
     # into next level.
-
-
     for neighbour in network[station]:
-        L_crit_tracks2 = L_crit_tracks.copy()
+        L_crit_tracks_child = L_crit_tracks.copy()
         n_crit_tracks_child = n_crit_tracks
         weight = int(network[station][neighbour]['weight'])
         tot_weight_child = weight + tot_weight
@@ -59,16 +57,37 @@ def route2(network, station, L_route, tot_weight, max_length, n_crit_tracks, L_c
             for track in L_crit_tracks:
                 if station in track and neighbour in track:
                     n_crit_tracks_child += 1
-                    L_crit_tracks2 = []
-                    for track2 in L_crit_tracks:
-                        if not (station in track2 and neighbour in track2):
-                            L_crit_tracks2.append(track2)
+                    # Create updated list of critical tracks, remove visited crit track
+                    L_crit_tracks_child = L_crit_tracks.copy()
+                    L_crit_tracks_child.remove(track)
                     break
             L_route_child = L_route.copy()
             L_route_child.append(neighbour)
-            route2(network, neighbour, L_route_child, tot_weight_child, max_length, n_crit_tracks_child, L_crit_tracks2)
-    print(L_route)
-    print(n_crit_tracks)
-    print(tot_weight)
+            route2(network, neighbour, L_route_child, tot_weight_child, max_length, n_crit_tracks_child, L_crit_tracks_child)
 
-# Alles met L_crit_tracks2 is nog heel lelijk, maar het werkt.
+    # Create global variables for route with optimal amount of critical tracks
+    # visited
+    global n_crit_opt
+    global L_route_opt
+    global length_opt
+
+    try:
+        n_crit_opt
+    except NameError:
+        n_crit_opt = n_crit_tracks
+        L_route_opt = L_route
+        length_opt = tot_weight
+
+    # Checks if current route is better than previous optimal route
+    if n_crit_tracks > n_crit_opt:
+        n_crit_opt = n_crit_tracks
+        L_route_opt = L_route
+        length_opt = tot_weight
+    elif n_crit_tracks == n_crit_opt:
+        if tot_weight < length_opt:
+            L_route_opt = L_route
+            length_opt = tot_weight
+
+    # If it reaches end of calculation returns optimal route values
+    if len(L_route) == 1:
+        return L_route_opt, n_crit_opt, length_opt
