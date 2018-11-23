@@ -19,6 +19,8 @@ import network as nw
 import station_class as st
 import import_data as imp
 import route2
+import route2object
+import route_class as rc
 
 import_dict = imp.open_stations('data', 'StationsHolland.csv')
 import_list = imp.open_connections('data', 'ConnectiesHolland.csv')
@@ -36,17 +38,14 @@ if __name__ == "__main__":
     # Gather relevant info
     L_crit_tracks = route2.crit_tracks(G)
     L_station = cs.create_starts(G, 7)
-    tot_weight = 0
     max_length = 120
-    n_crit_tracks = 0
     n_routes = 0
     final_length = 0
     # Create routes until there are no more critical tracks
     while len(L_crit_tracks) != 0:
         print(n_routes)
-        station = L_station[n_routes]
-        L_route = [station]
-        optimal = route2.route2(G, station, L_route, tot_weight, max_length, n_crit_tracks, L_crit_tracks)
+        route = rc.Route(L_station[n_routes], [L_station[n_routes]], 0, 0, L_crit_tracks)
+        optimal = route2object.route2object(G, max_length, route)
         final_length += optimal[2]
         print(optimal)
         L_crit_tracks = optimal[3]
