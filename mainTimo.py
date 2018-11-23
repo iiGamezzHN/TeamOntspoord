@@ -1,10 +1,6 @@
 # Imports
 import os
 import sys
-import networkx as nx
-import csv
-import matplotlib.pyplot as plt
-import pandas as pd
 
 # de map waarin het project staat
 located_map="TeamOntspoord"
@@ -21,6 +17,7 @@ import import_data as imp
 import route2
 import route2object
 import route_class as rc
+import calc_crit_tracks as ct
 
 import_dict = imp.open_stations('data', 'StationsHolland.csv')
 import_list = imp.open_connections('data', 'ConnectiesHolland.csv')
@@ -36,7 +33,7 @@ G = nw.Network_Graph(st.Station).graph
 
 if __name__ == "__main__":
     # Gather relevant info
-    L_crit_tracks = route2.crit_tracks(G)
+    L_crit_tracks = ct.crit_tracks(G)
     L_station = cs.create_starts(G, 7)
     max_length = 120
     n_routes = 0
