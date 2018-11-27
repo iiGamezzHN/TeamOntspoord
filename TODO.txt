@@ -1,16 +1,25 @@
 TO DO List
 
 #Vandaag
-README aanmaken (main en in code folder) zie https://github.com/Maarten-vd-Sande/voorbeeldRepo - DONE
-Presentatie aanmaken
-Packages in requirements.txt doen - David
+README uitbreiden https://github.com/Maarten-vd-Sande/voorbeeldRepo - DONE
+
 
 #Binnenkort
-- In mainTimo niet routes beginnen per kritiek station maar kijken naar station met minste kritieke verbindingen (niet 0)
-  Routes berekenen met een random keuze uit een van deze stations
-  Bij volgende route gebruik maken van geupdate lijst kritieke sporen
-  Alle scores verzamelen en de beste kiezen
-
 - Kijken of we het Hill Climbing algoritme toe kunnen passen
 
 - State Space berekenen
+
+- Kijken naar tkinter
+
+- Upper en lower bound (Holland en Nationaal)
+
+#Voor progressiepunten
+- 3e algoritme
+
+- Sillclimber - transformatiefunctie/vergelijken
+
+- Simulated ... (zie slides) - vergelijken
+
+- Statespace, upper, lower - In Readme
+
+- Senken aan visualiseren oplossing
