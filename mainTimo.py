@@ -19,6 +19,7 @@ import route2object
 import route_class as rc
 import calc_crit_tracks as ct
 import starts2 as s2
+import route2_object_n_best as best
 
 import_dict = imp.open_stations('data', 'StationsHolland.csv')
 import_list = imp.open_connections('data', 'ConnectiesHolland.csv')
@@ -39,23 +40,14 @@ if __name__ == "__main__":
     # Gather relevant info
     max_length = 120
     k_max = 0
-    for i in range(50):
-        L_crit_tracks = ct.crit_tracks(G)
-        n_routes = 0
-        final_length = 0
-        # Create routes until there are no more critical tracks
-        while len(L_crit_tracks) != 0:
-            start = s2.start_select(G, L_crit_tracks, L_station)
-            print(n_routes)
-            route = rc.Route(start, [start], 0, 0, L_crit_tracks)
-            optimal = route2object.route2object(G, max_length, route)
-            final_length += optimal[2]
-            print(optimal)
-            L_crit_tracks = optimal[3]
-            n_routes += 1
-        print(n_routes)
-        K = 10000 - (n_routes * 20 + (final_length / 10))
-        print(K)
-        if K > k_max:
-            k_max = K
-    print(k_max)
+    n_best = 10
+    L_crit_tracks = ct.crit_tracks(G)
+    tot_crit_tracks = len(L_crit_tracks)
+    start = "Den Helder"
+    route = rc.Route(start, [start], 0, 0, L_crit_tracks, 0)
+
+    best_routes = best.route2_object_n_best(G, max_length, route, tot_crit_tracks, n_best)
+    print(best_routes)
+    for item in best_routes:
+        print(item[0].k_score_ind)
+        print(item[0].L_route)
