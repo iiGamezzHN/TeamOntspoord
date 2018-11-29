@@ -1,28 +1,16 @@
 import copy
-from heapq import heappush, heappushpop, nlargest
+from heapq import heappush, heappushpop
 
 """
 Calculates all posible routes starting from a given station, with max length.
 Doesn't visit stations more than twice, does keep track of amount of critical
 tracks visited, and removes critical tracks from list of critical tracks when
-visited.
-
-L_route: list of visited stations, in order
-tot_weight: total length of route
-L_crit_tracks: list of critical tracks
-n_crit_tracks: number of critical visited
-station: current station
-neighbour: current neighbour
-max_length: maximal length of route
-opt = values of optimal route
+visited. Returns a list where the elements are single element lists with
+routes.
 """
 
 
 def route2_object_n_best(network, max_length, route, tot_crit_tracks, n_best):
-    # Find neighbours of given station, and see if they can be appended to
-    # route. If so, continue finding their neighbours. Keep track of number of
-    # critical tracks visited (n_crit_tracks). Variable is a copy to put
-    # into next level.
     for neighbour in network[route.station]:
         route_copy = copy.deepcopy(route)
         weight = int(network[route_copy.station][neighbour]['weight'])
@@ -41,6 +29,7 @@ def route2_object_n_best(network, max_length, route, tot_crit_tracks, n_best):
 
     route.k_score_ind = route.n_crit_tracks / tot_crit_tracks * 10000 - (20 + route.tot_weight / 10)
 
+    # Save the n_best scores
     global heap
     try:
         heap
@@ -57,4 +46,5 @@ def route2_object_n_best(network, max_length, route, tot_crit_tracks, n_best):
         routes_list = []
         for item in heap:
             routes_list.append([item])
+        heap = []
         return routes_list
