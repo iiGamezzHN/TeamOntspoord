@@ -11,6 +11,7 @@ for the second route.
 
 
 def route2_hill(para, n_best, L_crit_tracks):
+    i = 0
     while True:
         start = s2(para, L_crit_tracks)
         route = rc.Route(start, [start], 0, 0, L_crit_tracks, 0)
@@ -50,7 +51,8 @@ def route2_hill(para, n_best, L_crit_tracks):
         route = set_optimal[0]
         L_crit_tracks = route.L_crit_tracks
         k_best += k_current_route
-
+        i += 1
+        print("Found route "+str(i))
 
         if len(route.L_crit_tracks) == 0:
             break
