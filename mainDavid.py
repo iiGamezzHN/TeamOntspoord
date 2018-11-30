@@ -17,6 +17,7 @@ print(parent_dir_name+"\\"+located_map+"\\code")
 import network as nw
 import import_data as imp
 import station_class as st
+import calc_crit_tracks as ct
 
 # import files using the functions from import_data.py
 import_dict = imp.open_stations('data', 'StationsHolland.csv')
@@ -25,13 +26,16 @@ station_dict = imp.add_connections_dict(import_dict, import_list)
 
 # adding the stations as instances of the class Station
 stations = {}
+list_stations = []
 for x in station_dict:
     location = [station_dict[x]['Longitude'], station_dict[x]['Latitude']]
     stations[x] = st.Station(x, x, station_dict[x]['Critical'], location, station_dict[x]['Neighbours'])
+    list_stations.append(x)
 
-# test the class Station
-#print(station_dict)
+G = nw.Network_Graph(st.Station).graph
 
-
-# test network.py
-#G = nw.Network_Graph(st.Station)
+max_length = 120
+k_max = 0
+n_best = 3
+depth = 2
+list_crit_stations = ct.crit_tracks(G)
