@@ -2,7 +2,13 @@ import random
 
 
 def start_select(para, L_crit_tracks):
+    """
+    Select the 'best' starting station. Chooses the station with the fewest
+    (but >0) critical connections. If equal, chooses station with fewest total
+    connections. If equal, chooses random.
+    """
     min_station = []
+    # Loop over all stations and check amount of crit connections
     for station in para.stations_list:
         n_crit_tracks = sum(track.count(station) for track in L_crit_tracks)
         if len(min_station) == 0:
