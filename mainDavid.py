@@ -2,6 +2,16 @@
 import os
 import sys
 
+# import bestanden vanuit de map code
+import network as nw
+import import_data as imp
+import station_class as st
+import calc_crit_tracks as ct
+from starts2 import start_select as s2
+import parameter_class as pc
+import route_class as rc
+import breadth_first_beam as bfb
+
 # de map waarin het project staat
 located_map = "TeamOntspoord"
 
@@ -13,15 +23,6 @@ sys.path.append(parent_dir_name+"\\"+located_map+"\\code")
 print(parent_dir_name)
 print(parent_dir_name+"\\"+located_map+"\\code")
 
-# import bestanden vanuit de map code
-import network as nw
-import import_data as imp
-import station_class as st
-import calc_crit_tracks as ct
-from starts2 import start_select as s2
-import parameter_class as pc
-import route_class as rc
-
 # import files using the functions from import_data.py
 import_dict = imp.open_stations('data', 'StationsHolland.csv')
 import_list = imp.open_connections('data', 'ConnectiesHolland.csv')
@@ -32,7 +33,8 @@ stations = {}
 list_stations = []
 for x in station_dict:
     location = [station_dict[x]['Longitude'], station_dict[x]['Latitude']]
-    stations[x] = st.Station(x, x, station_dict[x]['Critical'], location, station_dict[x]['Neighbours'])
+    stations[x] = st.Station(x, x, station_dict[x]['Critical'], location,
+                             station_dict[x]['Neighbours'])
     list_stations.append(x)
 
 G = nw.Network_Graph(st.Station).graph
@@ -48,5 +50,5 @@ parameters = pc.Parameters(G, max_length, tot_crit_tracks, list_stations)
 route = []
 start = s2(parameters, list_crit_tracks)
 route = rc.Route(start, [start], 0, 0, list_crit_tracks, 0)
-
-#print(G[start])
+bfb.bfb(G, parameters, start, route)
+# print(G[start])
