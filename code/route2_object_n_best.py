@@ -10,13 +10,13 @@ routes.
 """
 
 
-def route2_object_n_best(network, max_length, route, tot_crit_tracks, n_best):
-    for neighbour in network[route.station]:
+def route2_object_n_best(para, route, n_best):
+    for neighbour in para.network[route.station]:
         route_copy = copy.deepcopy(route)
-        weight = int(network[route_copy.station][neighbour]['weight'])
+        weight = int(para.network[route_copy.station][neighbour]['weight'])
         route_copy.tot_weight = weight + route_copy.tot_weight
         # Make sure you don't go over total length, don't visit station more than twice
-        if route_copy.tot_weight < max_length and route_copy.L_route.count(neighbour) < 2:
+        if route_copy.tot_weight < para.max_length and route_copy.L_route.count(neighbour) < 2:
             for track in route_copy.L_crit_tracks:
                 if route_copy.station in track and neighbour in track:
                     route_copy.n_crit_tracks += 1
@@ -25,9 +25,9 @@ def route2_object_n_best(network, max_length, route, tot_crit_tracks, n_best):
                     break
             route_copy.L_route.append(neighbour)
             route_copy.station = neighbour
-            route2_object_n_best(network, max_length, route_copy, tot_crit_tracks, n_best)
+            route2_object_n_best(para, route_copy, n_best)
 
-    route.k_score_ind = route.n_crit_tracks / tot_crit_tracks * 10000 - (20 + route.tot_weight / 10)
+    route.k_score_ind = route.n_crit_tracks / para.tot_crit_tracks * 10000 - (20 + route.tot_weight / 10)
 
     # Save the n_best scores
     global heap

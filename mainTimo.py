@@ -12,7 +12,7 @@ sys.path.append(parent_dir_name+"\\"+located_map+"\\code")
 import network as nw
 import station_class as st
 import import_data as imp
-import route_class as rc
+import parameter_class as pc
 import calc_crit_tracks as ct
 import starts2 as s2
 import route2_object_n_best as best
@@ -34,10 +34,12 @@ if __name__ == "__main__":
 
     max_length = 120
     k_max = 0
-    n_best = 25
+    n_best = 30
     L_crit_tracks = ct.crit_tracks(G)
     tot_crit_tracks = len(L_crit_tracks)
-    solution_set = hc(G, max_length, tot_crit_tracks, L_station, n_best, L_crit_tracks)
+    parameters = pc.Parameters(G, max_length, tot_crit_tracks, L_station)
+    solution_set = hc(parameters, n_best, L_crit_tracks)
+
     for object in solution_set[0]:
         print(object.L_route)
     print(solution_set[1])
