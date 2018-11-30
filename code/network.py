@@ -129,3 +129,13 @@ class Network_Graph():
             # nx.draw_networkx_labels(self.graph,graphdict,t_labels,font_size=8,font_weight='bold')
             # nx.draw_networkx_labels(self.graph,graphdict,r_labels,font_size=8,font_weight='normal')
             plt.show(self.graph)
+
+        if 'labels' in locals():
+            # runs these lines if you use 'standard' or 'critical' since you've
+            # created the variable labels
+            nx.draw_networkx_labels(self.graph, graphdict, labels, font_size=8, font_weight='normal')
+            edge_labels = nx.get_edge_attributes(self.graph, 'weight')
+            nx.draw_networkx_edges(self.graph, graphdict, edge_labels=edge_labels, width=0.1, edge_color='k', style='solid')
+            if egdes_option == True:
+                nx.draw_networkx_edge_labels(self.graph, graphdict, edge_labels=edge_labels, font_size=6)
+            plt.show(self.graph)
