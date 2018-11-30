@@ -14,7 +14,6 @@ import station_class as st
 import import_data as imp
 import parameter_class as pc
 import calc_crit_tracks as ct
-import starts2 as s2
 import route2_object_n_best as best
 from hillclimber_for_route2 import route2_hill as hc
 
