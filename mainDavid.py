@@ -51,5 +51,8 @@ route = []
 start = s2(parameters, list_crit_tracks)
 route = rc.Route(start, [start], 0, 0, list_crit_tracks, 0)
 
-bfb.bfb(G, 'Zaandam', 'Dordrecht')
-#bfb.test(G, ['Den Helder'], [], [], depth)
+tracks = bfb.bfb(G, 'Den Helder', depth)
+print(bfb.bfb(G, 'Den Helder', depth))
+for x in tracks:
+    for y in range(len(x)-1):
+        print([x[y],x[y+1]])
