@@ -9,10 +9,6 @@ located_map = "TeamOntspoord"
 parent_dir_name = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 sys.path.append(parent_dir_name+"\\"+located_map+"\\code")
 
-# test
-print(parent_dir_name)
-print(parent_dir_name+"\\"+located_map+"\\code")
-
 # import bestanden vanuit de map code
 import network as nw
 import import_data as imp
@@ -22,6 +18,7 @@ from starts2 import start_select as s2
 import parameter_class as pc
 import route_class as rc
 import breadth_first_beam as bfb
+import calc_route_score as crs
 
 # import files using the functions from import_data.py
 import_dict = imp.open_stations('data', 'StationsHolland.csv')
@@ -40,8 +37,6 @@ for x in station_dict:
 G = nw.Network_Graph(st.Station).graph
 
 max_length = 120
-k_max = 0
-n_best = 3
 depth = 3
 list_crit_tracks = ct.crit_tracks(G)
 tot_crit_tracks = len(list_crit_tracks)
@@ -51,8 +46,7 @@ route = []
 start = s2(parameters, list_crit_tracks)
 route = rc.Route(start, [start], 0, 0, list_crit_tracks, 0)
 
-tracks = bfb.bfb(G, 'Den Helder', depth)
 print(bfb.bfb(G, 'Den Helder', depth))
-for x in tracks:
-    for y in range(len(x)-1):
-        print([x[y],x[y+1]])
+tracks = bfb.bfb(G, 'Den Helder', depth)
+
+crs.calc_route_score(G, tracks, list_crit_tracks, station_dict)

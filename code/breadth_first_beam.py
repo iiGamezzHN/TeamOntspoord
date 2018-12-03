@@ -40,8 +40,7 @@ def bfb(graph, start, depth):
                 if len(new_path) == depth:
                     depth_paths.append(new_path)
                 elif len(new_path) > depth:
-                    print("Limit reached!")
-                    print(sum([len(x)/depth for x in depth_paths if len(x) == depth]))
+                    #print(sum([len(x)/depth for x in depth_paths if len(x) == depth]))
                     return depth_paths
 
             # mark node as explored
