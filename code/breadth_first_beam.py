@@ -12,46 +12,78 @@ def test(nw, start, nb, used, depth):
         print(start, nb)
         test(nw, nb, [], used, depth)
 
-def bfb(network, parameters, start, route, depth, used):
-    while depth > 0:
-        used.append(start)
-        neighbours = []
-        for x in network[start]:
-            if x not in used:
-                neighbours.append(x)
-
-        print("Used")
-        print(used)
-        print("Neighbours")
-        print(neighbours)
-
-        for x in neighbours:
-            return bfb(network, parameters, neighbours[0], route, depth, used)
-
-        depth = depth - 1
-
-def bfs_connected_component(graph, start):
-    # keep track of all visited nodes
+def bfb(graph, start, goal):
+    # keep track of explored nodes
     explored = []
-    # keep track of nodes to be checked
-    queue = [start]
-    nr = 0
-    # keep looping until there are nodes still to be checked
+    # keep track of all the paths to be checked
+    queue = [[start]]
+    # return path if start is goal
+    val = []
+
+    # keeps looping until all possible paths have been checked
     while queue:
+        # pop the first path from the queue
+        path = queue.pop(0)
+        # get the last node from the path
+        node = path[-1]
+        print('queue ', queue)
+        print('node ', node)
+        if node not in explored:
+            neighbours = graph[node]
+            print('nb ', neighbours)
+            # go through all neighbour nodes, construct a new path and
+            # push it into the queue
+            for neighbour in neighbours:
+                new_path = list(path)
+                new_path.append(neighbour)
 
+                print("new_path ", new_path)
+                queue.append(new_path)
+                print('new_queue ', queue)
+                # return path if neighbour is goal
+                if len(new_path) == 4:
+                    val.append(new_path)
+                elif len(new_path) > 6:
+                    print("")
+                    print("")
+                    print("Limit reached!")
+                    print(sum([len(x)/4 for x in val if len(x) == 4]))
+                    return
+
+            # mark node as explored
+            explored.append(node)
+            print('ex ', explored)
+            print("")
+
+# finds shortest path between 2 nodes of a graph using BFS
+def bfs_shortest_path(graph, start, goal):
+    # keep track of explored nodes
+    explored = []
+    # keep track of all the paths to be checked
+    queue = [[start]]
+
+    # return path if start is goal
+    if start == goal:
+        return "That was easy! Start = goal"
+
+    # keeps looping until all possible paths have been checked
+    while queue:
+        # pop the first path from the queue
+        path = queue.pop(0)
+        # get the last node from the path
+        node = path[-1]
         print(queue)
-        # pop shallowest node (first node) from queue
-        # node = queue.pop(0)
-        for x in queue:
-            if x not in explored:
-                # add node to list of checked nodes
-                explored.append(x)
-                neighbours = graph[x]
+        if node not in explored:
+            neighbours = graph[node]
+            # go through all neighbour nodes, construct a new path and
+            # push it into the queue
+            for neighbour in neighbours:
+                new_path = list(path)
+                new_path.append(neighbour)
+                queue.append(new_path)
+                # return path if neighbour is goal
+                if neighbour == goal:
+                    return new_path
 
-                # add neighbours of node to queue
-                for neighbour in neighbours:
-                    if neighbour not in explored:
-                        queue.append(neighbour)
-        nr += 1
-        print(nr)
-    return explored
+            # mark node as explored
+            explored.append(node)

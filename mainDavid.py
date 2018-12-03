@@ -2,16 +2,6 @@
 import os
 import sys
 
-# import bestanden vanuit de map code
-import network as nw
-import import_data as imp
-import station_class as st
-import calc_crit_tracks as ct
-from starts2 import start_select as s2
-import parameter_class as pc
-import route_class as rc
-import breadth_first_beam as bfb
-
 # de map waarin het project staat
 located_map = "TeamOntspoord"
 
@@ -22,6 +12,16 @@ sys.path.append(parent_dir_name+"\\"+located_map+"\\code")
 # test
 print(parent_dir_name)
 print(parent_dir_name+"\\"+located_map+"\\code")
+
+# import bestanden vanuit de map code
+import network as nw
+import import_data as imp
+import station_class as st
+import calc_crit_tracks as ct
+from starts2 import start_select as s2
+import parameter_class as pc
+import route_class as rc
+import breadth_first_beam as bfb
 
 # import files using the functions from import_data.py
 import_dict = imp.open_stations('data', 'StationsHolland.csv')
@@ -42,7 +42,7 @@ G = nw.Network_Graph(st.Station).graph
 max_length = 120
 k_max = 0
 n_best = 3
-depth = 2
+depth = 3
 list_crit_tracks = ct.crit_tracks(G)
 tot_crit_tracks = len(list_crit_tracks)
 parameters = pc.Parameters(G, max_length, tot_crit_tracks, list_stations)
@@ -50,5 +50,6 @@ parameters = pc.Parameters(G, max_length, tot_crit_tracks, list_stations)
 route = []
 start = s2(parameters, list_crit_tracks)
 route = rc.Route(start, [start], 0, 0, list_crit_tracks, 0)
-bfb.bfb(G, parameters, start, route)
-# print(G[start])
+
+bfb.bfb(G, 'Zaandam', 'Dordrecht')
+#bfb.test(G, ['Den Helder'], [], [], depth)
