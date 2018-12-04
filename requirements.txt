@@ -1,7 +1,12 @@
 networkx
-matplotlib
+matplotlib.pyplot
 pandas
-random
 copy
 csv
+sys
+os
+gc
+collections
+random
 heapq
+colour
