@@ -20,7 +20,7 @@ def score(graph, tracks, apct, uct):
     bkv = []                 # bereden kritieke verbindingen
     transformed = tt.transform(graph, tracks)[0]
     time = tt.transform(graph, tracks)[1]
-    minlist = tt.transform(graph, tracks)[2]
+    # minlist = tt.transform(graph, tracks)[2]
     t = len(tracks)
     for i in range(t):
         track = transformed[i][0]
