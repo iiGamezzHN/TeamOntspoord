@@ -1,11 +1,11 @@
-import transform_track as tt
+import transform_tracklist as tt
 
 
 def unique(dict):
     apct = []					# all possible critical tracks
     uct = []					# unique critical tracks
     for x in dict:
-        if dict[x]['importance'] == 'critical':
+        if dict[x]['Critical'] == 'critical':
             for y in dict[x]['neighbours']:
                 n_input = [[x, y[0]], float(y[1])]
                 i_input = [[y[0], x], float(y[1])]
