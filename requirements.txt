@@ -1,3 +1,7 @@
 networkx
 matplotlib
 pandas
+random
+copy
+csv
+heapq
