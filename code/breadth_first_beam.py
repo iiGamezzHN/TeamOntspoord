@@ -9,7 +9,7 @@ def test(nw, start, nb, used, depth):
             used.append(x)
         start = set(start)
         nb = set(nb)
-        print(start, nb)
+        # print(start, nb)
         test(nw, nb, [], used, depth)
 
 

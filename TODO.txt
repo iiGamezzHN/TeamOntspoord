@@ -23,3 +23,11 @@ README uitbreiden https://github.com/Maarten-vd-Sande/voorbeeldRepo - DONE
 - Statespace, upper, lower - In Readme
 
 - Senken aan visualiseren oplossing
+
+# TODO na gesprek 4-12
+- transformatiefuncties
+- algoritme state space
+- laatste algoritme (beam search)
+- theorethische hoogste en laagste score in README
+- statespace verkennen op papier in README
+- pijnpunten in README
