@@ -8,6 +8,7 @@ located_map = "TeamOntspoord"
 # pak de parent map
 parent_dir_name = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 sys.path.append(parent_dir_name+"\\"+located_map+"\\code")
+sys.path.append(parent_dir_name+"\\"+located_map+"\\code\\class")
 
 # import bestanden vanuit de map code
 import network as nw
@@ -46,7 +47,10 @@ route = []
 start = s2(parameters, list_crit_tracks)
 route = rc.Route(start, [start], 0, 0, list_crit_tracks, 0)
 
-print(bfb.bfb(G, 'Den Helder', depth))
+# print(bfb.bfb(G, 'Den Helder', depth))
 tracks = bfb.bfb(G, 'Den Helder', depth)
 
-crs.calc_route_score(G, tracks, list_crit_tracks, station_dict)
+scores = crs.calc_route_score(G, tracks, station_dict)
+# print(scores[2])
+# print(len(scores[0]))
+print(scores)

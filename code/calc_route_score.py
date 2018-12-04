@@ -6,9 +6,10 @@ def calc_route_score(nw, track_lists, station_dict):
     pair_stations(track_lists)
     crit_stations(station_dict)
     unique = sc.unique(station_dict)
-    #sc.score(nw, [[]], unique[0], unique[1])
+    transform = tt.transform(nw, track_lists)
+    Score = sc.score(nw, track_lists, unique[0], unique[1])
 
-    return tt.transform(nw, track_lists)
+    return Score
 
 
 def crit_stations(station_dict):
