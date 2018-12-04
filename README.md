@@ -1,10 +1,48 @@
 # TeamOntspoord - RailNL
 
-Voor het project is gekozen voor het onderwerp RailNL, waarin een lijnvoering gemaakt moet worden voor de treinen in
-Nederland. In het eerste deel van de opdracht maak je de lijnvoering alleen in Noord- en Zuid-Holland. In het tweede deel
-van de opdracht maak je de lijnvoering voor heel Nederland.
+Voor het project is gekozen voor het onderwerp RailNL, waarin een lijnvoering gemaakt moet worden voor de intercity treinen in
+Nederland.
+
+In deel 1 van de opdracht moet er er lijnvoering gemaakt worden voor Noord- en Zuid Holland. 
+De Scorefunctie is K = 10000 * p - (T*20 + Min/10). Hierbij is p de fractie van het aantal bereden kritieke trajecten, T het aantal gebruikte Tracks en Min het totaal aantal minuten van alle Tracks bij elkaar.
 
 ## Aan de slag
+### Deel 1
+#### State Space, Upper en Lower Bounds
+De state space wordt berekend door het volgende:
+
+#### Score
+De  Lower en Upper bound voor 1b:
+```
+K: p = 0; T = 7; Min = 840 = -244       K: p = 1; T = 0
+```
+De realistische Lower en Upper bound voor 1b:
+```
+K: p = 1; T = 7; Min = 840 = 9776.0     K: p = 1; T = 3; Min = 287; = 9911.3
+```
+De  Lower en Upper bound voor 1c:
+```
+K: p = 0; T = 7; Min = 840 = -244
+```
+De realistische Lower en Upper bound voor 1c:
+```
+K: p = 1; T = 7; Min = 840 = 9776.0     K: p = 1; T = 4; Min = 381; = 9881.9
+```
+
+### Deel 2
+#### State Space, Upper en Lower Bounds
+De state space wordt berekend door het volgende:
+
+#### Score
+Respectievelijk de Lower en Upper bound voor 1b:
+```
+K: p = 1; T = 20; Min = 7*180 = 9474.0     K: p = 1; T = 7; Min = 1239; = 9736.1
+```
+Respectievelijk de Lower en Upper bound voor 1c:
+```
+K: p = 1; T = 20; Min = 7*180 = 9474.0     K: p = 1; T = 9; Min = 1551; = 9664.9
+```
+
 ### Vereisten
 
 Deze codebase is volledig geschreven in Python3.6.3. In requirements.txt staan alle benodigde packages om de code succesvol te draaien. Deze zijn gemakkelijk te installeren via pip dmv. de volgende instructie:
