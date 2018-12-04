@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import networkx as nx
 import gc
+import decimal
 
 
 
@@ -46,6 +47,37 @@ class Network_Graph():
     def information(self):
         """Returns the amount of nodes and the nodes themselves """
         return '{} {} {} {} {}'.format('There are', len(self.graph.nodes()), 'nodes', '\nNodes:', self.graph.nodes())
+
+    def calc_statespace(self,option):
+        if option == 'Holland':
+            minutes = 120
+            max_t = 7
+        if option == 'Nationaal':
+            minutes = 180
+            max_t = 20
+        tot_nodes = len(self.graph.nodes())
+        tot = 0
+        min_w = []
+        for node in self.graph.nodes():
+            n = len([x for x in self.graph[node]])
+            w = min([int(float(self.graph[node][x]['weight'])) for x in self.graph[node]])
+            min_w.append(w)
+            if n > tot:
+                tot = n
+        min_w = min(min_w)
+        max_c = minutes/min_w
+        statespace = 0
+        track_statespace = decimal.Decimal(tot_nodes*(tot**max_c)/2)
+        for t in range(1, max_t+1):
+            statespace = decimal.Decimal(statespace+track_statespace**t)
+            # print(t, tot_nodes, tot, max_c, track_statespace, decimal.Decimal(track_statespace**t), statespace)
+
+        return '{} {} {} {} {} {} {} {} {} {} {}'.format('There are', tot_nodes, 'nodes',
+                    '\nThe most amount neighbours of a node is', tot,
+                    '\nMinimal time between nodes is', min_w,
+                    '\nStatespace of a single track x is', track_statespace,
+                    '\nTotal statespace is', statespace)
+
 
     def draw_choice(self, option, egdes_option):
         """ This functions will create a visualisation of the graph. The input is the option to

@@ -42,8 +42,13 @@ print(stations['Alkmaar'].information())
 
 # test network.py
 G = nw.Network_Graph(st.Station)
+print(G.information())
 
-G.graph.nodes()
+print(G.calc_statespace('Holland'))
+print('')
+print(G.calc_statespace('Nationaal'))
+
+# G.graph.nodes()
 
 # adam_bfs = bfs.pathcount(G.graph, 'Amsterdam Centraal', 20)
 # for x in adam_bfs:
