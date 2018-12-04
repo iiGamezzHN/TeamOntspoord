@@ -22,14 +22,9 @@ def start_select(para, L_crit_tracks):
             distance = para.network[station][item]['weight']
             if distance > opt_weight_ind:
                 opt_weight_ind = distance
-        if len(min_station) == 0:
+        if len(min_station) == 0 or (n_crit_tracks < min and n_crit_tracks > 0):
             min_station = [station]
             min = n_crit_tracks
-            n_neighbours = len(para.network[station])
-            opt_weight = opt_weight_ind
-        elif n_crit_tracks < min and n_crit_tracks > 0:
-            min = n_crit_tracks
-            min_station = [station]
             n_neighbours = len(para.network[station])
             opt_weight = opt_weight_ind
         elif n_crit_tracks == min:
@@ -45,5 +40,4 @@ def start_select(para, L_crit_tracks):
                 opt_weight = opt_weight_ind
             elif len(para.network[station]) == n_neighbours and opt_weight_ind == opt_weight:
                 min_station.append(station)
-    print(min_station)
     return(random.choice(min_station))
