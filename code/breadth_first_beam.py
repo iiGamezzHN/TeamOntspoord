@@ -12,6 +12,7 @@ def test(nw, start, nb, used, depth):
         print(start, nb)
         test(nw, nb, [], used, depth)
 
+
 def bfb(graph, start, depth):
     # keep track of explored nodes
     explored = []
@@ -40,7 +41,8 @@ def bfb(graph, start, depth):
                 if len(new_path) == depth:
                     depth_paths.append(new_path)
                 elif len(new_path) > depth:
-                    #print(sum([len(x)/depth for x in depth_paths if len(x) == depth]))
+                    # print(sum([len(x)/depth for x in depth_paths if
+                    # len(x) == depth]))
                     return depth_paths
 
             # mark node as explored
