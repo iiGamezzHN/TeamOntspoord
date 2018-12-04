@@ -3,7 +3,7 @@ class Route():
     """Object saving all relevant data for current route"""
 
     def __init__(self, station, L_route, tot_weight, n_crit_tracks,
-                                        L_crit_tracks, k_score_ind):
+                 L_crit_tracks, k_score_ind):
         self.station = station
         self.L_route = L_route
         self.tot_weight = tot_weight

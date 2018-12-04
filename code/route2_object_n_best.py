@@ -33,7 +33,7 @@ def route2_object_n_best(para, route, n_best):
 
     # When at end calculate k_score of route
     route.k_score_ind = (route.n_crit_tracks / para.tot_crit_tracks * 10000 -
-                                                (20 + route.tot_weight / 10))
+                         (20 + route.tot_weight / 10))
 
     # Save the n_best scores
     global heap
