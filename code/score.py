@@ -5,8 +5,8 @@ def unique(dict):
     apct = []					# all possible critical tracks
     uct = []					# unique critical tracks
     for x in dict:
-        if dict[x]['Critical'] == 'critical':
-            for y in dict[x]['neighbours']:
+        if dict[x]['Critical'] == 'Kritiek':
+            for y in dict[x]['Neighbours']:
                 n_input = [[x, y[0]], float(y[1])]
                 i_input = [[y[0], x], float(y[1])]
                 apct.append(i_input)
