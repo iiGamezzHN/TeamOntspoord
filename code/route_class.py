@@ -1,6 +1,13 @@
 class Route():
 
-    """Object saving all relevant data for current route"""
+    """Object saving all relevant data for current routeself.
+    station: current station
+    L_route: list of stations visited
+    tot_weight: total length of route
+    n_crit_tracks: number of critical tracks visited
+    L_crit_tracks: list of critical tracks remaining
+    k_score_ind: k score of route
+    """
 
     def __init__(self, station, L_route, tot_weight, n_crit_tracks,
                  L_crit_tracks, k_score_ind):
