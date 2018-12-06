@@ -3,7 +3,7 @@
 Voor het project is gekozen voor het onderwerp RailNL, waarin een lijnvoering gemaakt moet worden voor de intercity treinen in
 Nederland.
 
-In deel 1 van de opdracht moet er er lijnvoering gemaakt worden voor Noord- en Zuid Holland. 
+In deel 1 van de opdracht moet er er lijnvoering gemaakt worden voor Noord- en Zuid Holland.
 De Scorefunctie is K = 10000 * p - (T*20 + Min/10). Hierbij is p de fractie van het aantal bereden kritieke trajecten, T het aantal gebruikte Tracks en Min het totaal aantal minuten van alle Tracks bij elkaar.
 
 ## Aan de slag
@@ -34,14 +34,19 @@ K: p = 1; T = 7; Min = 840 = 9776.0     K: p = 1; T = 4; Min = 381; = 9881.9
 De state space wordt berekend door het volgende:
 
 #### Score
-Respectievelijk de Lower en Upper bound voor 1b:
+Respectievelijk de Lower en Upper bound voor 2d:
 ```
 K: p = 1; T = 20; Min = 7*180 = 9474.0     K: p = 1; T = 7; Min = 1239; = 9736.1
 ```
-Respectievelijk de Lower en Upper bound voor 1c:
+Respectievelijk de Lower en Upper bound voor 2e:
 ```
 K: p = 1; T = 20; Min = 7*180 = 9474.0     K: p = 1; T = 9; Min = 1551; = 9664.9
 ```
+
+### Pijnpunten
+
+-Het hillclimberalgoritme moet erg lang rekenen voor heel Nederland
+
 
 ### Vereisten
 
@@ -64,7 +69,7 @@ python mainKennet.py
 python mainDavid.py
 ```
 
-## Autheurs
+## Auteurs
 
 - David Arisz
 - Kennet Botan

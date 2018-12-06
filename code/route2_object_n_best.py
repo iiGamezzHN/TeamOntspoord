@@ -29,9 +29,15 @@ def route2_object_n_best(para, route, n_best):
             # Add next station to route and continue with that station
             route_copy.L_route.append(neighbour)
             route_copy.station = neighbour
+            n_stat_visited = len(route_copy.L_route)
             # Ensure critical track is picked first time
-            if not (len(route_copy.L_route) == 2 and route_copy.n_crit_tracks == 0):
-                route2_object_n_best(para, route_copy, n_best)
+            if not (n_stat_visited == 2 and
+                    route_copy.n_crit_tracks == 0):
+                if not (route_copy.L_route[n_stat_visited - 1] ==
+                        route_copy.L_route[n_stat_visited - 3] and
+                        route_copy.L_route[n_stat_visited - 2] ==
+                        route_copy.L_route[n_stat_visited - 4]):
+                    route2_object_n_best(para, route_copy, n_best)
 
     # When at end calculate k_score of route
     route.k_score_ind = (route.n_crit_tracks / para.tot_crit_tracks * 10000 -
