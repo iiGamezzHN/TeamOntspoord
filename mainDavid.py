@@ -38,7 +38,7 @@ for x in station_dict:
 G = nw.Network_Graph(st.Station).graph
 
 max_length = 120
-depth = 3
+depth = 2
 list_crit_tracks = ct.crit_tracks(G)
 tot_crit_tracks = len(list_crit_tracks)
 parameters = pc.Parameters(G, max_length, tot_crit_tracks, list_stations)
@@ -47,10 +47,10 @@ route = []
 start = s2(parameters, list_crit_tracks)
 route = rc.Route(start, [start], 0, 0, list_crit_tracks, 0)
 
+explored = ['Den Helder', 'Alkmaar']
+test = [['Den Helder', 'Alkmaar', 'Castricum'], ['Den Helder', 'Alkmaar', 'Den Helder'], ['Den Helder', 'Alkmaar', 'Hoorn']]
+
 # print(bfb.bfb(G, 'Den Helder', depth))
-tracks = bfb.bfb(G, 'Den Helder', depth)
+tracks = bfb.bfb(G, [['Castricum'],['Hoorn']], depth, explored)
 
 scores = crs.calc_route_score(G, tracks, station_dict)
-# print(scores[2])
-# print(len(scores[0]))
-print(scores)

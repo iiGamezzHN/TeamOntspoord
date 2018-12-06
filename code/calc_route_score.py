@@ -11,7 +11,7 @@ def calc_route_score(nw, track_lists, station_dict):
     for x in track_lists:
         Scores.append(sc.score(nw, [x], unique[0], unique[1]))
 
-    return Scores
+    return track_lists, Scores
 
 
 def crit_stations(station_dict):
