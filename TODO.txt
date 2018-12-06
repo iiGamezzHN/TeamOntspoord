@@ -18,7 +18,7 @@ README uitbreiden https://github.com/Maarten-vd-Sande/voorbeeldRepo - DONE
 
 - Sillclimber - transformatiefunctie/vergelijken
 
-- Simulated ... (zie slides) - vergelijken
+- Simulated annealing (zie slides) - vergelijken
 
 - Statespace, upper, lower - In Readme
 
