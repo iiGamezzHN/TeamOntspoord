@@ -45,7 +45,7 @@ K: p = 1; T = 20; Min = 7*180 = 9474.0     K: p = 1; T = 9; Min = 1551; = 9664.9
 
 ### Pijnpunten
 
--Het hillclimberalgoritme moet erg lang rekenen voor heel Nederland
+-Het hillclimberalgoritme moet nog erg lang rekenen voor heel Nederland
 
 
 ### Vereisten
