@@ -16,35 +16,44 @@ def route2_hill(para, n_best, L_crit_tracks):
         start = s2(para, L_crit_tracks)
         route = rc.Route(start, [start], 0, 0, L_crit_tracks, 0)
         # Find set of n_best routes
-        routes_list = best.route2_object_n_best(para, route, n_best)
+        if i == 0:
+            routes_list = best.route2_object_n_best(para, route, n_best)
+        else:
+            routes_list = next_routes_list_optimal
         # For every route in routes_list calculate the next route with highest
         # k-score
-        for item in routes_list:
-            L_crit_tracks = item[0].L_crit_tracks.copy()
-            while len(L_crit_tracks) != 0:
-                start = s2(para, L_crit_tracks)
-                route = rc.Route(start, [start], 0, 0, L_crit_tracks, 0)
-                next = best.route2_object_n_best(para, route, 1)
-                item.append(next[0][0])
-                L_crit_tracks = next[0][0].L_crit_tracks.copy()
-
-        k_optimal = 0
-
         try:
             solution_set
         except NameError:
             solution_set = []
             k_best = 0
 
-        # Calculate the total score of all routes together per set
-        for set in routes_list:
+        k_optimal = 0
+        List_L_critical_tracks = []
+        for item in routes_list:
+            L_crit_tracks = item[0].L_crit_tracks.copy()
             k_total = 0
-            for object in set:
-                k_total += object.k_score_ind
-            if k_total > k_optimal:
-                k_optimal = k_total
-                set_optimal = copy.deepcopy(set)
-                k_current_route = set[0].k_score_ind
+            j = 0
+            if L_crit_tracks not in List_L_critical_tracks:
+                List_L_critical_tracks.append(L_crit_tracks)
+                while len(L_crit_tracks) != 0:
+                    start = s2(para, L_crit_tracks)
+                    route = rc.Route(start, [start], 0, 0, L_crit_tracks, 0)
+                    next = best.route2_object_n_best(para, route, n_best)
+                    item.append(next[0][0])
+                    L_crit_tracks = next[0][0].L_crit_tracks.copy()
+                    if j == 0:
+                        next_routes_list = next
+                    j += 1
+                for object in item:
+                    k_total += object.k_score_ind
+                if k_total > k_optimal:
+                    k_optimal = k_total
+                    set_optimal = copy.deepcopy(item)
+                    k_current_route = item[0].k_score_ind
+                    next_routes_list_optimal = next_routes_list
+
+
 
         # Add best route
         solution_set.append(set_optimal[0])

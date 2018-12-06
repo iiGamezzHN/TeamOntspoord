@@ -9,6 +9,7 @@ def start_select(para, L_crit_tracks):
     """
     min_station = []
     opt_weight = 0
+    min = 99
     # Loop over all stations and check amount of crit connections
     for station in para.stations_list:
         n_crit_tracks = sum(track.count(station) for track in L_crit_tracks)
@@ -22,7 +23,12 @@ def start_select(para, L_crit_tracks):
             distance = para.network[station][item]['weight']
             if distance > opt_weight_ind:
                 opt_weight_ind = distance
-        if len(min_station) == 0 or (n_crit_tracks < min and n_crit_tracks > 0):
+        if len(min_station) == 0 and n_crit_tracks > 0:
+            min_station = [station]
+            min = n_crit_tracks
+            n_neighbours = len(para.network[station])
+            opt_weight = opt_weight_ind
+        elif n_crit_tracks < min and n_crit_tracks > 0:
             min_station = [station]
             min = n_crit_tracks
             n_neighbours = len(para.network[station])
