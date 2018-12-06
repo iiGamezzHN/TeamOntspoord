@@ -2,22 +2,33 @@ import calc_route_score as crs
 from operator import itemgetter
 
 def main(graph, start, depth, explored, station_dict, max_length, n_best):
-    # while time < 120:
-
-    all_tracks = bfb(graph, start, depth, explored)
-    scores = crs.calc_route_score(graph, all_tracks[0], station_dict)
-    explored = all_tracks[1]
-    best_paths = select_best_n(scores, n_best)
-    new_starts = [x[0] for x in best_paths]
-    new_all_tracks = bfb(graph, new_starts, depth, explored)
-
-    temp = update_tracks(new_starts, new_all_tracks[0])
-
-    scores = crs.calc_route_score(graph, temp, station_dict)
-    explored = new_all_tracks[1]
-    best_paths = select_best_n(scores, 5)
-    print('')
-    print(best_paths)
+    time = 0
+    while time < 220:
+        try:
+            print(start)
+            print(explored)
+            all_tracks = bfb(graph, start, depth, explored) # Get all tracks with n depth from starting point
+            print(all_tracks)
+            scores = crs.calc_route_score(graph, all_tracks[0], station_dict) # Get scores for all tracks
+            explored = all_tracks[1] # Update explored nodes
+            select_best = select_best_n(scores, n_best)
+            best_paths = select_best[0] # Select n best paths from scores
+            start = [x[0] for x in best_paths] # Only starts from best paths
+            time += select_best[1]
+            print(time)
+            print(start)
+            print(explored)
+            print(best_paths)
+        except ValueError:
+            print('Done!')
+        # new_all_tracks = bfb(graph, new_starts, depth, explored)
+        #
+        # temp = update_tracks(new_starts, new_all_tracks[0])
+        #
+        # scores = crs.calc_route_score(graph, temp, station_dict)
+        # explored = new_all_tracks[1]
+        # best_paths = select_best_n(scores, n_best)
+        # new_starts = [x[0] for x in best_paths]
 
     return # print(routes, time)
 
@@ -39,13 +50,13 @@ def select_best_n(scores, n_best):
         individual_route = scores[0][i]
         individual_score = scores[1][i][0]
         individual_time = scores[1][i][4]
-        if individual_time > time:
-            time = individual_time
         routes.append([individual_route, individual_score, individual_time])
+    print('')
     print(sorted(routes, key=itemgetter(1), reverse=True))
     print('')
     routes = sorted(routes, key=itemgetter(1), reverse=True)[0:n_best]
-    return routes
+    time = routes[0][2]
+    return routes, time
 
 
 
