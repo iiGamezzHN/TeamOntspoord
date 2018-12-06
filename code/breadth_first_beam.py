@@ -1,23 +1,23 @@
 import calc_route_score as crs
+from operator import itemgetter
 
-def main(graph, start, depth, explored, station_dict, max_length):
-    time = 0;
-    routes = []
+def main(graph, start, depth, explored, station_dict, max_length, n_best):
     # while time < 120:
+
     all_tracks = bfb(graph, start, depth, explored)
     scores = crs.calc_route_score(graph, all_tracks[0], station_dict)
-    start = all_tracks[0]
     explored = all_tracks[1]
+    best_paths = select_best_n(scores, n_best)
+    new_starts = [x[0] for x in best_paths]
+    new_all_tracks = bfb(graph, new_starts, depth, explored)
 
-    for i in range(len(scores[0])):
-        individual_route = scores[0][i]
-        individual_score = scores[1][i][0]
-        individual_time = scores[1][i][4]
-        if individual_time > time:
-            time = individual_time
-        routes.append([individual_route, individual_score, individual_time])
-    new_all_tracks = bfb(graph, start, depth, explored)
-    print(update_tracks(all_tracks[0], new_all_tracks[0]))
+    temp = update_tracks(new_starts, new_all_tracks[0])
+
+    scores = crs.calc_route_score(graph, temp, station_dict)
+    explored = new_all_tracks[1]
+    best_paths = select_best_n(scores, 5)
+    print('')
+    print(best_paths)
 
     return # print(routes, time)
 
@@ -29,6 +29,24 @@ def update_tracks(all_tracks, new_all_tracks):
             if x[-1] == y[0]:
                 new_route.append(x + y[1:])
     return new_route
+
+
+def select_best_n(scores, n_best):
+    time = 0
+    routes = []
+
+    for i in range(len(scores[0])):
+        individual_route = scores[0][i]
+        individual_score = scores[1][i][0]
+        individual_time = scores[1][i][4]
+        if individual_time > time:
+            time = individual_time
+        routes.append([individual_route, individual_score, individual_time])
+    print(sorted(routes, key=itemgetter(1), reverse=True))
+    print('')
+    routes = sorted(routes, key=itemgetter(1), reverse=True)[0:n_best]
+    return routes
+
 
 
 def bfb(graph, start, depth, explored):
