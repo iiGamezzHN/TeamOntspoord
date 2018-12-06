@@ -1,6 +1,6 @@
 class Route():
 
-    """Object saving all relevant data for current routeself.
+    """Object saving all relevant data for current route.
     station: current station
     L_route: list of stations visited
     tot_weight: total length of route
