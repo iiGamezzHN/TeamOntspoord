@@ -33,7 +33,9 @@ K: p = 1; T = 7; Min = 840 = 9776.0     K: p = 1; T = 4; Min = 381; = 9881.9
 #### State Space, Upper en Lower Bounds
 De state space wordt berekend door het volgende:
 
+```
 Formule ((s*n)^rpt/rtts)
+```
 
 Holland
 Totaal aantal stations:                       22
