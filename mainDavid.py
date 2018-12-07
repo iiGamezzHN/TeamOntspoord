@@ -49,14 +49,15 @@ start = s2(parameters, list_crit_tracks)
 route = rc.Route(start, [start], 0, 0, list_crit_tracks, 0)
 explored = []
 
-final = bfb.main(G, [[start]], depth, explored, station_dict, max_length, n_best)
+# final = bfb.main(G, [[start]], depth, explored, station_dict, max_length, n_best)
 
 # a = [['Den Helder', 'Alkmaar', 'Castricum'], ['Den Helder', 'Alkmaar', 'Den Helder'], ['Den Helder', 'Alkmaar', 'Hoorn']]
 # b = ['Den Helder', 'Alkmaar']
 
-# tracks = bfb.bfb(G, a, depth, b)
-# print(tracks[0])
-# print(tracks[1])
+print(start)
+tracks = bfb.bfb(G, [[start]], depth, explored)
+print(tracks[0])
+print(tracks[1])
 # scores = crs.calc_route_score(G, tracks, station_dict)
 
 # for i in range(len(scores[0])):

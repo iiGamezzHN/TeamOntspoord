@@ -18,7 +18,6 @@ def crit_stations(station_dict):
     crit_stations = []
 
     for x in station_dict:
-
         if station_dict[x]['Critical'] == 'Kritiek':
             crit_stations.append(x)
 
