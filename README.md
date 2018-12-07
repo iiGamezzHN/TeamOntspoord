@@ -12,17 +12,17 @@ De Scorefunctie is K = 10000 * p - (T*20 + Min/10). Hierbij is p de fractie van 
 De state space wordt berekend door het volgende:
 
 #### Score
-De  Lower en Upper bound voor 1b:
+De absolute Lower en Upper bound voor 1b:
 ```
-K: p = 0; T = 7; Min = 840 = -244       K: p = 1; T = 0
+K: p = 0; T = 7; Min = 840 = -244       K: p = 1; T = 3; Min = 287; = 9911.3
 ```
 De realistische Lower en Upper bound voor 1b:
 ```
 K: p = 1; T = 7; Min = 840 = 9776.0     K: p = 1; T = 3; Min = 287; = 9911.3
 ```
-De  Lower en Upper bound voor 1c:
+De absolute Lower en Upper bound voor 1c:
 ```
-K: p = 0; T = 7; Min = 840 = -244
+K: p = 0; T = 7; Min = 840 = -244       K: p = 1; T = 4; Min = 381;
 ```
 De realistische Lower en Upper bound voor 1c:
 ```
@@ -46,6 +46,7 @@ K: p = 1; T = 20; Min = 7*180 = 9474.0     K: p = 1; T = 9; Min = 1551; = 9664.9
 ### Pijnpunten
 
 -Het hillclimberalgoritme moet nog erg lang rekenen voor heel Nederland
+-
 
 
 ### Vereisten
