@@ -38,11 +38,11 @@ Formule ((s*n)^rpt/rtts)
 ```
 
 Holland
-<br>Totaal aantal stations:                       22
-<br>Maximaal aantal buren voor een station:       4
-<br>Minimale reistijd tussen twee stations:       5
-<br>Maximale reistijd per traject:                120
-<br>Maximaal aantal trajects:                     7
+<br>Totaal aantal stations(s):                      22
+<br>Maximaal aantal buren voor een station(n):      4
+<br>Minimale reistijd tussen twee stations(rtts):   5
+<br>Maximale reistijd per traject(rpt):             120
+<br>Maximaal aantal trajects:                       7
 
 ```
 ((22*4)^(120/5))^n
@@ -51,11 +51,11 @@ Holland
 ```
 
 Nationaal
-Totaal aantal stations:                       64
-Maximaal aantal buren voor een station:       9
-Minimale reistijd tussen twee stations:       5
-Maximale reistijd per traject:                180
-Maximaal aantal trajects:                     20
+<br>Totaal aantal stations:                       64
+<br>Minimale reistijd tussen twee stations:       5
+<br>Maximaal aantal buren voor een station:       9
+<br>Maximale reistijd per traject:                180
+<br>Maximaal aantal trajects:                     20
 
 ```
 ((64*9)^(180/5))^n
