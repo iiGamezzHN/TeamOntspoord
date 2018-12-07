@@ -42,9 +42,11 @@ Minimale reistijd tussen twee stations:       5
 Maximale reistijd per traject:                120
 Maximaal aantal trajects:                     7
 
+```
 ((22*4)^(120/5))^n
 = ((22*4)^24) + ((22*4)^24)^2 + ((22*4)^24)^3 + ...... + ((22*4)^24)^7
 = 2.73 e^108
+```
 
 Nationaal
 Totaal aantal stations:                       64
@@ -53,9 +55,11 @@ Minimale reistijd tussen twee stations:       5
 Maximale reistijd per traject:                180
 Maximaal aantal trajects:                     20
 
+```
 ((64*9)^(180/5))^n
 = ((64*9)^36) + ((64*9)^36)^2 + ((64*9)^36)^3 + ...... ((64*9)^36)^20
 = 5.50 e^716
+```
 
 
 #### Score
