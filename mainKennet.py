@@ -21,6 +21,7 @@ import import_data as imp
 import station_class as st
 import breadth_first_search as bfs
 import routes as rt
+import traject_class as tc
 
 # import files using the functions from import_data.py
 import_dict = imp.open_stations('data', 'StationsHolland.csv')
@@ -43,6 +44,10 @@ print(stations['Alkmaar'].information())
 # test network.py
 G = nw.Network_Graph(st.Station)
 print(G.information())
+
+testT = [['Den Helder', 'Alkmaar', 'Castricum', 'Zaandam', 'Amsterdam Sloterdijk', 'Haarlem', 'Heemstede-Aerdenhout', 'Leiden Centraal', 'Den Haag Centraal'], ['Dordrecht', 'Rotterdam Centraal', 'Schiedam Centrum', 'Rotterdam Centraal', 'Rotterdam Alexander', 'Gouda', 'Alphen a/d Rijn', 'Gouda', 'Den Haag Centraal', 'Delft'], ['Amsterdam Amstel', 'Amsterdam Centraal', 'Amsterdam Sloterdijk', 'Haarlem', 'Beverwijk', 'Zaandam', 'Hoorn', 'Alkmaar']]
+T = tc.Trajects(G.graph, testT)
+print(T.transform_track(0, -3))
 
 print(G.calc_statespace('Holland'))
 print('')

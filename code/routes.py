@@ -1,6 +1,8 @@
 import copy
 import breadth_first_search as bfs
 
+from random import randint
+
 def timelimit(graph,track):
 	track_time=0
 	for i in range(len(track)):
@@ -45,7 +47,7 @@ def combine_all_timelimit(graph,station,limit):
 					if new not in templist:
 						templist.append(new)
 						i+=1
-						print(i,timelimit(graph,new),new)
+						# print(i,timelimit(graph,new),new)
 	limit=[x for x in templist if timelimit(graph,x)<=limit]
 	return limit
 
@@ -56,3 +58,11 @@ def shortest_routes(graph,station_a,station_b,limit):
 		if x[0]==station_a and x[len(x)-1]==station_b:
 			a_b_routes.append([timelimit(graph,x),x])
 	return sorted(a_b_routes,key=lambda x: x[0])
+
+def random_track(graph,station,limit):
+	random_tracks=combine_all_timelimit(graph,station,limit)
+	rlen= len(random_tracks)
+	random_index= randint(0,rlen-1)
+	random_track= random_tracks[random_index]
+	print(random_index,random_track)
+	return random_track
