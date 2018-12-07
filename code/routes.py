@@ -64,5 +64,5 @@ def random_track(graph,station,limit):
 	rlen= len(random_tracks)
 	random_index= randint(0,rlen-1)
 	random_track= random_tracks[random_index]
-	print(random_index,random_track)
+	# print(random_index,random_track)
 	return random_track

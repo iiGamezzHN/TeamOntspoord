@@ -30,8 +30,10 @@ class Trajects():
         new_part2 = rt.combine_all_timelimit(self.graph, cut_station,57)
         rlen = len(new_part2)
         random_index = randint(0, rlen-1)
-        print(len(new_part2), random_index, new_part2[random_index])
+        # print(len(new_part2), random_index, new_part2[random_index])
         transformed_track = first_part + new_part2[random_index]
+        print("Old track: ", transform_track)
+        print("New track: ", transformed_track)
 
         return transformed_track
 
