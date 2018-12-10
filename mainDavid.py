@@ -51,12 +51,12 @@ route = rc.Route(start, [start], 0, 0, list_crit_tracks, 0)
 # print(route.L_route)
 explored = []
 final = bfb.main(G, [route], depth, station_dict, list_crit_tracks, max_length, n_best)
-for x in final:
-    print(x.station)
-    print(x.L_route)
-    print(x.tot_weight)
-    print(x.k_score_ind)
-    print("")
+# for x in final:
+#     print(x.station)
+#     print(x.L_route)
+#     print(x.tot_weight)
+#     print(x.k_score_ind)
+#     print("")
 
 
 

@@ -10,7 +10,30 @@ def calc_route_score(nw, track_lists, station_dict):
     Scores = []
     for x in track_lists:
         temp = sc.score(nw, [x], unique[0], unique[1])
+        if temp[4] > 120:
+            print(x)
+            while True:
+                print("Begin ", temp[4])
+                path = x[:-1] # Takes old x when doing this again
+                print(path)
+                temp2 = sc.score(nw, [path], unique[0], unique[1])
+                time = temp2[4]
+                print("Change ", time)
+
+                if time <= temp2[4]:
+                    print("Noice! ",time)
+                    break
+            print('')
         Scores.append(sc.score(nw, [x], unique[0], unique[1]))
+
+    # for x in Scores:
+    #     if x[4] >120:
+    #         print(x)
+    #         time = 200
+    #         while time > 120:
+    #             path = x[:-1]
+    #             sc.score(nw, )
+
 
     return track_lists, Scores
 
