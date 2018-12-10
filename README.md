@@ -5,32 +5,13 @@ Nederland.
 
 In deel 1 van de opdracht moet er er lijnvoering gemaakt worden voor Noord- en Zuid Holland.
 De Scorefunctie is K = 10000 * p - (T*20 + Min/10). Hierbij is p de fractie van het aantal bereden kritieke trajecten, T het aantal gebruikte Tracks en Min het totaal aantal minuten van alle Tracks bij elkaar.
+```
+K = 10000 * p - (T*20 + Min/10)
+```
 
 ## Aan de slag
 ### Deel 1
-#### State Space, Upper en Lower Bounds
-De state space wordt berekend door het volgende:
-
-#### Score
-De absolute Lower en Upper bound voor 1b:
-```
-K: p = 0; T = 7; Min = 840 = -244       K: p = 1; T = 3; Min = 287; = 9911.3
-```
-De realistische Lower en Upper bound voor 1b:
-```
-K: p = 1; T = 7; Min = 840 = 9776.0     K: p = 1; T = 3; Min = 287; = 9911.3
-```
-De absolute Lower en Upper bound voor 1c:
-```
-K: p = 0; T = 7; Min = 840 = -244       K: p = 1; T = 4; Min = 381;
-```
-De realistische Lower en Upper bound voor 1c:
-```
-K: p = 1; T = 7; Min = 840 = 9776.0     K: p = 1; T = 4; Min = 381; = 9881.9
-```
-
-### Deel 2
-#### State Space, Upper en Lower Bounds
+#### State Space
 De state space wordt berekend door het volgende:
 
 ```
@@ -50,12 +31,38 @@ Holland
 = 2.73 e^108
 ```
 
+#### Score Lower- en Upperbound
+De absolute Lower en Upper bound voor 1b:
+```
+K: p = 0; T = 7; Min = 840 = -244       K: p = 1; T = 3; Min = 287; = 9911.3
+```
+De realistische Lower en Upper bound voor 1b:
+```
+K: p = 1; T = 7; Min = 840 = 9776.0     K: p = 1; T = 3; Min = 287; = 9911.3
+```
+De absolute Lower en Upper bound voor 1c:
+```
+K: p = 0; T = 7; Min = 840 = -244       K: p = 1; T = 4; Min = 381;
+```
+De realistische Lower en Upper bound voor 1c:
+```
+K: p = 1; T = 7; Min = 840 = 9776.0     K: p = 1; T = 4; Min = 381; = 9881.9
+```
+
+### Deel 2
+#### State Space
+De state space wordt berekend door het volgende:
+
+```
+Formule ((s*n)^rpt/rtts)
+```
+
 Nationaal
-<br>Totaal aantal stations:                       64
-<br>Minimale reistijd tussen twee stations:       5
-<br>Maximaal aantal buren voor een station:       9
-<br>Maximale reistijd per traject:                180
-<br>Maximaal aantal trajects:                     20
+<br>Totaal aantal stations(s):                       64
+<br>Minimale reistijd tussen twee stations(n):       5
+<br>Maximaal aantal buren voor een station(rtts):    9
+<br>Maximale reistijd per traject(rpt):              180
+<br>Maximaal aantal trajects:                        20
 
 ```
 ((64*9)^(180/5))^n
@@ -64,7 +71,7 @@ Nationaal
 ```
 
 
-#### Score
+#### Score Lower- en Upperbound
 Respectievelijk de Lower en Upper bound voor 2d:
 ```
 K: p = 1; T = 20; Min = 7*180 = 9474.0     K: p = 1; T = 7; Min = 1239; = 9736.1
