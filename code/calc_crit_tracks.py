@@ -8,7 +8,7 @@ Improve this so that it uses station class instead of reading the csv.
 
 
 def crit_tracks(network):
-    dict_stat = imp.open_stations('data', 'StationsNationaal.csv')
+    dict_stat = imp.open_stations('data', 'StationsHolland.csv')
     L_crit_stat = []
     L_crit_tracks = []
     # List of critical stations
