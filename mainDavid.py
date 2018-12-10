@@ -39,7 +39,7 @@ for x in station_dict:
 G = nw.Network_Graph(st.Station).graph
 
 max_length = 120
-depth = 4
+depth = 3
 n_best = 4
 list_crit_tracks = ct.crit_tracks(G)
 tot_crit_tracks = len(list_crit_tracks)
@@ -47,9 +47,20 @@ parameters = pc.Parameters(G, max_length, tot_crit_tracks, list_stations)
 
 start = s2(parameters, list_crit_tracks)
 route = rc.Route(start, [start], 0, 0, list_crit_tracks, 0)
+# print(route.station)
+# print(route.L_route)
 explored = []
 final = bfb.main(G, [route], depth, station_dict, list_crit_tracks, max_length, n_best)
-print(final)
+# for x in final:
+#     print(x.station)
+#     print(x.L_route)
+#     print(x.tot_weight)
+#     print(x.k_score_ind)
+#     print("")
+
+
+
+
 
 # a = [['Den Helder', 'Alkmaar', 'Castricum'], ['Den Helder', 'Alkmaar', 'Den Helder'], ['Den Helder', 'Alkmaar', 'Hoorn']]
 # b = ['Den Helder', 'Alkmaar']

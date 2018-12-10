@@ -1,19 +1,21 @@
 import calc_route_score as crs
-import route_class as sc
+import route_class as rc
 from operator import itemgetter
 
 
 def main(graph, list_routes, depth, station_dict, list_crit_tracks, max_length, n_best):
     time = 0
-    # while time < 220:
-    a = bfb(graph, list_routes, depth)
-    scores = crs.calc_route_score(graph, a, station_dict)
-    best = select_best_n(scores, n_best)
+    while time <= 4:
+        a = bfb(graph, list_routes, depth)
+        scores = crs.calc_route_score(graph, a, station_dict)
+        best = select_best_n(scores, n_best)
 
-    list_routes = []
+        list_routes = []
 
-    for x in best:
-        print(x[0])
+        for x in best:
+            list_routes.append(rc.Route(x[0][-1], x[0], x[2], 0, list_crit_tracks, x[1]))
+
+        time += 1
 
     # for x in best:
     #     bkv =
@@ -24,20 +26,7 @@ def main(graph, list_routes, depth, station_dict, list_crit_tracks, max_length, 
     #             if pair[0] in crit and pair[1] in crit:
     #                 print(pair, crit)
 
-
-
-
-    # all_tracks = bfb(graph, start, depth, explored)  # Get all tracks with n depth from starting point
-    # counter += 1
-    # print(type(all_tracks))
-    # scores = crs.calc_route_score(graph, all_tracks[0], station_dict)  # Get scores for all tracks
-    # explored = all_tracks[1]  # Update explored nodes
-    # select_best = select_best_n(scores, n_best)
-    # best_paths = select_best[0]  # Select n best paths from scores
-    # start = [x[0] for x in best_paths]  # Only starts from best paths
-    # time += select_best[1]
-
-    return best
+    return list_routes
 
 
 def bfb(graph, list_routes, depth):
@@ -51,6 +40,11 @@ def bfb(graph, list_routes, depth):
         start.append([x.station])
         routes.append(x.L_route)
         explored.extend(x.L_route[:-1])
+
+    # print(start)
+    # print(routes)
+    # print(explored)
+    # print("")
 
     queue = start
     # return path if start is goal
@@ -80,6 +74,14 @@ def bfb(graph, list_routes, depth):
                         explore = list(set([y for x in depth_paths for y in x[:-1]]))
                         explored.extend(explore)
                         temp2 = update_tracks(routes, depth_paths)
+                        print(len(temp2))
+                        print('before')
+                        for x in temp2:
+                            if temp2.count(x) >= 2:
+                                for y in range(temp2.count(x)-1):
+                                    temp2.remove(x)
+                        print(len(temp2))
+                        print('after')
 
                         return temp2
 
