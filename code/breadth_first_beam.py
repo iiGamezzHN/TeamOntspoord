@@ -74,14 +74,14 @@ def bfb(graph, list_routes, depth):
                         explore = list(set([y for x in depth_paths for y in x[:-1]]))
                         explored.extend(explore)
                         temp2 = update_tracks(routes, depth_paths)
-                        print(len(temp2))
-                        print('before')
+                        # print(len(temp2))
+                        # print('before')
                         for x in temp2:
                             if temp2.count(x) >= 2:
                                 for y in range(temp2.count(x)-1):
                                     temp2.remove(x)
-                        print(len(temp2))
-                        print('after')
+                        # print(len(temp2))
+                        # print('after')
 
                         return temp2
 
