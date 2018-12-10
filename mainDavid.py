@@ -54,8 +54,7 @@ explored = []
 # a = [['Den Helder', 'Alkmaar', 'Castricum'], ['Den Helder', 'Alkmaar', 'Den Helder'], ['Den Helder', 'Alkmaar', 'Hoorn']]
 # b = ['Den Helder', 'Alkmaar']
 
-print(start)
-tracks = bfb.bfb(G, [[start]], depth, explored)
+tracks = bfb.bfb(G, [route], depth)
 print(tracks[0])
 print(tracks[1])
 # scores = crs.calc_route_score(G, tracks, station_dict)

@@ -54,38 +54,44 @@ def select_best_n(scores, n_best):
     return routes, time
 
 
-def bfb(graph, start, depth, explored):
+def bfb(graph, list_routes, depth):
     # keep track of all the paths to be checked
-    start = [[x[-1]] for x in start if x[-1] not in explored]
+    # start = [[x[-1]] for x in start if x[-1] not in explored]
+    start = []
+    explored = []
+    for x in list_routes:
+        start.append([x.station])
+        explored.extend(x.L_route[:-1])
+
     queue = start
     # return path if start is goal
     depth_paths = []
     temp = []
 
     # keeps looping until all possible paths have been checked
-    # while queue:
-    #     for x in queue:
-    #         # pop the first path from the queue
-    #         path = queue.pop(0)
-    #         # get the last node from the path
-    #         node = path[-1]
-    #
-    #         if node not in explored:
-    #             neighbours = graph[node]
-    #             # go through all neighbour nodes, construct a new path and
-    #             # push it into the queue
-    #             for neighbour in neighbours:
-    #                 new_path = list(path)
-    #                 new_path.append(neighbour)
-    #                 queue.append(new_path)
-    #                 # return path if neighbour is goal
-    #                 if len(new_path) == depth:
-    #                     depth_paths.append(new_path)
-    #                 elif len(new_path) > depth:
-    #                     temp = list(set([y for x in depth_paths for y in x[:-1]]))
-    #                     explored.extend(temp)
-    #
-    #                     return depth_paths, explored
+    while queue:
+        for x in queue:
+            # pop the first path from the queue
+            path = queue.pop(0)
+            # get the last node from the path
+            node = path[-1]
+
+            if node not in explored:
+                neighbours = graph[node]
+                # go through all neighbour nodes, construct a new path and
+                # push it into the queue
+                for neighbour in neighbours:
+                    new_path = list(path)
+                    new_path.append(neighbour)
+                    queue.append(new_path)
+                    # return path if neighbour is goal
+                    if len(new_path) == depth:
+                        depth_paths.append(new_path)
+                    elif len(new_path) > depth:
+                        temp = list(set([y for x in depth_paths for y in x[:-1]]))
+                        explored.extend(temp)
+
+                        return depth_paths, explored
             # else:
             #     neighbours = graph[node]
             #     # go through all neighbour nodes, construct a new path and
