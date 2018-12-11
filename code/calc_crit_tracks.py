@@ -7,13 +7,16 @@ Improve this so that it uses station class instead of reading the csv.
 """
 
 
-def crit_tracks(network):
-    dict_stat = imp.open_stations('data', 'StationsHolland.csv')
+def crit_tracks(network, region, all):
+    dict_stat = imp.open_stations('data', 'Stations' + region + '.csv')
     L_crit_stat = []
     L_crit_tracks = []
     # List of critical stations
     for item in dict_stat:
-        if dict_stat[item]['Critical'] == 'Kritiek':
+        if not all:
+            if dict_stat[item]['Critical'] == 'Kritiek':
+                L_crit_stat.append(item)
+        else:
             L_crit_stat.append(item)
     # Adds critical tracks as tuples to list. Makes sure there are no doubles
     for x in L_crit_stat:
