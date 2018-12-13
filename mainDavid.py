@@ -40,36 +40,48 @@ G = nw.Network_Graph(st.Station).graph
 
 max_length = 120
 depth = 3
-n_best = 4
-list_crit_tracks = ct.crit_tracks(G)
+n_best = 10
+list_crit_tracks = ct.crit_tracks(G, "Holland", False)
 tot_crit_tracks = len(list_crit_tracks)
 parameters = pc.Parameters(G, max_length, tot_crit_tracks, list_stations)
 
 start = s2(parameters, list_crit_tracks)
 route = rc.Route(start, [start], 0, 0, list_crit_tracks, 0)
-# print(route.station)
-# print(route.L_route)
 explored = []
-final = bfb.main(G, [route], depth, station_dict, list_crit_tracks, max_length, n_best)
-# for x in final:
-#     print(x.station)
-#     print(x.L_route)
-#     print(x.tot_weight)
-#     print(x.k_score_ind)
-#     print("")
 
+final_routes = bfb.main(G, [route], depth, station_dict, list_crit_tracks,
+                        max_length, n_best)
+sorting = []
+for x in final_routes:
+    sorting.append(x.k_score_ind)
+sorting = sorted(sorting, reverse=True)
 
+final_track = []
+for x in final_routes:
+    if x.k_score_ind == sorting[0]:
+        station = x.station
+        L_route = x.L_route
+        tot_weight = x.tot_weight
+        n_crit_tracks = x.n_crit_tracks
+        L_crit_tracks = x.L_crit_tracks
+        k_score_ind = x.k_score_ind
+        final_track.append(rc.Route(station, L_route, tot_weight,
+                           n_crit_tracks, L_crit_tracks, k_score_ind))
 
+a = crs.pair_stations([final_track[0].L_route])[0]
+for x in a:
+    for y in list_crit_tracks:
+        if x[0] in y and x[1] in y:
+            list_crit_tracks.remove(y)
 
+final_track[0].L_crit_tracks = list_crit_tracks
 
-# a = [['Den Helder', 'Alkmaar', 'Castricum'], ['Den Helder', 'Alkmaar', 'Den Helder'], ['Den Helder', 'Alkmaar', 'Hoorn']]
-# b = ['Den Helder', 'Alkmaar']
-
-# tracks = bfb.bfb(G, [route], depth)
-# print(tracks[0])
-# print(tracks[1])
-# scores = crs.calc_route_score(G, tracks, station_dict)
-
+for x in final_track:
+    print(x.station)
+    print(x.L_route)
+    print(x.tot_weight)
+    print(x.L_crit_tracks)
+    print(x.k_score_ind)
 # for i in range(len(scores[0])):
 #     individual_route = scores[0][i]
 #     score = scores[1][i][0]
