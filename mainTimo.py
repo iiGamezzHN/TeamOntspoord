@@ -21,9 +21,9 @@ from hillclimber_for_route2 import route2_hill as hc
 
 if __name__ == "__main__":
     # Gather relevant info
-    region = 'Holland'
+    region = 'Nationaal'
     all = False
-    n_best = 30
+    n_best = 25
 
     stations = {}
     L_station = []

@@ -18,7 +18,7 @@ def route2_object_n_best(para, route, n_best):
         # Make sure you don't go over total length, don't visit station more
         # than twice, with Utrecht as exception
         if (route_copy.tot_weight < para.max_length and
-                (route_copy.L_route.count(neighbour) < 2 or
+                (route_copy.L_route.count(neighbour) < 1 or
                     (neighbour == 'Utrecht Centraal' and
                         route_copy.L_route.count(neighbour) < 3))):
             route_copy.n_tracks_since_crit += 1
