@@ -5,31 +5,26 @@ from operator import itemgetter
 
 def main(graph, list_routes, depth, station_dict, list_crit_tracks,
          max_length, n_best):
-    time = 0
-    while time <= 4:
+    time = True
+
+    while time:
         a = bfb(graph, list_routes, depth)
-        scores = crs.calc_route_score(graph, a, station_dict)
+
+        scores = crs.calc_route_score(graph, a, station_dict, list_crit_tracks)
         best = select_best_n(scores, n_best)
-        # print(best)
-        # print("")
+
+        if all(x[-1] >= 100 for x in best):
+            time = False
 
         list_routes = []
 
         for x in best:
             list_routes.append(rc.Route(x[0][-1], x[0], x[2], 0,
                                list_crit_tracks, x[1]))
+        # time += 1
 
-        time += 1
-
-    # for x in best:
-    #     bkv =
-    #     pairs = crs.pair_stations([x[0]])
-    #     pairs = ([y for sublist in pairs for y in sublist])
-    #     for pair in pairs:
-    #         for crit in list_crit_tracks:
-    #             if pair[0] in crit and pair[1] in crit:
-    #                 print(pair, crit)
-
+    print("")
+    print("")
     return list_routes
 
 
@@ -63,7 +58,6 @@ def bfb(graph, list_routes, depth):
     queue = start
     # return path if start is goal
     depth_paths = []
-    temp = []
 
     # keeps looping until all possible paths have been checked
     while queue:
@@ -92,9 +86,6 @@ def bfb(graph, list_routes, depth):
                             if temp2.count(x) >= 2:
                                 for y in range(temp2.count(x)-1):
                                     temp2.remove(x)
-                        # for x in temp2:
-                        #         print(x)
-                        #     print("")
                         return temp2
 
 

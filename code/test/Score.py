@@ -26,11 +26,15 @@ for x in range(10000):
     times[value] = {'p':p,'T':T,'Min_list':Min_list,'Min':Min}
 
 T = ceil(206/120)
-print("Max score "+str(10000 - (T*20 + 206/10)))
-print("Nr trajecten "+str(287/120))
-print("Min score "+str(10000 - (7*20 + 7*120/10)))
+# print("Max score "+str(10000 - (T*20 + 206/10)))
+# print("Nr trajecten "+str(287/120))
+# print("Min score "+str(10000 - (7*20 + 7*120/10)))
 
 # test = [('bla','la'),('tihi','hihi'),("bla",'tihi')]
 #
 # sum(x.count('bla') for x in test)
 # asdf = 0
+
+a = [['AK',118],['AK',120],['AK',115],['AK',109]]
+
+print(all(x[1] >= 110 for x in a))
