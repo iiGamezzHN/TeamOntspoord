@@ -1,9 +1,7 @@
 import import_data as imp
 
 """
-Returns a list of tuples, where elements are stations of a critical trackself.
-
-Improve this so that it uses station class instead of reading the csv.
+Returns a list of tuples, where elements are stations of a critical track.
 """
 
 

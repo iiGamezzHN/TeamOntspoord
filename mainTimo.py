@@ -1,9 +1,10 @@
 # Imports
 import os
 import sys
+import matplotlib.pyplot as plt
 
 # de map waarin het project staat
-located_map="TeamOntspoord"
+located_map = "TeamOntspoord"
 
 # pak de parent map
 parent_dir_name = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
@@ -15,27 +16,32 @@ import station_class as st
 import import_data as imp
 import parameter_class as pc
 import calc_crit_tracks as ct
-import route2_object_n_best as best
 from hillclimber_for_route2 import route2_hill as hc
 
 
 if __name__ == "__main__":
     # Gather relevant info
+    region = 'Holland'
+    all = False
+    n_best = 30
+
     stations = {}
     L_station = []
-    import_dict = imp.open_stations('data', 'StationsNationaal.csv')
-    import_list = imp.open_connections('data', 'ConnectiesNationaal.csv')
+    import_dict = imp.open_stations('data', 'Stations' + region + '.csv')
+    import_list = imp.open_connections('data', 'Connecties' + region + '.csv')
     station_dict = imp.add_connections_dict(import_dict, import_list)
     for x in station_dict:
         location = [station_dict[x]['Longitude'], station_dict[x]['Latitude']]
-        stations[x] = st.Station(x, x, station_dict[x]['Critical'], location, station_dict[x]['Neighbours'])
+        stations[x] = st.Station(x, x, station_dict[x]['Critical'], location,
+                                 station_dict[x]['Neighbours'])
         L_station.append(x)
     G = nw.Network_Graph(st.Station).graph
 
-    max_length = 180
-    k_max = 0
-    n_best = 20
-    L_crit_tracks = ct.crit_tracks(G)
+    if region == 'Holland':
+        max_length = 120
+    elif region == 'Nationaal':
+        max_length = 180
+    L_crit_tracks = ct.crit_tracks(G, region, all)
     tot_crit_tracks = len(L_crit_tracks)
     parameters = pc.Parameters(G, max_length, tot_crit_tracks, L_station)
     solution_set = hc(parameters, n_best, L_crit_tracks)
@@ -43,3 +49,5 @@ if __name__ == "__main__":
     for object in solution_set[0]:
         print(object.L_route)
     print(solution_set[1])
+    plt.plot(solution_set[2])
+    plt.show()
