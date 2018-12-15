@@ -20,6 +20,7 @@ import parameter_class as pc
 import route_class as rc
 import breadth_first_beam as bfb
 import calc_route_score as crs
+import score as sc
 
 # import files using the functions from import_data.py
 import_dict = imp.open_stations('data', 'StationsHolland.csv')
@@ -40,7 +41,7 @@ G = nw.Network_Graph(st.Station).graph
 
 max_length = 120
 depth = 4
-n_best = 3
+n_best = 10
 list_crit_tracks = ct.crit_tracks(G, "Holland", False)
 tot_crit_tracks = len(list_crit_tracks)
 parameters = pc.Parameters(G, max_length, tot_crit_tracks, list_stations)
@@ -48,11 +49,12 @@ start = s2(parameters, list_crit_tracks)
 route = rc.Route(start, [start], 0, 0, list_crit_tracks, 0, 0)
 
 tracks = []
-# var = True
+var = 0
 
 
 while True:
     print(start)
+    print("--------------------------")
     final_routes = bfb.main(G, [route], depth, station_dict, list_crit_tracks,
                             max_length, n_best)
     sorting = []
@@ -63,9 +65,6 @@ while True:
     final_track = []
     for x in final_routes:
         if x.k_score_ind == sorting[0]:
-            # print(x.L_route)
-            # print(x.k_score_ind)
-            # print(x.tot_weight)
             station = x.station
             L_route = x.L_route
             tot_weight = x.tot_weight
@@ -77,25 +76,13 @@ while True:
 
     a = crs.pair_stations([final_track[0].L_route])[0]
 
-    # print(len(list_crit_tracks))
-
     for x in a:
         for y in list_crit_tracks:
             if x[0] in y and x[1] in y:
                 list_crit_tracks.remove(y)
-    # print(len(list_crit_tracks))
 
     final_track[0].L_crit_tracks = list_crit_tracks
-    tracks.append(final_track)
-
-    # for x in final_track:
-    #     print("")
-    #     # print(x.station)
-    #     print(x.L_route)
-    #     print(x.tot_weight)
-    #     print(x.L_crit_tracks)
-    #     print(x.k_score_ind)
-    #     print("")
+    tracks.append(final_track[0].L_route)
 
     print(final_track[0].L_route)
     print(final_track[0].tot_weight)
@@ -110,10 +97,8 @@ while True:
     start = s2(parameters, list_crit_tracks)
     route = rc.Route(start, [start], 0, 0, list_crit_tracks, 0, 0)
 
-    # var += 1
+    var += 1
 
-# for x in tracks:
-#     print(x)
-#     print(x.L_route)
-#     print(x.tot_weight)
-#     print(x.k_score_ind)
+print(tracks)
+unique = sc.unique(station_dict)
+print(sc.score(G, tracks, unique[0], unique[1]))

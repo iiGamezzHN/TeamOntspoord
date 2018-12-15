@@ -1,18 +1,14 @@
-# import transform_tracklist as tt
 import score as sc
 
 
 def calc_route_score(nw, track_lists, station_dict, list_crit_tracks):
-    # pair_stations(track_lists)
-    # crit_stations(station_dict)
     unique = sc.unique(station_dict)
 
     Scores = []
     new_track_lists = []
+
     for x in track_lists:
         temp = calc_score(nw, [x], unique[1], list_crit_tracks)
-        # print(list_crit_tracks)
-        calc_score(nw, [x], unique[1], list_crit_tracks)
         if temp[4] > 120:
             new_x = x.copy()
             while True:
@@ -40,20 +36,14 @@ def calc_route_score(nw, track_lists, station_dict, list_crit_tracks):
 
 
 def calc_score(nw, track_lists, unique_ct, list_crit_tracks):
-    # print(len(list_crit_tracks))
     tot_len_ct = len(unique_ct)
     tracks = pair_stations(track_lists)  # Get pairs between stations of track
     tracks = [item for sublist in tracks for item in sublist]
     time = 0
     bkv = []
-    print(len(list_crit_tracks))
 
-    # print(len(tracks))
     for pair in tracks:
-        print(pair)
-        # print("")
         for crit in list_crit_tracks:
-            print(crit)
             if pair[0] in crit and pair[1] in crit:  # Check if pair is in crit list
                 for ucrit in unique_ct:
                     if pair[0] in ucrit[0] and pair[1] in ucrit[0]:  # Get the weight
@@ -62,17 +52,12 @@ def calc_score(nw, track_lists, unique_ct, list_crit_tracks):
                             time += ucrit[1]
                         else:
                             time += ucrit[1]
-            # else:
-            #     a = nw[pair[0]][pair[1]]['weight']
-            #     print(a)
-        print("")
+        if pair not in bkv:
+            time += nw[pair[0]][pair[1]]['weight']
 
-    # print("888888888888888888888888")
-    # print(time)
     p = len(bkv)/tot_len_ct
     S = p*10000 - (1*20 + time/10)
-    # print(S)
-    # print(S, bkv, p, tot_len_ct)
+
     return S, p, len(bkv), tot_len_ct, time
 
 
