@@ -5,26 +5,32 @@ from operator import itemgetter
 
 def main(graph, list_routes, depth, station_dict, list_crit_tracks,
          max_length, n_best):
-    time = True
 
-    while time:
+    # print("--------------------------")
+    # print("")
+    # print("")
+
+    while True:
         a = bfb(graph, list_routes, depth)
+        # print("888888888888888888888")
 
-        scores = crs.calc_route_score(graph, a, station_dict, list_crit_tracks)
-        best = select_best_n(scores, n_best)
+        if a is not None:
+            # print(len(a))
+            # print("")
+            scores = crs.calc_route_score(graph, a, station_dict, list_crit_tracks)
+            best = select_best_n(scores, n_best)
 
-        if all(x[-1] >= 100 for x in best):
-            time = False
+            if all(x[-1] >= 100 for x in best):
+                break
 
-        list_routes = []
+            list_routes = []
 
-        for x in best:
-            list_routes.append(rc.Route(x[0][-1], x[0], x[2], 0,
-                               list_crit_tracks, x[1]))
-        # time += 1
+            for x in best:
+                list_routes.append(rc.Route(x[0][-1], x[0], x[2], 0,
+                                   list_crit_tracks, x[1], 0))
+        else:
+            break
 
-    print("")
-    print("")
     return list_routes
 
 

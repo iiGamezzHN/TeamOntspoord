@@ -83,7 +83,7 @@ K: p = 1; T = 20; Min = 7*180 = 9474.0     K: p = 1; T = 9; Min = 1551; = 9664.9
 
 ### Pijnpunten
 
--Utrecht Centraal heeft veel buren en zorgt voor een grote nStatespace
+- Utrecht Centraal heeft veel buren en zorgt voor een grote nStatespace
 - De volgorde van je trajecten maakt heel erg uit en kan ervoor zorgen dat je uiteindelijk enkele kritieke sporen hebt die ver uit elkaar liggen
 
 
