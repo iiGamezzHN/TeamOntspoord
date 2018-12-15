@@ -99,6 +99,7 @@ while True:
 
     var += 1
 
+print(len(tracks))
 print(tracks)
 unique = sc.unique(station_dict)
 print(sc.score(G, tracks, unique[0], unique[1]))

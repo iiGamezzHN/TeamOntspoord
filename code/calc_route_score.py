@@ -8,6 +8,11 @@ def calc_route_score(nw, track_lists, station_dict, list_crit_tracks):
     new_track_lists = []
 
     for x in track_lists:
+        if x[0] == "Alphen a/d Rijn":
+            print(x)
+        # print("asdf")
+        # print(x)
+        # print("asdf")
         temp = calc_score(nw, [x], unique[1], list_crit_tracks)
         if temp[4] > 120:
             new_x = x.copy()
