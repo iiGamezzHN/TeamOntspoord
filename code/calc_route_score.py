@@ -8,19 +8,16 @@ def calc_route_score(nw, track_lists, station_dict, list_crit_tracks):
     new_track_lists = []
 
     for x in track_lists:
-        if x[0] == "Alphen a/d Rijn":
-            print(x)
-        # print("asdf")
-        # print(x)
-        # print("asdf")
+        # if x[0] == "Alphen a/d Rijn":
+        #     print(x)
         temp = calc_score(nw, [x], unique[1], list_crit_tracks)
-        if temp[4] > 120:
+        if temp[4] > 180:
             new_x = x.copy()
             while True:
                 path = new_x[:-1]
                 temp2 = calc_score(nw, [path], unique[1], list_crit_tracks)
 
-                if temp2[4] <= 120:
+                if temp2[4] <= 180:
                     Scores.append(calc_score(nw, [path], unique[1], list_crit_tracks))
                     new_track_lists.append(path)
                     break
@@ -46,6 +43,12 @@ def calc_score(nw, track_lists, unique_ct, list_crit_tracks):
     tracks = [item for sublist in tracks for item in sublist]
     time = 0
     bkv = []
+    # print(tracks)
+    # print(list_crit_tracks)
+    #
+    # if len([x for x in list_crit_tracks if x in tracks or x[-1:] + x[:-1] in tracks]) == len(list_crit_tracks):
+    #     print("yeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees")
+    # print("----")
 
     for pair in tracks:
         for crit in list_crit_tracks:
