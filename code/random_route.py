@@ -7,14 +7,13 @@ import import_data as imp
 #import trainNetwork
 
 """
-Creates a random route with given network, starting point, and max_length. Tries
+Creates a random route with given network, starting point, and max_length (min). Tries
 to find unvisited critical stations first, then unvisited in general, then
-random. Returns list of visited stations (including starting point) and total
-length
+random. Returns list of visited stations (including starting point)
 """
 
-def random_route(network, station, max_length):
-    dict_stat = imp.open_stations('data','StationsHolland.csv')
+def random_route(network, station, max_length, L_route):
+    dict_stat = imp.open_stations('data','StationsNationaal.csv')
     L_crit_stat = []
     L_tracks = []
     for item in dict_stat:
@@ -24,9 +23,11 @@ def random_route(network, station, max_length):
     tot_length = 0
 
     # List of stations in route
-    L_route = [station]
+    # L_route = [station]
     while True:
-
+        break_chance = random.randint(0, 10)*10
+        if break_chance < 31:
+            return L_route
         # Get list of neighbours of station
         neighbors = network[station]
         L_n_all= []
@@ -45,10 +46,19 @@ def random_route(network, station, max_length):
                     L_n_crit_unv.append(item)
 
         # Go to random unvisited critical station, elif unvisited, else random
-        if len(L_n_crit_unv) != 0:
-            station=random.choice(L_n_crit_unv)
-        elif len(L_n_unvisited) != 0:
-            station=random.choice(L_n_unvisited)
+        random_chance = random.randint(0, 10)*10
+        if random_chance < 70:
+            if len(L_n_crit_unv) != 0:
+                station=random.choice(L_n_crit_unv)
+            elif len(L_n_unvisited) != 0:
+                station=random.choice(L_n_unvisited)
+            else:
+                station=random.choice(L_n_all)
+        elif random_chance < 80:
+            if len(L_n_unvisited) != 0:
+                station=random.choice(L_n_unvisited)
+            else:
+                station=random.choice(L_n_all)
         else:
             station=random.choice(L_n_all)
 
@@ -71,5 +81,4 @@ def random_route(network, station, max_length):
         L_tracks.append([station_old, station])
         tot_length += weight
         L_route.append(station)
-    print(L_tracks)
-    return L_route, tot_length
+    return L_route

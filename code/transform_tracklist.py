@@ -11,7 +11,7 @@ def transform(graph, tracks):
             if i+1 < len(track):
                 a = track[i]
                 b = track[i+1]
-                time = float(graph[a][b]['weight'])
+                time = int(float(graph[a][b]['weight']))
                 tracklist.append([[a, b], time])
                 track_time += time
         tracklist = [tracklist, track_time]
