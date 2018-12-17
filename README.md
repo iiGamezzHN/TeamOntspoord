@@ -102,21 +102,38 @@ testen. In de map Data zitten alle csv's die we importeren. In de algemene map z
 ### Test
 
 Om de code te draaien voor onze algoritmes gebruik één van de volgende instructies:
-```
+
 Depth First met Random Selector:
+```
   - python main.py depth_first_random region all_critical n_best n_iterations
-  where region is either Nationaal or Holland, all_critical is a boolean,
-  n_best and n_iterations are integers. If depth_first_random is run without
-  any other aruments it will run in its default setting. If region is set to
-  Nationaal runtime can be very long, so watch out for that.
+```
+where region is either Nationaal or Holland, all_critical is a boolean,
+n_best and n_iterations are integers. If depth_first_random is run without
+any other aruments it will run in its default setting. If region is set to
+Nationaal runtime can be very long, so watch out for that.
 
 Depth First met Look Ahead:
-  python main.py depth_first_random region all_critical n_best
-  where region is either Nationaal or Holland, all_critical is a boolean,
-  n_best is an integers. If depth_first_random is run without
-  any other aruments it will run in its default setting. If region is set to
-  Nationaal runtime can be very long, so watch out for that.
 ```
+  python main.py depth_first_random region all_critical n_best
+```
+where region is either Nationaal or Holland, all_critical is a boolean,
+n_best is an integer. If depth_first_random is run without
+any other aruments it will run in its default setting. If region is set to
+Nationaal runtime can be very long, so watch out for that.
+
+### Keuzes
+
+- In starts2.py hebben we ervoor gekozen om te beginnen bij vooral 'uitstekende'
+stations. Hier moet je namelijk sowieso overheen, en als je er begint ga je maar
+1 keer over de verbinding ipv 2. Verder hebben we ervoor gekozen om van deze
+stations de stations met langere verbindingen boven de kortere te verkiezen,
+zodat je latere trajecten minder in de weg zit.
+
+- In depth_first_n_best.py hebben we ervoor gekozen om enkele heuristieken toe
+te passen waardoor de runtime sterk verminderd wordt. Zo mag een traject maar
+maximaal 2 keer over één station, en mag een traject alleen station A, B, A
+kiezen als spoor AB kritiek is. Verder moet het eerste spoor in een traject
+kritiek zijn.
 
 ## Auteurs
 
