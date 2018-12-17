@@ -4,3 +4,9 @@
 ['Alkmaar', 'Hoorn', 'Zaandam', 'Beverwijk', 'Castricum']
 ]
 9879.0
+[['Den Helder', 'Alkmaar', 'Castricum', 'Zaandam', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Amstel', 'Amsterdam Zuid', 'Amsterdam Sloterdijk', 'Haarlem']
+['Dordrecht', 'Rotterdam Centraal', 'Rotterdam Alexander', 'Rotterdam Centraal', 'Schiedam Centrum', 'Delft', 'Den Haag Centraal', 'Leiden Centraal', 'Heemstede-Aerdenhout', 'Haarlem', 'Beverwijk']
+['Rotterdam Alexander', 'Gouda', 'Den Haag Centraal', 'Gouda', 'Alphen a/d Rijn', 'Leiden Centraal', 'Schiphol Airport', 'Amsterdam Zuid']
+['Alkmaar', 'Hoorn', 'Zaandam', 'Beverwijk', 'Castricum']
+]
+9879.300000000001
