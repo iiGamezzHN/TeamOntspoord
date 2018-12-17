@@ -16,6 +16,7 @@ import station_class as st
 import import_data as imp
 import parameter_class as pc
 import calc_crit_tracks as ct
+import mainDavid as md
 from lookahead_for_depth_first import look_ahead as la
 from random_for_depth_first import depth_random as dr
 import breadth_first_search as bfs
@@ -148,8 +149,23 @@ def depth_first_random(region, all, n_best, n_iterations):
     plt.show()
 
 
+def breadth_first_beam(region, all_crit, depth, n_best):
+    md.breadth_first_beam_main(region, all_crit, depth, n_best)
+
+
 if __name__ == "__main__":
     # Running depth first with random selection
+    if sys.argv[2] == 'breadth_first_beam':
+        if len(sys.argv) == 3:
+            breadth_first_beam(sys.argv[1], False, 5, 10)
+        else:
+            try:
+                depth_first_random(sys.argv[1], sys.argv[3], int(sys.argv[4]),
+                                   int(sys.argv[5]))
+            except:
+                print("Invalid Input: usage: python main.py region"
+                      "breadth_first_beam")
+
     if sys.argv[2] == 'depth_first_random':
         if len(sys.argv) == 3:
             depth_first_random(sys.argv[1], False, 30, 50)
