@@ -5,78 +5,44 @@ from operator import itemgetter
 
 def main(graph, list_routes, depth, station_dict, list_crit_tracks,
          max_length, n_best):
+    if 'Utrecht Centraal' in station_dict:
+        min = 160  # Minimun length of routes in Nationaal
+    else:
+        min = 100  # Minimum length of routes in Holland
 
     while True:
-        a = bfb(graph, list_routes, depth)
+        a = bfb(graph, list_routes, depth)  # Returns list of routes from start
 
-        if a is not None:
-            scores = crs.calc_route_score(graph, a, station_dict, list_crit_tracks)
-            # scores2 = []
-            # print('hier komen scores')
-            # for i in range(len(scores[0])):
-            #     scores2.append([scores[0][i], scores[1][i][0], scores[1][i][-1]])
-            #     print([scores[0][i], scores[1][i][0], scores[1][i][-1]])
+        if a is not None:  # To prevent NoneType error
+            # Returns sorted scores for n_best routes
+            scores = crs.calc_route_score(graph, a, station_dict,
+                                          list_crit_tracks, n_best)
 
-            # print('----')
-            # for x in scores2:
-            #     print(x)
-
-            # print('len scores', len(scores2))
-            # for x in scores2:
-            #     print(x)
-            # print('----')
-            # best = select_best_n(scores2, n_best)
-
-            # print('len scores after n best', len(best))
-
-            # print(best)
-            # for x in best:
-            #     if x[0][0] == "Alphen a/d Rijn":
-            #         print("asdf")
-            #         print(x)
-            #         print("asdf")
-            #         print("")
             testing1 = [x.L_route for x in list_routes]
-            # print(testing1)
-            # print("----")
             list_routes = []
 
             for x in scores:
                 list_routes.append(rc.Route(x[0][-1], x[0], x[2], 0,
                                    list_crit_tracks, x[1], 0))
 
-            # print('len routes made', len(list_routes))
-
             testing2 = [x.L_route for x in list_routes]
-            # print(testing2)
-            # print("---------")
 
-            if testing1 == testing2:
+            if testing1 == testing2:  # If begin and end are equal, stop
                 break
 
-            if all(x[-1] >= 100 for x in scores):
-                # print('all routes > 100')
-                # print(best)
-                break
+            if all(x[-1] >= min for x in scores):
+                break  # If all routes have minimun length, stop
         else:
             break
-        # print("----------------")
 
     return list_routes
 
 
 def select_best_n(scores, n_best):
-    # time = 0
-    # routes = []
-    if n_best > len(scores):
-        n_best = len(scores)
+    if n_best > len(scores):  # If nr of routes is lower than n_best
+        n_best = len(scores)  # Set n_best to nr of routes
 
-    # for i in range(len(scores)):
-    #     individual_route = scores[0][i]
-    #     individual_score = scores[1][i][0]
-    #     individual_time = scores[1][i][4]
-    #     routes.append([individual_route, individual_score, individual_time])
-
+    # Sort scores descending on the score
     best = sorted(scores, key=itemgetter(1), reverse=True)[0:n_best]
 
     return best
@@ -84,18 +50,16 @@ def select_best_n(scores, n_best):
 
 def bfb(graph, list_routes, depth):
     # keep track of all the paths to be checked
-    # start = [[x[-1]] for x in start if x[-1] not in explored]
     start = []
     routes = []
     explored = []
 
     for x in list_routes:
-        start.append([x.station])
-        routes.append(x.L_route)
-        explored.extend(x.L_route[:-1])
+        start.append([x.station])  # Makes a list with all starting points
+        routes.append(x.L_route)  # Makes a list with all the current routes
+        explored.extend(x.L_route[:-1])  # Makes a list of explored stations
 
     queue = start
-    # return path if start is goal
     depth_paths = []
 
     # keeps looping until all possible paths have been checked
@@ -106,7 +70,7 @@ def bfb(graph, list_routes, depth):
             # get the last node from the path
             node = path[-1]
 
-            if explored.count(node) <= 1 :
+            if explored.count(node) <= 1:
                 neighbours = graph[node]
                 # go through all neighbour nodes, construct a new path and
                 # push it into the queue
@@ -114,24 +78,28 @@ def bfb(graph, list_routes, depth):
                     new_path = list(path)
                     new_path.append(neighbour)
                     queue.append(new_path)
-                    # return path if neighbour is goal
-                    if len(new_path) == depth:
+
+                    if len(new_path) == depth:  # Return path if depth reached
                         depth_paths.append(new_path)
+                    #
                     elif len(new_path) > depth:
-                        explore = list(set([y for x in depth_paths for y in x[:-1]]))
+                        explore = list(set([y for x in depth_paths for y in
+                                       x[:-1]]))
                         explored.extend(explore)
+                        # Put old and new path together
                         temp2 = update_tracks(routes, depth_paths)
-                        for x in temp2:
+                        for x in temp2:  # Remove duplicate routes
                             if temp2.count(x) >= 2:
                                 for y in range(temp2.count(x)-1):
                                     temp2.remove(x)
-                        return temp2
+                        return temp2  # Return new complete path
 
 
 def update_tracks(all_tracks, new_all_tracks):
     new_route = []
     for x in all_tracks:
         for y in new_all_tracks:
+            # If last in old equals first in new, put together
             if x[-1] == y[0]:
                 new_route.append(x + y[1:])
     return new_route
