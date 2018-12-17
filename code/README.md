@@ -37,7 +37,7 @@ Pair_stations pakt de volledige route en maakt er losstaande trajecten van. Dus 
 De class Network_Graph zorgt ervoor dat het netwerk van alle stations wordt geladen. Daarnaast bevat het de functies om labels van stations aan te passen. Denk hierbij
 aan dat 'Amsterdam Centraal' 'A. Centraal' wordt. Vanuit het netwerk kan ook direct de statespace worden berekend, met als vereiste dat de databestanden van het desbetreffende
 netwerk/statespace zijn ingeladen. Tot slot het netwerk verschillende visualisaties tonen met de functie draw_choice. Hierbij kan het volgende worden gevisualiseerd:
-<br> Het netwerk met de labels van alle edges en stations
-<br> Het netwerk met alleen de labels van de kritieke stations
-<br> Het netwerk met alleen de labels van de edges en stations van de route + de labels van de kritieke stations
-<br> Het netwerk met een counter op alle bereden edges, de edges met count=1 zijn groen, de andere edges verschillen in kleur rood>donkerrood
+<br>- Het netwerk met de labels van alle edges en stations
+<br>- Het netwerk met alleen de labels van de kritieke stations
+<br>- Het netwerk met alleen de labels van de edges en stations van de route + de labels van de kritieke stations
+<br>- Het netwerk met een counter op alle bereden edges, de edges met count=1 zijn groen, de andere edges verschillen in kleur rood>donkerrood
