@@ -16,12 +16,15 @@ import import_data as imp
 import station_class as st
 import calc_crit_tracks as ct
 from starts2 import start_select as s2
+from operator import itemgetter
 import parameter_class as pc
 import route_class as rc
 import breadth_first_beam as bfb
 import calc_route_score as crs
 import score as sc
+import score_nationaal as sc_n
 
+results = []
 
 def breadth_first_beam_main(region, all_crit, depth, n_best):
     # import files using the functions from import_data.py
@@ -108,26 +111,34 @@ def breadth_first_beam_main(region, all_crit, depth, n_best):
 
     # print('len tracks', len(tracks))
     # print('tracks', tracks)
-    unique = sc.unique(station_dict)
-    score = sc.score(G, tracks, unique[0], unique[1])
-    # print(score)
 
-    return [region, all_crit, score, depth, n_best, tracks, len(tracks)]
+    if all_crit:
+        unique = sc_n.unique(station_dict)
+        score = sc_n.score(G, tracks, unique[0], unique[1])
+        # print(score)
+    else:
+        unique = sc.unique(station_dict)
+        score = sc.score(G, tracks, unique[0], unique[1])
+
+    return [score, depth, n_best, len(tracks), tracks]
 
 
-resultsHolland = []
-# breadth_first_beam_main("Holland", False, 4, 10)
-
+# breadth_first_beam_main("Holland", True, 3, 4)
 for x in range(3, 6):
-    for y in range(5, 36, 10):
+    for y in range(5, 21, 5):
         print(x, y)
-        result = breadth_first_beam_main("Nationaal", False, x, y)
-        resultsHolland.append(result)
+        result = breadth_first_beam_main("Holland", False, x, y)
+        results.append(result)
 
-for x in resultsHolland:
-    print(x)
-#
-#
+print(results)
+results = sorted(results, key=itemgetter(0), reverse=True)
+print("")
+
+for i in range(len(results)):
+    print(results[i])
+
+
+
 # with open('BFB_.txt', 'w') as f:
 #     for item in results:
 #         f.write("%s\n" % item)
