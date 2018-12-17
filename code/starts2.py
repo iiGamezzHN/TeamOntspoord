@@ -11,45 +11,49 @@ def start_select(para, L_crit_tracks):
     min_station = []
     opt_weight = 0
     min = 99
+    excluded = ('Heerlen')
     # Loop over all stations and check amount of crit connections
     for station in para.stations_list:
-        n_crit_tracks = sum(track.count(station) for track in L_crit_tracks)
+        n_crit_connections = sum(track.count(station) for track in
+                                 L_crit_tracks)
         crit_neighbours = []
         opt_weight_ind = 0
+        if station in excluded:
+            continue
         for neighbour in para.network[station]:
             for track in L_crit_tracks:
                 if neighbour in track and station in track:
                     crit_neighbours.append(neighbour)
-        # Check for longest neighbouring critical track
+        # Check for longest neighbouring critical connection
         for item in crit_neighbours:
             distance = para.network[station][item]['weight']
             if distance > opt_weight_ind:
                 opt_weight_ind = distance
-        # Add if no stations have been found yet and if has critical track
-        if len(min_station) == 0 and n_crit_tracks > 0:
+        # Add if no stations have been found yet and if has critical connection
+        if len(min_station) == 0 and n_crit_connections > 0:
             min_station = [station]
-            min = n_crit_tracks
+            min = n_crit_connections
             n_neighbours = len(para.network[station])
             opt_weight = opt_weight_ind
-        # Replace if station found with less critical tracks (but >0)
-        elif n_crit_tracks < min and n_crit_tracks > 0:
+        # Replace if station found with less critical connection (but >0)
+        elif n_crit_connections < min and n_crit_connections > 0:
             min_station = [station]
-            min = n_crit_tracks
+            min = n_crit_connections
             n_neighbours = len(para.network[station])
             opt_weight = opt_weight_ind
 
-        elif n_crit_tracks == min:
+        elif n_crit_connections == min:
             # Checks for station with fewest total connections
             if len(para.network[station]) < n_neighbours:
-                min = n_crit_tracks
+                min = n_crit_connections
                 min_station = [station]
                 n_neighbours = len(para.network[station])
                 opt_weight = opt_weight_ind
-            # Checks for longest critical track
+            # Checks for longest critical connection
             elif (len(para.network[station]) == n_neighbours and
                     opt_weight_ind > opt_weight):
 
-                min = n_crit_tracks
+                min = n_crit_connections
                 min_station = [station]
                 n_neighbours = len(para.network[station])
                 opt_weight = opt_weight_ind
