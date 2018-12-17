@@ -25,6 +25,7 @@ import score as sc
 import random_route as rr
 import hillclimber_obj_orien as hh
 import transform_tracklist as tt
+import simulated_annealing as sa
 
 # import files using the functions from import_data.py
 
@@ -182,17 +183,27 @@ if __name__ == "__main__":
         L.draw_choice(['all tracks', tt.transform(L.graph, tracks)[0], uct],
                       egdes_option=False)
 
+    # Create the beginning of tracks for 'draw_hillclimber' and 'draw_simulated'
+    # to complete the tracks
+    tracks = [['Den Helder', 'Alkmaar', 'Castricum', 'Zaandam', 'Amsterdam Sloterdijk'],
+    ['Maastricht', 'Sittard', 'Heerlen', 'Sittard', 'Roermond', 'Weert'],
+    ['Enschede', 'Hengelo', 'Almelo', 'Zwolle', 'Deventer', 'Zutphen'],
+    ['Hoorn', 'Alkmaar', 'Castricum', 'Beverwijk', 'Haarlem'],
+    ['Steenwijk', 'Zwolle', 'Amersfoort', 'Utrecht Centraal', 'Hilversum'],
+    ['Heerenveen', 'Leeuwarden', 'Groningen', 'Assen', 'Zwolle'],
+    ['Helmond', 'Eindhoven', 'Tilburg', 'Breda', 'Etten-Leur', 'Roosendaal'],
+    ['Schiphol Airport', 'Utrecht Centraal', 'Amsterdam Centraal']]
+    W = tc.Trajects(L.graph, tracks)
+
     if sys.argv[2] == 'draw_hillclimber':
-        tracks = [['Den Helder', 'Alkmaar', 'Castricum', 'Zaandam', 'Amsterdam Sloterdijk'],
-        ['Maastricht', 'Sittard', 'Heerlen', 'Sittard', 'Roermond', 'Weert'],
-        ['Enschede', 'Hengelo', 'Almelo', 'Zwolle', 'Deventer', 'Zutphen'],
-        ['Hoorn', 'Alkmaar', 'Castricum', 'Beverwijk', 'Haarlem'],
-        ['Steenwijk', 'Zwolle', 'Amersfoort', 'Utrecht Centraal', 'Hilversum'],
-        ['Heerenveen', 'Leeuwarden', 'Groningen', 'Assen', 'Zwolle'],
-        ['Helmond', 'Eindhoven', 'Tilburg', 'Breda', 'Etten-Leur', 'Roosendaal'],
-        ['Schiphol Airport', 'Utrecht Centraal', 'Amsterdam Centraal']]
-        W = tc.Trajects(L.graph, tracks)
         new_track = hh.hillclimber(L, W, 8, 1000, -3, 180, apct, uct)[0].tracks
+        print(new_track)
+        print(sc.score(L.graph, new_track, apct, uct)[0])
+        L.draw_choice(['all tracks', tt.transform(L.graph, new_track)[0], uct],
+                      egdes_option=False)
+
+    if sys.argv[2] == 'draw_simulated':
+        new_track = sa.simulated_annealing(L, W, 8, 100, -3, 180,apct, uct).tracks
         print(new_track)
         print(sc.score(L.graph, new_track, apct, uct)[0])
         L.draw_choice(['all tracks', tt.transform(L.graph, new_track)[0], uct],

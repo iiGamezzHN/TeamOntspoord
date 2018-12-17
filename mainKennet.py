@@ -27,6 +27,7 @@ import random_route as rr
 import decimal
 import transform_tracklist as tt
 import hillclimber_obj_orien as hh
+import simulated_annealing as sa
 
 
 # import files using the functions from import_data.py
@@ -160,57 +161,57 @@ print(W.information())
 #     return traject
 
 
-new_track = hh.hillclimber(G, W, 8, 1000, -3, 180, apct, uct)[0].tracks
-print(new_track)
-print(sc.score(G.graph,new_track,apct,uct)[0])
-G.draw_choice(['all tracks',tt.transform(G.graph,new_track)[0],uct],egdes_option=False)
-
-W5= tc.Trajects(G.graph, testT51)
-G.draw_choice(['all tracks', tt.transform(G.graph,W5.tracks)[0],uct],egdes_option=False)
+# new_track = hh.hillclimber(G, W, 8, 1000, -3, 180, apct, uct)[0].tracks
+# print(new_track)
+# print(sc.score(G.graph,new_track,apct,uct)[0])
+# G.draw_choice(['all tracks',tt.transform(G.graph,new_track)[0],uct],egdes_option=False)
+#
+# W5= tc.Trajects(G.graph, testT51)
+# G.draw_choice(['all tracks', tt.transform(G.graph,W5.tracks)[0],uct],egdes_option=False)
 # L.draw_choice(['track',tt.transform(L.graph,endtest)[0],uct],egdes_option=False)
 
-from math import exp
+# from math import exp
+#
+#
+# def acceptance_probability(old_score, new_score, T):
+#     score_dif = (new_score-old_score)
+#     tt = (9400-old_score)/100
+#     a = exp(score_dif/20)
+#     return a
+#
+# from random import random
+#
+#
+# def simulated_annealing(graph, traject, nr_tracks, iterations, cut_x, minutes):
+#     for a in range(nr_tracks):
+#         print(a, 'len of track: ', len(traject.tracks[a]))
+#         old_score = traject.score(apct, uct)
+#         T = 1.0
+#         T_min = 0.1
+#         alpha = 0.8
+#         while T > T_min:
+#             i = 1
+#             while i <= iterations:
+#                 new_sol = traject.transform_track(a, cut_x, minutes, apct, uct)
+#                 new_score = new_sol[1]
+#                 ap = acceptance_probability(old_score, new_score, T)
+#                 r = random()
+#                 if ap > r:
+#                     sol = new_sol
+#                     print(i, round(ap,2), round(r,2), new_score, new_score-old_score)
+#                     old_score = new_score
+#                     # traject = tc.Trajects(graph.graph, sol[0])
+#
+#                 i += 1
+#             print(a,T)
+#             T = T*0.8
+#         if 'sol' in locals():
+#             traject = tc.Trajects(graph.graph, sol[0])
+#             print(traject.information())
+#     return sol
 
 
-def acceptance_probability(old_score, new_score, T):
-    score_dif = (new_score-old_score)
-    tt = (9400-old_score)/100
-    a = exp(score_dif/20)
-    return a
-
-from random import random
-
-
-def simulated_annealing(graph, traject, nr_tracks, iterations, cut_x, minutes):
-    for a in range(nr_tracks):
-        print(a, 'len of track: ', len(traject.tracks[a]))
-        old_score = traject.score(apct, uct)
-        T = 1.0
-        T_min = 0.1
-        alpha = 0.8
-        while T > T_min:
-            i = 1
-            while i <= iterations:
-                new_sol = traject.transform_track(a, cut_x, minutes, apct, uct)
-                new_score = new_sol[1]
-                ap = acceptance_probability(old_score, new_score, T)
-                r = random()
-                if ap > r:
-                    sol = new_sol
-                    print(i, round(ap,2), round(r,2), new_score, new_score-old_score)
-                    old_score = new_score
-                    traject = tc.Trajects(graph.graph, sol[0])
-
-                i += 1
-            print(a,T)
-            T = T*0.8
-        # if 'sol' in locals():
-        #     traject = tc.Trajects(graph.graph, sol[0])
-        #     print(traject.information())
-    return sol
-
-
-# simulated_annealing(G, W, 8, 100, -4, 180)
+print(sa.simulated_annealing(G, W, 8, 100, -3, 180,apct, uct).tracks)
 endtest3 = [['Den Helder', 'Alkmaar', 'Castricum', 'Zaandam', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Sloterdijk', 'Haarlem', 'Heemstede-Aerdenhout', 'Leiden Centraal', 'Den Haag HS', 'Delft', 'Den Haag Centraal', 'Leiden Centraal', 'Schiphol Airport', 'Amsterdam Zuid'],['Maastricht', 'Sittard', 'Heerlen', 'Sittard', 'Roermond', 'Weert', 'Eindhoven', 's-Hertogenbosch', 'Tilburg', 'Breda', 'Dordrecht', 'Rotterdam Centraal', 'Schiedam Centrum'],['Enschede', 'Hengelo', 'Almelo', 'Zwolle', 'Deventer', 'Zutphen', 'Dieren', 'Arnhem Centraal', 'Ede-Wageningen', 'Utrecht Centraal', 'Gouda'],['Hoorn', 'Alkmaar', 'Castricum', 'Beverwijk', 'Haarlem', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Amstel', 'Utrecht Centraal', 'Alphen a/d Rijn', 'Leiden Centraal', 'Den Haag Laan v NOI'],['Steenwijk', 'Zwolle', 'Amersfoort', 'Utrecht Centraal', 'Hilversum', 'Utrecht Centraal', 's-Hertogenbosch', 'Oss', 'Nijmegen', 'Arnhem Centraal'],['Heerenveen', 'Leeuwarden', 'Groningen', 'Assen', 'Zwolle'],['Helmond', 'Eindhoven', 'Tilburg', 'Breda', 'Etten-Leur', 'Roosendaal', 'Dordrecht', 'Rotterdam Blaak', 'Rotterdam Alexander', 'Rotterdam Centraal', 'Schiedam Centrum', 'Delft', 'Den Haag HS', 'Gouda', 'Den Haag Centraal'],['Schiphol Airport', 'Utrecht Centraal', 'Amsterdam Centraal', 'Almere Centrum']]
 print(sc.score(G.graph,new_track,apct,uct)[0])
 # L.draw_choice(['track',tt.transform(L.graph,endtest)[0],uct],egdes_option=False)
