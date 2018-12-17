@@ -91,7 +91,6 @@ if __name__ == "__main__":
         if len(sys.argv) == 2:
             depth_first_random('Holland', False, 30, 1000)
         else:
-            print(type(int(sys.argv[4])))
             try:
                 depth_first_random(sys.argv[2], sys.argv[3], int(sys.argv[4]), int(sys.argv[5]))
             except:

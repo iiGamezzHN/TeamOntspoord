@@ -103,9 +103,19 @@ testen. In de map Data zitten alle csv's die we importeren. In de algemene map z
 
 Om de code te draaien voor onze algoritmes gebruik één van de volgende instructies:
 ```
-python mainTimo.py
-python mainKennet.py
-python mainDavid.py
+Depth First met Random Selector:
+  - python main.py depth_first_random region all_critical n_best n_iterations
+  where region is either Nationaal or Holland, all_critical is a boolean,
+  n_best and n_iterations are integers. If depth_first_random is run without
+  any other aruments it will run in its default setting. If region is set to
+  Nationaal runtime can be very long, so watch out for that.
+
+Depth First met Look Ahead:
+  python main.py depth_first_random region all_critical n_best
+  where region is either Nationaal or Holland, all_critical is a boolean,
+  n_best is an integers. If depth_first_random is run without
+  any other aruments it will run in its default setting. If region is set to
+  Nationaal runtime can be very long, so watch out for that.
 ```
 
 ## Auteurs
