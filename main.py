@@ -34,8 +34,6 @@ if sys.argv[1] == "Holland":
 if sys.argv[1] == "Nationaal":
     import_dict = imp.open_stations('data', 'StationsNationaal.csv')
     import_list = imp.open_connections('data', 'ConnectiesNationaal.csv')
-
-
 station_dict = imp.add_connections_dict(import_dict, import_list)
 
 
