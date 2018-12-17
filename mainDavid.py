@@ -23,6 +23,7 @@ import breadth_first_beam as bfb
 import calc_route_score as crs
 import score as sc
 import score_nationaal as sc_n
+import bfb_draw as draw
 
 results = []
 
@@ -124,9 +125,8 @@ def breadth_first_beam_main(region, all_crit, depth, n_best):
 
 
 # breadth_first_beam_main("Holland", True, 3, 4)
-for x in range(3, 6):
+for x in range(3, 6):  # Get scores for different variables of depth, n_best
     for y in range(5, 21, 5):
-        print(x, y)
         result = breadth_first_beam_main("Holland", False, x, y)
         results.append(result)
 
@@ -134,8 +134,14 @@ print(results)
 results = sorted(results, key=itemgetter(0), reverse=True)
 print("")
 
-for i in range(len(results)):
-    print(results[i])
+best = []
+used_depth = []  # Objects in draw
+for x in results:
+    if x[2] not in used_depth:
+        used_depth.append(x[2])
+        best.append(x[0][0])
+
+# draw.draw(used_depth, best)  # Uncomment to draw
 
 
 

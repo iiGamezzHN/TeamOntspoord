@@ -41,3 +41,6 @@ netwerk/statespace zijn ingeladen. Tot slot het netwerk verschillende visualisat
 <br>- Het netwerk met alleen de labels van de kritieke stations
 <br>- Het netwerk met alleen de labels van de edges en stations van de route + de labels van de kritieke stations
 <br>- Het netwerk met een counter op alle bereden edges, de edges met count=1 zijn groen, de andere edges verschillen in kleur rood>donkerrood
+
+#### draw.py
+Maakt een barchart met matplotlib
