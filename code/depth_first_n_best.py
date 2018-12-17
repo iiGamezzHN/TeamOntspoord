@@ -2,7 +2,7 @@ import copy
 from heapq import heappush, heappushpop
 
 
-def route2_object_n_best(para, route, n_best):
+def depth_first_n_best(para, route, n_best):
     """
     Calculates all posible routes starting from a given station, with max
     length. Doesn't visit stations more than twice, does keep track of amount
@@ -16,11 +16,9 @@ def route2_object_n_best(para, route, n_best):
         weight = int(para.network[route_copy.station][neighbour]['weight'])
         route_copy.tot_weight = weight + route_copy.tot_weight
         # Make sure you don't go over total length, don't visit station more
-        # than twice, with Utrecht as exception
+        # than twice
         if (route_copy.tot_weight < para.max_length and
-                (route_copy.L_route.count(neighbour) < 1 or
-                    (neighbour == 'Utrecht Centraal' and
-                        route_copy.L_route.count(neighbour) < 3))):
+                route_copy.L_route.count(neighbour) < 2):
             route_copy.n_tracks_since_crit += 1
             # Check if current track is critical
             for track in route_copy.L_crit_tracks:
@@ -38,15 +36,33 @@ def route2_object_n_best(para, route, n_best):
             # Ensure first track is critical
             if not (n_stat_visited == 2 and
                     route_copy.n_crit_tracks == 0):
+                # Force Maastricht, Sittard, Heerlen, Sittard
+                if (route_copy.L_route[n_stat_visited - 2] == 'Sittard' and
+                        n_stat_visited == 3):
+                    if route_copy.station == 'Heerlen':
+                        depth_first_n_best(para, route_copy, n_best)
+                    else:
+                        continue
+                if (route_copy.L_route[0] == 'Heerenveen' and
+                        n_stat_visited == 3):
+                    if route_copy.station == 'Groningen':
+                        depth_first_n_best(para, route_copy, n_best)
+                    else:
+                        continue
+                if (route_copy.L_route[0] == 'Zwolle' and
+                        n_stat_visited == 3):
+                    if route_copy.station == 'Heerenveen':
+                        depth_first_n_best(para, route_copy, n_best)
+                    else:
+                        continue
                 # Prevent ABA if AB is not critical
                 if n_stat_visited >= 4:
-                    if not (route_copy.L_route[n_stat_visited - 1] ==
+                    if not (route_copy.station ==
                             route_copy.L_route[n_stat_visited - 3]
                             and route_copy.n_tracks_since_crit > 1):
-                        route2_object_n_best(para, route_copy, n_best)
+                        depth_first_n_best(para, route_copy, n_best)
                 else:
-                    route2_object_n_best(para, route_copy, n_best)
-
+                    depth_first_n_best(para, route_copy, n_best)
     # When at end calculate k_score of route
     route.k_score_ind = (route.n_crit_tracks / para.tot_crit_tracks * 10000 -
                          (20 + route.tot_weight / 10))
