@@ -1,4 +1,4 @@
-Here you can find all the data we've been given. The stations files give then
-names, locations and the 'criticality' of the stations. The connections files
-show which stations are connected to which, and how long it takes to travel
-over them.
+Hier kun je alle data die we gekregen hebben vinden. De 'stations'-bestanden
+bevatten de namen, locaties, en de 'kritiekheid' van de stations. De
+'connections'-bestanden geven aan welke stations met welke verbonden zijn
+en hoe lang het duurt om over die verbindingen te rijden.

@@ -14,7 +14,7 @@ def depth_random(para, n_best, L_crit_tracks, n_iterations):
     k_solution = 0
     k_evolution = []
     for j in range(0, n_iterations):
-        print("did " + str(j) + " n_iterations")
+        print("Did " + str(j) + " n_iterations")
         k_score = 0
         set = []
         L_crit_tracks_route = L_crit_tracks.copy()

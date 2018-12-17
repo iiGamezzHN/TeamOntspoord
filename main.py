@@ -34,8 +34,6 @@ if sys.argv[1] == "Holland":
 if sys.argv[1] == "Nationaal":
     import_dict = imp.open_stations('data', 'StationsNationaal.csv')
     import_list = imp.open_connections('data', 'ConnectiesNationaal.csv')
-
-
 station_dict = imp.add_connections_dict(import_dict, import_list)
 
 
@@ -82,7 +80,7 @@ def depth_first_look_ahead(region, all, n_best):
     tot_crit_tracks = len(L_crit_tracks)
     parameters = pc.Parameters(G, max_length, tot_crit_tracks, L_station)
     solution_set = la(parameters, n_best, L_crit_tracks)
-    solution_string = ''
+    solution_string = '['
 
     # Print solutions, create graph
     for object in solution_set[0]:
@@ -96,12 +94,14 @@ def depth_first_look_ahead(region, all, n_best):
     if all:
         with open("resultaten/depth_look_"+region+"_all.txt", "a") as myfile:
             myfile.write(solution_string)
-            myfile.write(solution_set[1])
+            myfile.write(']\n')
+            myfile.write(solution_set[1] + '\n')
         plt.savefig("resultaten/depth_look" + region + 'All')
     else:
         with open("resultaten/depth_look_"+region+"_notAll.txt", "a") as myfile:
             myfile.write(str(solution_string))
-            myfile.write(str(solution_set[1]))
+            myfile.write(']\n')
+            myfile.write(str(solution_set[1]) + '\n')
         plt.savefig("resultaten/depth_look" + region + 'notAll')
     plt.show()
 
@@ -121,7 +121,7 @@ def depth_first_random(region, all, n_best, n_iterations):
     tot_crit_tracks = len(L_crit_tracks)
     parameters = pc.Parameters(G, max_length, tot_crit_tracks, L_station)
     solution_set = dr(parameters, n_best, L_crit_tracks, n_iterations)
-    solution_string = ''
+    solution_string = '['
 
     # Print solutions, create graph
     for object in solution_set[0]:
@@ -134,14 +134,16 @@ def depth_first_random(region, all, n_best, n_iterations):
     plt.title('Evolution of K-score with depth first with random choice')
     if all:
         plt.savefig("resultaten/depth_random" + region + 'All')
-        with open("resultaten/depth_look_"+region+"_all.txt", "a") as myfile:
+        with open("resultaten/depth_random_"+region+"_all.txt", "a") as myfile:
             myfile.write(str(solution_string))
-            myfile.write(str(solution_set[1]))
+            myfile.write(']\n')
+            myfile.write(str(solution_set[1]) + '\n')
     else:
         plt.savefig("resultaten/depth_random" + region + 'notAll')
-        with open("resultaten/depth_look_"+region+"_all.txt", "a") as myfile:
+        with open("resultaten/depth_random_"+region+"_all.txt", "a") as myfile:
             myfile.write(str(solution_string))
-            myfile.write(str(solution_set[1]))
+            myfile.write(']\n')
+            myfile.write(str(solution_set[1]) + '\n')
     plt.show()
 
 
