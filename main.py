@@ -68,15 +68,8 @@ uct = sc.unique(station_dict)[1]
 
 
 def depth_first_look_ahead(region, all, n_best):
-    stations = {}
     L_station = []
-    import_dict = imp.open_stations('data', 'Stations' + region + '.csv')
-    import_list = imp.open_connections('data', 'Connecties' + region + '.csv')
-    station_dict = imp.add_connections_dict(import_dict, import_list)
     for x in station_dict:
-        location = [station_dict[x]['Longitude'], station_dict[x]['Latitude']]
-        stations[x] = st.Station(x, x, station_dict[x]['Critical'], location,
-                                 station_dict[x]['Neighbours'])
         L_station.append(x)
     G = nw.Network_Graph(st.Station).graph
 
@@ -114,15 +107,8 @@ def depth_first_look_ahead(region, all, n_best):
 
 
 def depth_first_random(region, all, n_best, n_iterations):
-    stations = {}
     L_station = []
-    import_dict = imp.open_stations('data', 'Stations' + region + '.csv')
-    import_list = imp.open_connections('data', 'Connecties' + region + '.csv')
-    station_dict = imp.add_connections_dict(import_dict, import_list)
     for x in station_dict:
-        location = [station_dict[x]['Longitude'], station_dict[x]['Latitude']]
-        stations[x] = st.Station(x, x, station_dict[x]['Critical'], location,
-                                 station_dict[x]['Neighbours'])
         L_station.append(x)
     G = nw.Network_Graph(st.Station).graph
 
@@ -169,8 +155,8 @@ if __name__ == "__main__":
                 depth_first_random(sys.argv[1], sys.argv[3], int(sys.argv[4]),
                                    int(sys.argv[5]))
             except:
-                print("Invalid Input: usage: python main.py depth_first_random"
-                      "region all_critical n_best iterations")
+                print("Invalid Input: usage: python main.py region"
+                      "depth_first_random all_critical n_best iterations")
 
     # Running depth first with look ahead
     if sys.argv[2] == 'depth_first_look_ahead':
@@ -182,7 +168,7 @@ if __name__ == "__main__":
                                        int(sys.argv[4]))
             except:
                 print("Invalid Input: usage: python main.py"
-                      "depth_first_look_ahead region all_critical n_best")
+                      " region depth_first_look_ahead all_critical n_best")
 
     # Draw the variable 'tracks', the edges are green if they are vistited once
     # and the are red when they are vistied multiple times
