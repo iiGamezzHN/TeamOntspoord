@@ -23,7 +23,7 @@ import routes as rt
 import traject_class as tc
 import score as sc
 import random_route as rr
-# import decimal
+import hillclimber_obj_orien as hh
 import transform_tracklist as tt
 
 # import files using the functions from import_data.py
@@ -177,6 +177,23 @@ if __name__ == "__main__":
     if sys.argv[2] == 'draw_routes':
         tracks = [['Den Helder', 'Alkmaar', 'Castricum', 'Zaandam', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Sloterdijk', 'Haarlem', 'Heemstede-Aerdenhout', 'Leiden Centraal', 'Den Haag HS', 'Delft', 'Den Haag Centraal', 'Leiden Centraal', 'Schiphol Airport', 'Amsterdam Zuid'],['Maastricht', 'Sittard', 'Heerlen', 'Sittard', 'Roermond', 'Weert', 'Eindhoven', 's-Hertogenbosch', 'Tilburg', 'Breda', 'Dordrecht', 'Rotterdam Centraal', 'Schiedam Centrum'],['Enschede', 'Hengelo', 'Almelo', 'Zwolle', 'Deventer', 'Zutphen', 'Dieren', 'Arnhem Centraal', 'Ede-Wageningen', 'Utrecht Centraal', 'Gouda'],['Hoorn', 'Alkmaar', 'Castricum', 'Beverwijk', 'Haarlem', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Amstel', 'Utrecht Centraal', 'Alphen a/d Rijn', 'Leiden Centraal', 'Den Haag Laan v NOI'],['Steenwijk', 'Zwolle', 'Amersfoort', 'Utrecht Centraal', 'Hilversum', 'Utrecht Centraal', 's-Hertogenbosch', 'Oss', 'Nijmegen', 'Arnhem Centraal'],['Heerenveen', 'Leeuwarden', 'Groningen', 'Assen', 'Zwolle'],['Helmond', 'Eindhoven', 'Tilburg', 'Breda', 'Etten-Leur', 'Roosendaal', 'Dordrecht', 'Rotterdam Blaak', 'Rotterdam Alexander', 'Rotterdam Centraal', 'Schiedam Centrum', 'Delft', 'Den Haag HS', 'Gouda', 'Den Haag Centraal'],['Schiphol Airport', 'Utrecht Centraal', 'Amsterdam Centraal', 'Almere Centrum']]
 
-        print(sc.score(L.graph,tracks,apct,uct)[0])
+        print(sc.score(L.graph, tracks, apct, uct)[0])
         # L.draw_choice(['track',tt.transform(L.graph,endtest)[0],uct],egdes_option=False)
-        L.draw_choice(['all tracks',tt.transform(L.graph,tracks)[0],uct],egdes_option=False)
+        L.draw_choice(['all tracks', tt.transform(L.graph, tracks)[0], uct],
+                      egdes_option=False)
+
+    if sys.argv[2] == 'draw_hillclimber':
+        tracks = [['Den Helder', 'Alkmaar', 'Castricum', 'Zaandam', 'Amsterdam Sloterdijk'],
+        ['Maastricht', 'Sittard', 'Heerlen', 'Sittard', 'Roermond', 'Weert'],
+        ['Enschede', 'Hengelo', 'Almelo', 'Zwolle', 'Deventer', 'Zutphen'],
+        ['Hoorn', 'Alkmaar', 'Castricum', 'Beverwijk', 'Haarlem'],
+        ['Steenwijk', 'Zwolle', 'Amersfoort', 'Utrecht Centraal', 'Hilversum'],
+        ['Heerenveen', 'Leeuwarden', 'Groningen', 'Assen', 'Zwolle'],
+        ['Helmond', 'Eindhoven', 'Tilburg', 'Breda', 'Etten-Leur', 'Roosendaal'],
+        ['Schiphol Airport', 'Utrecht Centraal', 'Amsterdam Centraal']]
+        W = tc.Trajects(L.graph, tracks)
+        new_track = hh.hillclimber(L, W, 8, 1000, -3, 180, apct, uct)[0].tracks
+        print(new_track)
+        print(sc.score(L.graph, new_track, apct, uct)[0])
+        L.draw_choice(['all tracks', tt.transform(L.graph, new_track)[0], uct],
+                      egdes_option=False)

@@ -7,10 +7,9 @@ from colour import Color
 
 
 class Network_Graph():
-    """docstring for ClassName"""
+    """The class Network_Graph"""
 
     def __init__(self, station_class):
-
         """ Deze init heeft een class als input, in ons geval gaat het hier om de class Station. De init zal
         aan de hand van deze class een netwerk opbouwen mbv networkx. Het netwerk bevat de stations als nodes,
         de verbindingen tussen stations als edges en de reistijd als weight van de edges. """
@@ -72,12 +71,12 @@ class Network_Graph():
                     '\nTotal statespace is', statespace)
 
     def draw_choice(self, option, egdes_option):
-        """ This functions will create a visualisation of the graph. The input is the option to
-        chose which stations to show.
+        """ This functions will create a visualisation of the graph. The input
+        is the option to chose which stations to show.
         standard= a graph with all the stations
         critical= a graph with only the critical stations
         track= a graph with only the stations from the track and critical stations
-        tracks= shows a graph, all the critical edges are blue, the remaining critical edges are red
+        tracks= a graph with a Counter of how many a edge is visisted,
         The second input is the edges_option, if its true all the edge labels will show
         """
         graphdict = {}
@@ -174,14 +173,9 @@ class Network_Graph():
 
             most_used_edge = Counter(unique_all_edges).most_common()[0][1]
 
-            nx.draw_networkx_edges(self.graph, graphdict, edgelist=red_labels, width=1, edge_color='red', style='solid', with_label=True)
+            nx.draw_networkx_edges(self.graph, graphdict, edgelist=red_labels, width=1, edge_color='blue', style='solid', with_label=True)
             nx.draw_networkx_edge_labels(self.graph, graphdict, edge_labels=red_labels, width=1, edge_color='blue', font_size=6)
 
-            # nx.draw_networkx_edges(self.graph, graphdict,edgelist=edge_labels,width=0.5, edge_color='blue', style='solid',with_label=True)
-            # nx.draw_networkx_edge_labels(self.graph, graphdict,edge_labels=edge_labels,font_size=6)
-            # nx.draw_networkx_labels(self.graph,graphdict,b_labels,font_size=8,font_weight='bold')
-            # nx.draw_networkx_labels(self.graph,graphdict,t_labels,font_size=8,font_weight='bold')
-            # nx.draw_networkx_labels(self.graph,graphdict,r_labels,font_size=8,font_weight='normal')
             plt.show(self.graph)
 
         if 'labels' in locals():
