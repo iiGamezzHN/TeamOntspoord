@@ -91,8 +91,9 @@ if __name__ == "__main__":
         if len(sys.argv) == 2:
             depth_first_random('Holland', False, 30, 1000)
         else:
+            print(type(int(sys.argv[4])))
             try:
-                depth_first_random(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
+                depth_first_random(sys.argv[2], sys.argv[3], int(sys.argv[4]), int(sys.argv[5]))
             except:
                 print("Invalid Input: usage: python main.py depth_first_random region all_critical n_best iterations")
 
@@ -102,6 +103,6 @@ if __name__ == "__main__":
             depth_first_look_ahead('Holland', False, 50)
         else:
             try:
-                depth_first_look_ahead(sys.argv[2], sys.argv[3], sys.argv[4])
+                depth_first_look_ahead(sys.argv[2], sys.argv[3], int(sys.argv[4]))
             except:
                 print("Invalid Input: usage: python main.py depth_first_look_ahead region all_critical n_best")
