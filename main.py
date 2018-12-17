@@ -156,22 +156,30 @@ def breadth_first_beam(region, all_crit, depth, n_best):
 if __name__ == "__main__":
     # Running depth first with random selection
     if sys.argv[2] == 'breadth_first_beam':
+        if sys.argv[3] == "False":
+            all = False
+        elif sys.argv[3] == "True":
+            all = True
         if len(sys.argv) == 3:
             breadth_first_beam(sys.argv[1], False, 5, 10)
         else:
             try:
-                depth_first_random(sys.argv[1], sys.argv[3], int(sys.argv[4]),
+                breadth_first_beam(sys.argv[1], all, int(sys.argv[4]),
                                    int(sys.argv[5]))
             except:
                 print("Invalid Input: usage: python main.py region"
                       "breadth_first_beam")
 
     if sys.argv[2] == 'depth_first_random':
+        if sys.argv[3] == "False":
+            all = False
+        elif sys.argv[3] == "True":
+            all = True
         if len(sys.argv) == 3:
             depth_first_random(sys.argv[1], False, 30, 50)
         else:
             try:
-                depth_first_random(sys.argv[1], sys.argv[3], int(sys.argv[4]),
+                depth_first_random(sys.argv[1], all, int(sys.argv[4]),
                                    int(sys.argv[5]))
             except:
                 print("Invalid Input: usage: python main.py region"
@@ -179,11 +187,15 @@ if __name__ == "__main__":
 
     # Running depth first with look ahead
     if sys.argv[2] == 'depth_first_look_ahead':
+        if sys.argv[3] == "False":
+            all = False
+        elif sys.argv[3] == "True":
+            all = True
         if len(sys.argv) == 3:
             depth_first_look_ahead(sys.argv[1], False, 20)
         else:
             try:
-                depth_first_look_ahead(sys.argv[1], sys.argv[3],
+                depth_first_look_ahead(sys.argv[1], all,
                                        int(sys.argv[4]))
             except:
                 print("Invalid Input: usage: python main.py"

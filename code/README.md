@@ -3,11 +3,11 @@ in main.py
 
 #### starts2.py
 Berekent het 'optimale' startpunt voor een nieuwe route met de overgebleven kritieke verbindingen.
-Dit gebeurt door te kijken naar een station met de minste kritieke verbindingen (maar >0), daarna 
+Dit gebeurt door te kijken naar een station met de minste kritieke verbindingen (maar >0), daarna
 de minste verbindingen en dan de langste kritieke verbinding.
 
 #### depth_first_n_best
-Geeft een lijst met de beste routes (hoogste k-scores) vanaf een gegeven beginpunt. 
+Geeft een lijst met de beste routes (hoogste k-scores) vanaf een gegeven beginpunt.
 
 #### lookahead_for_depth_first
 Probeert om langzamerhand de totale k-score te verbeteren. Dit wordt gedaan door depth_first_n_best
@@ -32,3 +32,12 @@ Calc_score pakt de trajecten uit de volledige route en kijkt of er trajecten kri
 gebruikt dit om de score te berekenen. Hij returnt dan de route met de bijbehorende score, en tijd.
 
 Pair_stations pakt de volledige route en maakt er losstaande trajecten van. Dus van ['Alkmaar','Castricum','Hoorn'] naar [['Alkmaar','Castricum'],['Castricum','Hoorn']]
+
+#### network.py
+De class Network_Graph zorgt ervoor dat het netwerk van alle stations wordt geladen. Daarnaast bevat het de functies om labels van stations aan te passen. Denk hierbij
+aan dat 'Amsterdam Centraal' 'A. Centraal' wordt. Vanuit het netwerk kan ook direct de statespace worden berekend, met als vereiste dat de databestanden van het desbetreffende
+netwerk/statespace zijn ingeladen. Tot slot het netwerk verschillende visualisaties tonen met de functie draw_choice. Hierbij kan het volgende worden gevisualiseerd:
+<br>- Het netwerk met de labels van alle edges en stations
+<br>- Het netwerk met alleen de labels van de kritieke stations
+<br>- Het netwerk met alleen de labels van de edges en stations van de route + de labels van de kritieke stations
+<br>- Het netwerk met een counter op alle bereden edges, de edges met count=1 zijn groen, de andere edges verschillen in kleur rood>donkerrood
