@@ -24,9 +24,12 @@ import routes as rt
 import traject_class as tc
 import score as sc
 import random_route as rr
+import decimal
+import transform_tracklist as tt
+
 
 # import files using the functions from import_data.py
-import_name = "Holland"
+import_name = "Nationaal"
 
 if import_name == "Holland":
     import_dict = imp.open_stations('data', 'StationsHolland.csv')
@@ -46,9 +49,19 @@ for x in station_dict:
     stations[x] = st.Station(x, x, station_dict[x]['Critical'], location,
                              station_dict[x]['Neighbours'])
 
+print(station_dict)
+
+for x in stations:
+    if 'Amsterdam' in stations[x].label:
+        stations[x].update_single('Amsterdam', 'A.')
+    if 'Rotterdam' in stations[x].label:
+        stations[x].update_single('Rotterdam', 'R.')
+    if 'Den Haag' in stations[x].label:
+        stations[x].update_single('Den Haag', 'DH.')
+
 
 # test the class Station
-# print(stations['Sittard'].information())
+print(stations['Amsterdam Centraal'].information())
 
 
 # test network.py
@@ -92,33 +105,100 @@ testT4 = [['Den Helder', 'Alkmaar', 'Castricum', 'Beverwijk', 'Haarlem'],['Maast
 
 # for a in range(3):
 #     print(T.transform_track_return_if_impr(0, -1, 180, apct, uct))
-# w_tracks =  [['Den Helder', 'Alkmaar', 'Castricum', 'Beverwijk', 'Haarlem', 'Heemstede-Aerdenhout', 'Leiden Centraal', 'Den Haag HS', 'Delft', 'Den Haag Centraal', 'Leiden Centraal', 'Schiphol Airport', 'Amsterdam Zuid'], ['Maastricht', 'Sittard', 'Roermond', 'Weert', 'Eindhoven', 's-Hertogenbosch', 'Oss', 'Nijmegen', 'Arnhem Centraal'], ['Heerlen', 'Sittard', 'Roermond', 'Weert', 'Eindhoven', 'Tilburg', 'Breda', 'Dordrecht', 'Rotterdam Centraal', 'Schiedam Centrum', 'Rotterdam Blaak', 'Dordrecht', 'Roosendaal'], ['Enschede', 'Hengelo', 'Almelo', 'Zwolle', 'Amersfoort', 'Utrecht Centraal', 'Alphen a/d Rijn', 'Leiden Centraal', 'Den Haag Centraal', 'Gouda', 'Den Haag HS'], ['Steenwijk', 'Zwolle', 'Deventer', 'Zutphen', 'Dieren', 'Arnhem Centraal', 'Ede-Wageningen', 'Utrecht Centraal', 'Amsterdam Centraal', 'Almere Centrum'], ['Hoorn', 'Alkmaar', 'Castricum', 'Zaandam', 'Amsterdam Sloterdijk', 'Haarlem', 'Heemstede-Aerdenhout', 'Haarlem', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Amstel', 'Utrecht Centraal', 'Hilversum'], ['Heerenveen', 'Leeuwarden', 'Groningen', 'Assen', 'Zwolle', 'Amersfoort', 'Utrecht Centraal', 'Schiphol Airport', 'Leiden Centraal', 'Den Haag Laan v NOI'], ['Helmond', 'Eindhoven', 'Tilburg', 's-Hertogenbosch', 'Utrecht Centraal', 'Gouda', 'Rotterdam Alexander', 'Rotterdam Centraal', 'Schiedam Centrum']]
-# W = tc.Trajects(G.graph, w_tracks)
+w_tracks =  [['Den Helder', 'Alkmaar', 'Castricum', 'Beverwijk', 'Haarlem', 'Heemstede-Aerdenhout', 'Leiden Centraal', 'Den Haag HS', 'Delft', 'Den Haag Centraal', 'Leiden Centraal', 'Schiphol Airport', 'Amsterdam Zuid'], ['Maastricht', 'Sittard', 'Roermond', 'Weert', 'Eindhoven', 's-Hertogenbosch', 'Oss', 'Nijmegen', 'Arnhem Centraal'], ['Heerlen', 'Sittard', 'Roermond', 'Weert', 'Eindhoven', 'Tilburg', 'Breda', 'Dordrecht', 'Rotterdam Centraal', 'Schiedam Centrum', 'Rotterdam Blaak', 'Dordrecht', 'Roosendaal'], ['Enschede', 'Hengelo', 'Almelo', 'Zwolle', 'Amersfoort', 'Utrecht Centraal', 'Alphen a/d Rijn', 'Leiden Centraal', 'Den Haag Centraal', 'Gouda', 'Den Haag HS'], ['Steenwijk', 'Zwolle', 'Deventer', 'Zutphen', 'Dieren', 'Arnhem Centraal', 'Ede-Wageningen', 'Utrecht Centraal', 'Amsterdam Centraal', 'Almere Centrum'], ['Hoorn', 'Alkmaar', 'Castricum', 'Zaandam', 'Amsterdam Sloterdijk', 'Haarlem', 'Heemstede-Aerdenhout', 'Haarlem', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Amstel', 'Utrecht Centraal', 'Hilversum'], ['Heerenveen', 'Leeuwarden', 'Groningen', 'Assen', 'Zwolle', 'Amersfoort', 'Utrecht Centraal', 'Schiphol Airport', 'Leiden Centraal', 'Den Haag Laan v NOI'], ['Helmond', 'Eindhoven', 'Tilburg', 's-Hertogenbosch', 'Utrecht Centraal', 'Gouda', 'Rotterdam Alexander', 'Rotterdam Centraal', 'Schiedam Centrum']]
 
+w_sa= [['Den Helder', 'Alkmaar', 'Castricum', 'Beverwijk', 'Haarlem', 'Heemstede-Aerdenhout', 'Leiden Centraal', 'Den Haag HS', 'Delft', 'Den Haag Centraal', 'Gouda'], ['Maastricht', 'Sittard', 'Heerlen', 'Sittard', 'Roermond', 'Weert', 'Eindhoven', 'Tilburg', 'Breda', 'Dordrecht', 'Rotterdam Blaak', 'Schiedam Centrum', 'Rotterdam Centraal', 'Schiedam Centrum'], ['Heerlen', 'Sittard', 'Roermond', 'Weert', 'Eindhoven', 's-Hertogenbosch', 'Utrecht Centraal', 'Ede-Wageningen', 'Arnhem Centraal', 'Nijmegen', 'Oss', 's-Hertogenbosch', 'Tilburg'], ['Enschede', 'Hengelo', 'Almelo', 'Zwolle', 'Amersfoort', 'Utrecht Centraal', 'Schiphol Airport', 'Amsterdam Zuid', 'Amsterdam Amstel', 'Amsterdam Centraal', 'Amsterdam Sloterdijk'], ['Steenwijk', 'Zwolle', 'Deventer', 'Apeldoorn', 'Amersfoort', 'Utrecht Centraal', 'Amsterdam Centraal', 'Almere Centrum', 'Amsterdam Amstel', 'Amsterdam Zuid', 'Schiphol Airport', 'Leiden Centraal'], ['Hoorn', 'Alkmaar', 'Castricum', 'Beverwijk', 'Haarlem', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Utrecht Centraal', 'Gouda', 'Den Haag HS', 'Delft', 'Den Haag Centraal', 'Leiden Centraal', 'Den Haag Laan v NOI'], ['Heerenveen', 'Leeuwarden', 'Groningen', 'Assen', 'Zwolle', 'Amersfoort', 'Utrecht Centraal', 'Alphen a/d Rijn'], ['Helmond', 'Eindhoven', 'Tilburg', 'Breda', 'Etten-Leur', 'Roosendaal', 'Dordrecht', 'Rotterdam Centraal', 'Rotterdam Alexander', 'Rotterdam Blaak']]
 
-g_tracks = [['Den Helder', 'Alkmaar', 'Castricum', 'Zaandam', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Sloterdijk', 'Haarlem', 'Heemstede-Aerdenhout'], ['Dordrecht', 'Rotterdam Centraal', 'Rotterdam Alexander', 'Gouda', 'Den Haag Centraal', 'Leiden Centraal', 'Heemstede-Aerdenhout', 'Haarlem', 'Beverwijk'], ['Alphen a/d Rijn', 'Gouda', 'Rotterdam Alexander', 'Rotterdam Centraal', 'Schiedam Centrum'], ['Delft', 'Den Haag Centraal', 'Leiden Centraal', 'Heemstede-Aerdenhout', 'Haarlem', 'Amsterdam Sloterdijk', 'Zaandam', 'Hoorn', 'Alkmaar'], ['Amsterdam Amstel', 'Amsterdam Centraal', 'Amsterdam Sloterdijk', 'Zaandam', 'Beverwijk', 'Castricum', 'Alkmaar', 'Castricum', 'Alkmaar']]
-W = tc.Trajects(G.graph, g_tracks)
-
-highscore = 0
-for a in range(5):
-    print(a, 'len of track: ', len(g_tracks[a]))
-    for b in range(2000):
-        new = W.transform_track_return_if_impr(a, -4, 120, apct, uct)
-        if new != None:
-            new_tracks = new[0]
-            new_score = new[1]
-            if new_score > highscore:
-                Y = tc.Trajects(G.graph, new_tracks)
-                highscore = new_score
-                print(a,b,new_score,highscore, new_tracks[a])
-    if 'Y' in locals():
-        W = Y
-
+W = tc.Trajects(G.graph, testT4)
 print(W.information())
+
+
+# g_tracks = [['Den Helder', 'Alkmaar', 'Castricum', 'Zaandam', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Sloterdijk', 'Haarlem', 'Heemstede-Aerdenhout'], ['Dordrecht', 'Rotterdam Centraal', 'Rotterdam Alexander', 'Gouda', 'Den Haag Centraal', 'Leiden Centraal', 'Heemstede-Aerdenhout', 'Haarlem', 'Beverwijk'], ['Alphen a/d Rijn', 'Gouda', 'Rotterdam Alexander', 'Rotterdam Centraal', 'Schiedam Centrum'], ['Delft', 'Den Haag Centraal', 'Leiden Centraal', 'Heemstede-Aerdenhout', 'Haarlem', 'Amsterdam Sloterdijk', 'Zaandam', 'Hoorn', 'Alkmaar'], ['Amsterdam Amstel', 'Amsterdam Centraal', 'Amsterdam Sloterdijk', 'Zaandam', 'Beverwijk', 'Castricum', 'Alkmaar', 'Castricum', 'Alkmaar']]
+# W = tc.Trajects(G.graph, g_tracks)
+
+#  hillclimber!!!!!!!!!!
+def hillclimber(graph, traject, nr_tracks, iterations, cut_x, minutes, apct, uct):
+    highscore = 0
+    total_i = 0
+    score_i_list = []
+    for a in range(nr_tracks):
+        print(a, 'len of track:', len(traject.tracks[a]))
+        for b in range(iterations):
+            total_i += 1
+            new = traject.transform_track_return_if_impr(a, cut_x, minutes, apct, uct)
+            if new != None:
+                new_tracks = new[0]
+                new_score = new[1]
+                score_i_list.append([total_i,new_score])
+                if new_score > highscore:
+                    Y = tc.Trajects(graph.graph, new_tracks)
+                    highscore = new_score
+                    print(a,b,new_score,highscore, new_tracks[a])
+        # if 'Y' in locals():
+                    traject = Y
+    for ab in score_i_list:
+        print(ab)
+    return traject
+
+
+# hillclimber(G, W, 8, 1000, -3, 180, apct, uct)
+
+from math import exp
+
+
+def acceptance_probability(old_score, new_score, T):
+    score_dif = (new_score-old_score)
+    tt = (9400-old_score)/100
+    a = exp(score_dif/20)
+    return a
+
+from random import random
+
+
+def simulated_annealing(graph, traject, nr_tracks, iterations, cut_x, minutes):
+    for a in range(nr_tracks):
+        print(a, 'len of track: ', len(traject.tracks[a]))
+        old_score = traject.score(apct, uct)
+        T = 1.0
+        T_min = 0.1
+        alpha = 0.8
+        while T > T_min:
+            i = 1
+            while i <= iterations:
+                new_sol = traject.transform_track(a, cut_x, minutes, apct, uct)
+                new_score = new_sol[1]
+                ap = acceptance_probability(old_score, new_score, T)
+                r = random()
+                if ap > r:
+                    sol = new_sol
+                    print(i, round(ap,2), round(r,2), new_score, new_score-old_score)
+                    old_score = new_score
+                    traject = tc.Trajects(graph.graph, sol[0])
+
+                i += 1
+            print(a,T)
+            T = T*0.8
+        # if 'sol' in locals():
+        #     traject = tc.Trajects(graph.graph, sol[0])
+        #     print(traject.information())
+    return sol
+
+
+# simulated_annealing(G, W, 8, 100, -4, 180)
+endtest3 = [['Den Helder', 'Alkmaar', 'Castricum', 'Zaandam', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Sloterdijk', 'Haarlem', 'Heemstede-Aerdenhout', 'Leiden Centraal', 'Den Haag HS', 'Delft', 'Den Haag Centraal', 'Leiden Centraal', 'Schiphol Airport', 'Amsterdam Zuid'],['Maastricht', 'Sittard', 'Heerlen', 'Sittard', 'Roermond', 'Weert', 'Eindhoven', 's-Hertogenbosch', 'Tilburg', 'Breda', 'Dordrecht', 'Rotterdam Centraal', 'Schiedam Centrum'],['Enschede', 'Hengelo', 'Almelo', 'Zwolle', 'Deventer', 'Zutphen', 'Dieren', 'Arnhem Centraal', 'Ede-Wageningen', 'Utrecht Centraal', 'Gouda'],['Hoorn', 'Alkmaar', 'Castricum', 'Beverwijk', 'Haarlem', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Amstel', 'Utrecht Centraal', 'Alphen a/d Rijn', 'Leiden Centraal', 'Den Haag Laan v NOI'],['Steenwijk', 'Zwolle', 'Amersfoort', 'Utrecht Centraal', 'Hilversum', 'Utrecht Centraal', 's-Hertogenbosch', 'Oss', 'Nijmegen', 'Arnhem Centraal'],['Heerenveen', 'Leeuwarden', 'Groningen', 'Assen', 'Zwolle'],['Helmond', 'Eindhoven', 'Tilburg', 'Breda', 'Etten-Leur', 'Roosendaal', 'Dordrecht', 'Rotterdam Blaak', 'Rotterdam Alexander', 'Rotterdam Centraal', 'Schiedam Centrum', 'Delft', 'Den Haag HS', 'Gouda', 'Den Haag Centraal'],['Schiphol Airport', 'Utrecht Centraal', 'Amsterdam Centraal', 'Almere Centrum']]
+print(sc.score(G.graph,endtest3,apct,uct)[0])
+# L.draw_choice(['track',tt.transform(L.graph,endtest)[0],uct],egdes_option=False)
+G.draw_choice(['all tracks',tt.transform(G.graph,tracks)[0],uct],egdes_option=False)
+
+# IMPORTA ;KASDNF;LAJ S;FLKJ ASPDLFKJ PASLKDGJ PASRHG
+print(1111111111111111111111111)
+# print(W.transform_track(0, -4, 180, apct, uct))
+
+# print(W.information())
 # btrack = [['Den Helder', 'Alkmaar', 'Castricum', 'Beverwijk', 'Haarlem', 'Heemstede-Aerdenhout', 'Leiden Centraal', 'Den Haag HS', 'Delft', 'Den Haag Centraal', 'Gouda', 'Utrecht Centraal', 'Amsterdam Centraal'], ['Maastricht', 'Sittard', 'Roermond', 'Weert', 'Eindhoven', 'Tilburg', 'Breda', 'Dordrecht', 'Rotterdam Centraal', 'Rotterdam Alexander', 'Gouda', 'Den Haag HS', 'Leiden Centraal', 'Den Haag Centraal'], ['Heerlen', 'Sittard', 'Roermond', 'Weert', 'Eindhoven', 'Tilburg', 'Breda', 'Dordrecht', 'Rotterdam Centraal', 'Schiedam Centrum', 'Delft', 'Den Haag Centraal', 'Leiden Centraal', 'Schiphol Airport', 'Amsterdam Zuid'], ['Enschede', 'Hengelo', 'Almelo', 'Zwolle', 'Amersfoort', 'Utrecht Centraal', 'Amsterdam Centraal', 'Amsterdam Amstel', 'Almere Centrum', 'Hilversum', 'Utrecht Centraal'], ['Steenwijk', 'Zwolle', 'Deventer', 'Zutphen', 'Dieren', 'Arnhem Centraal', 'Nijmegen', 'Oss', 's-Hertogenbosch', 'Eindhoven', 'Tilburg', 'Breda', 'Etten-Leur', 'Breda'], ['Hoorn', 'Alkmaar', 'Castricum', 'Zaandam', 'Amsterdam Sloterdijk', 'Haarlem', 'Heemstede-Aerdenhout', 'Leiden Centraal', 'Schiphol Airport', 'Utrecht Centraal', 'Amsterdam Centraal', 'Almere Centrum'], ['Heerenveen', 'Leeuwarden', 'Groningen', 'Assen', 'Zwolle', 'Amersfoort', 'Utrecht Centraal', 'Amsterdam Centraal', 'Amsterdam Sloterdijk'], ['Helmond', 'Eindhoven', 'Tilburg', 's-Hertogenbosch', 'Utrecht Centraal']]
 # ctrack = [['Den Helder', 'Alkmaar', 'Castricum', 'Beverwijk', 'Haarlem', 'Heemstede-Aerdenhout', 'Leiden Centraal', 'Den Haag HS', 'Delft', 'Den Haag Centraal', 'Gouda', 'Utrecht Centraal', 'Amsterdam Centraal'], ['Maastricht', 'Sittard', 'Roermond', 'Weert', 'Eindhoven', 'Tilburg', 'Breda', 'Dordrecht', 'Rotterdam Centraal', 'Rotterdam Alexander', 'Gouda', 'Den Haag HS', 'Leiden Centraal', 'Den Haag Centraal'], ['Heerlen', 'Sittard', 'Roermond', 'Weert', 'Eindhoven', 'Tilburg', 'Breda', 'Dordrecht', 'Rotterdam Centraal', 'Schiedam Centrum', 'Delft', 'Den Haag Centraal', 'Leiden Centraal', 'Schiphol Airport', 'Amsterdam Zuid'], ['Enschede', 'Hengelo', 'Almelo', 'Zwolle', 'Amersfoort', 'Utrecht Centraal', 'Amsterdam Centraal', 'Amsterdam Amstel', 'Almere Centrum', 'Hilversum', 'Utrecht Centraal'], ['Steenwijk', 'Zwolle', 'Deventer', 'Zutphen', 'Dieren', 'Arnhem Centraal', 'Nijmegen', 'Oss', 's-Hertogenbosch', 'Eindhoven', 'Tilburg', 'Breda', 'Etten-Leur', 'Breda'], ['Hoorn', 'Alkmaar', 'Castricum', 'Zaandam', 'Amsterdam Sloterdijk', 'Haarlem', 'Heemstede-Aerdenhout', 'Leiden Centraal', 'Schiphol Airport', 'Utrecht Centraal', 'Amsterdam Centraal', 'Almere Centrum'], ['Heerenveen', 'Leeuwarden', 'Groningen', 'Assen', 'Zwolle', 'Amersfoort', 'Utrecht Centraal', 'Amsterdam Centraal', 'Amsterdam Sloterdijk'], ['Helmond', 'Eindhoven', 'Tilburg', 's-Hertogenbosch', 'Utrecht Centraal', 'Ede-Wageningen','Arnhem Centraal', 'Nijmegen','Oss']]
 #
-# B = tc.Trajects(G.graph, btrack)
+# B = tc.Trajects(G.graph, btrack
 # C = tc.Trajects(G.graph, ctrack)
 #
 # print(B.score(apct, uct))
@@ -136,9 +216,9 @@ print(W.information())
 
 
 
-print(G.calc_statespace('Holland'))
-print('')
-print(G.calc_statespace('Nationaal'))
+# print(G.calc_statespace('Holland'))
+# print('')
+# print(G.calc_statespace('Nationaal'))
 
 # G.graph.nodes()
 

@@ -2,15 +2,8 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import gc
 import decimal
-
-
-
-def import_other_func():
-    """
-    This function is purely made to test whether the main.py can succesfully import other functions
-    from the folder 'code' and use them.
-    """
-    print("It's working")
+from collections import Counter
+from colour import Color
 
 
 class Network_Graph():
@@ -26,6 +19,7 @@ class Network_Graph():
         # create l of instances of class Station by looping through all objects
         stations = [obj.name for obj in gc.get_objects() if isinstance(obj,
                     station_class)]
+
         # https://stackoverflow.com/questions/328851/printing-all-instances-of-a-class
         double_connections = [(obj.name, n[0], n[1]) for obj in gc.get_objects() if isinstance(obj, station_class) for n in obj.neighbours]
         locations = [(obj.name, obj.location) for obj in gc.get_objects() if isinstance(obj, station_class)]
@@ -70,17 +64,12 @@ class Network_Graph():
         track_statespace = decimal.Decimal(tot_nodes*(tot**max_c)/2)
         for t in range(1, max_t+1):
             statespace = decimal.Decimal(statespace+track_statespace**t)
-            # print(t, tot_nodes, tot, max_c, track_statespace, decimal.Decimal(track_statespace**t), statespace)
 
         return '{} {} {} {} {} {} {} {} {} {} {}'.format('There are', tot_nodes, 'nodes',
                     '\nThe most amount neighbours of a node is', tot,
                     '\nMinimal time between nodes is', min_w,
                     '\nStatespace of a single track x is', track_statespace,
                     '\nTotal statespace is', statespace)
-
-    def all_critical(self):
-
-
 
     def draw_choice(self, option, egdes_option):
         """ This functions will create a visualisation of the graph. The input is the option to
@@ -95,8 +84,8 @@ class Network_Graph():
         locations = [(obj.name, obj.location) for obj in gc.get_objects() if isinstance(obj, self.station_class)]
         graphdict = {x[0]: x[1] for x in locations}
 
-        c_list = [obj.name for obj in gc.get_objects() if isinstance(obj, self.station_class) if obj.importance=='critical']
-        nc_list = [obj.name for obj in gc.get_objects() if isinstance(obj, self.station_class) if obj.importance=='not critical']
+        c_list = [obj.name for obj in gc.get_objects() if isinstance(obj, self.station_class) if obj.importance == 'Kritiek']
+        nc_list = [obj.name for obj in gc.get_objects() if isinstance(obj, self.station_class) if obj.importance != 'Kritiek']
 
         nx.draw(self.graph, graphdict, font_size=8, node_size=1, edge_width=0.1, width=0.1)
         nx.draw_networkx_nodes(self.graph, graphdict, node_size=30, nodelist=c_list, node_color='lightsalmon')
@@ -105,7 +94,7 @@ class Network_Graph():
         if option == 'standard':
             labels = {obj.name: obj.label for obj in gc.get_objects() if isinstance(obj, self.station_class)}
         elif option == 'critical':
-            labels = {obj.name: obj.label for obj in gc.get_objects() if isinstance(obj, self.station_class) if obj.importance=='critical'}
+            labels = {obj.name: obj.label for obj in gc.get_objects() if isinstance(obj, self.station_class) if obj.importance=='Kritiek'}
         elif option[0] == 'track':
             tracks = option[1]
             for x in tracks:
@@ -119,7 +108,7 @@ class Network_Graph():
                     edge_labels[(y[0][0], y[0][1])] = y[1]
                 tracklist = set(templist)
                 t_labels = {obj.name: obj.label for obj in gc.get_objects() if isinstance(obj, self.station_class) if obj.name in tracklist}
-                r_labels = {obj.name: obj.label for obj in gc.get_objects() if isinstance(obj, self.station_class) if obj.importance == 'critical' and obj.name not in t_labels}
+                r_labels = {obj.name: obj.label for obj in gc.get_objects() if isinstance(obj, self.station_class) if obj.importance == 'Kritiek' and obj.name not in t_labels}
 
                 nx.draw(self.graph, graphdict, font_size=8, node_size=1, edge_width=0.1, width=0.1)
                 nx.draw_networkx_nodes(self.graph, graphdict, node_size=30, nodelist=c_list, node_color='lightsalmon')
@@ -145,10 +134,10 @@ class Network_Graph():
                     templist.append(y[0][1])
                     edge_labels[(y[0][0], y[0][1])] = y[1]
             tracklist = set(templist)
-            labels = {obj.name: obj.label for obj in gc.get_objects() if isinstance(obj, self.station_class) if obj.importance == 'critical'}
+            labels = {obj.name: obj.label for obj in gc.get_objects() if isinstance(obj, self.station_class) if obj.importance == 'Kritiek'}
             t_labels = {obj.name: obj.label for obj in gc.get_objects() if isinstance(obj, self.station_class) if obj.name in tracklist}
-            r_labels = {obj.name: obj.label for obj in gc.get_objects() if isinstance(obj, self.station_class) if obj.importance == 'critical' and obj.name not in t_labels}
-            b_labels = {obj.name: obj.label for obj in gc.get_objects() if isinstance(obj, self.station_class) if obj.importance == 'critical'}
+            r_labels = {obj.name: obj.label for obj in gc.get_objects() if isinstance(obj, self.station_class) if obj.importance == 'Kritiek' and obj.name not in t_labels}
+            b_labels = {obj.name: obj.label for obj in gc.get_objects() if isinstance(obj, self.station_class) if obj.importance == 'Kritiek'}
 
 
             nx.draw(self.graph, graphdict, font_size=8, node_size=1, edge_width=0.1, width=0.1)
@@ -170,7 +159,6 @@ class Network_Graph():
             most_used_edge = Counter(unique_all_edges).most_common()[0][1]
             red = Color("red")
             colors = list(red.range_to(Color("darkred"), most_used_edge-1))
-            print(Counter(unique_all_edges).most_common())
 
             for nr_count in range(most_used_edge):
                 edge_labels = {}
@@ -178,14 +166,11 @@ class Network_Graph():
                     if edge[1] == nr_count+1:
                         edge_labels[(edge[0][0], edge[0][1])] = nr_count+1
 
-                    print(edge_labels)
-
                     if nr_count != 0:
-                        print(colors[nr_count-1])
                         nx.draw_networkx_edges(self.graph, graphdict, edgelist=edge_labels, width=1, edge_color=str(colors[nr_count-1]), style='solid', with_label=True)
                         nx.draw_networkx_edge_labels(self.graph, graphdict, edge_labels=edge_labels, font_size=6)
                     else:
-                        nx.draw_networkx_edges(self.graph, graphdict, edgelist=edge_labels, width=0.7, edge_color='lightgreen', style='solid', with_label=True)
+                        nx.draw_networkx_edges(self.graph, graphdict, edgelist=edge_labels, width=0.1, edge_color='lightgreen', style='solid', with_label=True)
 
             most_used_edge = Counter(unique_all_edges).most_common()[0][1]
 
@@ -207,4 +192,3 @@ class Network_Graph():
             nx.draw_networkx_edges(self.graph, graphdict, edge_labels=edge_labels, width=0.1, edge_color='k', style='solid')
             if egdes_option == True:
                 nx.draw_networkx_edge_labels(self.graph, graphdict, edge_labels=edge_labels, font_size=6)
-            plt.show(self.graph)

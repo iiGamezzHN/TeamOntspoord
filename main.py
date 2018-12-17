@@ -18,6 +18,53 @@ import parameter_class as pc
 import calc_crit_tracks as ct
 from lookahead_for_depth_first import look_ahead as la
 from random_for_depth_first import depth_random as dr
+import breadth_first_search as bfs
+import routes as rt
+import traject_class as tc
+import score as sc
+import random_route as rr
+# import decimal
+import transform_tracklist as tt
+
+# import files using the functions from import_data.py
+import_name = "Nationaal"
+
+if import_name == "Holland":
+    import_dict = imp.open_stations('data', 'StationsHolland.csv')
+    import_list = imp.open_connections('data', 'ConnectiesHolland.csv')
+if import_name == "Nationaal":
+    import_dict = imp.open_stations('data', 'StationsNationaal.csv')
+    import_list = imp.open_connections('data', 'ConnectiesNationaal.csv')
+
+
+station_dict = imp.add_connections_dict(import_dict, import_list)
+
+
+# adding the stations as instances of the class Station
+stations = {}
+for x in station_dict:
+    location = [station_dict[x]['Longitude'], station_dict[x]['Latitude']]
+    stations[x] = st.Station(x, x, station_dict[x]['Critical'], location,
+                             station_dict[x]['Neighbours'])
+# update certain labels
+for x in stations:
+    if 'Amsterdam' in stations[x].label:
+        stations[x].update_single('Amsterdam', 'A.')
+    if 'Rotterdam' in stations[x].label:
+        stations[x].update_single('Rotterdam', 'R.')
+    if 'Den Haag' in stations[x].label:
+        stations[x].update_single('Den Haag', 'DH.')
+
+# test an instance of the class Station
+print(stations['Amsterdam Centraal'].information())
+
+
+# Create the network
+G = nw.Network_Graph(st.Station)
+print(G.information())
+
+apct = sc.unique(station_dict)[0]
+uct = sc.unique(station_dict)[1]
 
 
 def depth_first_look_ahead(region, all, n_best):
@@ -129,3 +176,9 @@ if __name__ == "__main__":
             except:
                 print("Invalid Input: usage: python main.py"
                       "depth_first_look_ahead region all_critical n_best")
+    if sys.argv[1] == 'draw_routes':
+        tracks = [['Den Helder', 'Alkmaar', 'Castricum', 'Zaandam', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Sloterdijk', 'Haarlem', 'Heemstede-Aerdenhout', 'Leiden Centraal', 'Den Haag HS', 'Delft', 'Den Haag Centraal', 'Leiden Centraal', 'Schiphol Airport', 'Amsterdam Zuid'],['Maastricht', 'Sittard', 'Heerlen', 'Sittard', 'Roermond', 'Weert', 'Eindhoven', 's-Hertogenbosch', 'Tilburg', 'Breda', 'Dordrecht', 'Rotterdam Centraal', 'Schiedam Centrum'],['Enschede', 'Hengelo', 'Almelo', 'Zwolle', 'Deventer', 'Zutphen', 'Dieren', 'Arnhem Centraal', 'Ede-Wageningen', 'Utrecht Centraal', 'Gouda'],['Hoorn', 'Alkmaar', 'Castricum', 'Beverwijk', 'Haarlem', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Amstel', 'Utrecht Centraal', 'Alphen a/d Rijn', 'Leiden Centraal', 'Den Haag Laan v NOI'],['Steenwijk', 'Zwolle', 'Amersfoort', 'Utrecht Centraal', 'Hilversum', 'Utrecht Centraal', 's-Hertogenbosch', 'Oss', 'Nijmegen', 'Arnhem Centraal'],['Heerenveen', 'Leeuwarden', 'Groningen', 'Assen', 'Zwolle'],['Helmond', 'Eindhoven', 'Tilburg', 'Breda', 'Etten-Leur', 'Roosendaal', 'Dordrecht', 'Rotterdam Blaak', 'Rotterdam Alexander', 'Rotterdam Centraal', 'Schiedam Centrum', 'Delft', 'Den Haag HS', 'Gouda', 'Den Haag Centraal'],['Schiphol Airport', 'Utrecht Centraal', 'Amsterdam Centraal', 'Almere Centrum']]
+
+        print(sc.score(G.graph,tracks,apct,uct)[0])
+        # L.draw_choice(['track',tt.transform(L.graph,endtest)[0],uct],egdes_option=False)
+        G.draw_choice(['all tracks',tt.transform(G.graph,tracks)[0],uct],egdes_option=False)
