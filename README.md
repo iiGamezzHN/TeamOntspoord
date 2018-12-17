@@ -107,19 +107,19 @@ Depth First met Random Selector:
 ```
   - python main.py region depth_first_random all_critical n_best n_iterations
 ```
-where region is either Nationaal or Holland, all_critical is a boolean,
-n_best and n_iterations are integers. If depth_first_random is run without
-any arguments after depth_first_random it will run in its default setting. If region is set to
-Nationaal runtime can be very long, so watch out for that.
+waar region of Holland of Nationaal is, all_critical is een boolean, n_best
+en n_interations zijn integers. Als dit gerund wordt zonder argumenten na 
+depth_first_random worden de standaardinstellingen gebruikt. Als region
+Nationaal is kan de runtime erg groot zijn, dus kijk daarmee uit.
 
 Depth First met Look Ahead:
 ```
   python main.py region depth_first_look_ahead all_critical n_best
 ```
-where region is either Nationaal or Holland, all_critical is a boolean,
-n_best is an integer. If depth_first_look_ahead is run without
-any other arguments after depth_first_look_ahead it will run in its default setting.
-If region is set to Nationaal runtime can be very long, so watch out for that.
+waar region of Holland of Nationaal is, all_critical is een boolean, n_best
+is een integer. Als dit gerund wordt zonder argumenten na 
+depth_first_look_ahead worden de standaardinstellingen gebruikt. Als region
+Nationaal is kan de runtime erg groot zijn, dus kijk daarmee uit.
 
 Draw best solution routes (depth first met look ahead):
 ```
@@ -151,7 +151,9 @@ zodat je latere trajecten minder in de weg zit.
 te passen waardoor de runtime sterk verminderd wordt. Zo mag een traject maar
 maximaal 2 keer over één station, en mag een traject alleen station A, B, A
 kiezen als spoor AB kritiek is. Verder moet het eerste spoor in een traject
-kritiek zijn.
+kritiek zijn. Ook wordt een route die begint bij Maastricht gedwongen om 
+naar Heerlen heen en weer te gaan. Hierdoor hoef jemaar 1 keer over de rest
+van Limburg te rijden en is de k-score vrijwel altijd hoger.
 
 ## Auteurs
 
