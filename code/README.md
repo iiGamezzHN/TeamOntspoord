@@ -1,18 +1,18 @@
-This folder contains all functions and classes that are used in main.py.
+Deze map bevat alle functies en classes die gebruikt worden (al dan niet direct)
+in main.py
 
-starts2.py calculates the optimal starting point with the remaining critical
-tracks. It does this by picking a station with the fewest critical connections,
-then fewest connections, then longest critical connection.
+#### starts2.py
+Berekent het 'optimale' startpunt voor een nieuwe route met de overgebleven kritieke verbindingen.
+Dit gebeurt door te kijken naar een station met de minste kritieke verbindingen (maar >0), daarna 
+de minste verbindingen en dan de langste kritieke verbinding.
 
-depth_first_n_best gives starting from a given starting station, given network,
-and given maximum length of a route a list of the n_best best routes. Best
-routes are calculated by calculating the k-score of every route.
+#### depth_first_n_best
+Geeft een lijst met de beste routes (hoogste k-scores) vanaf een gegeven beginpunt. 
 
-lookahead_for_depth_first tries to slowly increase the final k-score. This is
-done by generating a list of best routes with route2_object_n_best, and then
-for each route continue calculating the best (nr. 1) routes until no more
-critical tracks remain. Once that is done, you pick the first route with the
-highest final k-score. Then it does this same process for track nr. 2, 3 etc.
+#### lookahead_for_depth_first
+Probeert om langzamerhand de totale k-score te verbeteren. Dit wordt gedaan door depth_first_n_best
+te gebruiken, en dan voor elke route te kijken naar wat er zou gebeuren als er verder wordt
+gerekend door altijd de beste te kiezen, en dan daarmee weer het eerste traject te kiezen.
 
 #### breadth_first_beam
 Update_tracks voegt 'oude' en 'nieuwe' routes aan elkaar toe zodat het 1 gehele route wordt.
