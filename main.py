@@ -42,15 +42,27 @@ def depth_first_look_ahead(region, all, n_best):
     tot_crit_tracks = len(L_crit_tracks)
     parameters = pc.Parameters(G, max_length, tot_crit_tracks, L_station)
     solution_set = la(parameters, n_best, L_crit_tracks)
+    solution_list = []
 
     # Print solutions, create graph
     for object in solution_set[0]:
         print(object.L_route)
+        solution_list.append(object.L_route)
     print(solution_set[1])
     plt.plot(solution_set[2], 'o-')
     plt.xlabel('Amount of routes found (0 is the route without look-ahead)')
     plt.ylabel('K-score')
     plt.title('Evolution of K-score with depth first with look ahead')
+    if all:
+        with open("resultaten/depth_look_"+region+"_all.txt", "a") as myfile:
+            myfile.write(solution_list)
+            myfile.write(solution_set[1])
+        plt.savefig("resultaten/depth_look" + region + 'All')
+    else:
+        with open("resultaten/depth_look_"+region+"_notAll.txt", "a") as myfile:
+            myfile.write(str(solution_list))
+            myfile.write(str(solution_set[1]))
+        plt.savefig("resultaten/depth_look" + region + 'notAll')
     plt.show()
 
 
@@ -86,6 +98,10 @@ def depth_first_random(region, all, n_best, n_iterations):
     plt.xlabel('Iterations')
     plt.ylabel('K-score')
     plt.title('Evolution of K-score with depth first with random choice')
+    if all:
+        plt.savefig("resultaten/depth_random" + region + 'All')
+    else:
+        plt.savefig("resultaten/depth_random" + region + 'notAll')
     plt.show()
 
 
