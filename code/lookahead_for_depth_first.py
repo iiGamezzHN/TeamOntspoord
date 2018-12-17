@@ -24,8 +24,6 @@ def look_ahead(para, n_best, L_crit_tracks):
         route = rc.Route(start, [start], 0, 0, L_crit_tracks, 0, 0)
         # Find set of n_best routes if first route
         if i == 0:
-            start = 'Heerenveen'
-            route = rc.Route(start, [start], 0, 0, L_crit_tracks, 0, 0)
             routes_list = n_best_routes(para, route, n_best)
             solution_set = []
             k_solution = 0

@@ -17,13 +17,14 @@ import import_data as imp
 import parameter_class as pc
 import calc_crit_tracks as ct
 from lookahead_for_depth_first import look_ahead as la
+from random_for_depth_first import depth_random as dr
 
 
 if __name__ == "__main__":
     # Gather relevant info
-    region = 'Nationaal'
-    all = False
-    n_best = 40
+    region = 'Holland'
+    all = True
+    n_best = 30
 
     stations = {}
     L_station = []
@@ -44,14 +45,15 @@ if __name__ == "__main__":
     L_crit_tracks = ct.crit_tracks(G, region, all)
     tot_crit_tracks = len(L_crit_tracks)
     parameters = pc.Parameters(G, max_length, tot_crit_tracks, L_station)
-    solution_set = la(parameters, n_best, L_crit_tracks)
+    solution_set = dr(parameters, n_best, L_crit_tracks, 2000)
 
     for object in solution_set[0]:
         print(object.L_route)
         print(object.tot_weight)
     print(solution_set[1])
-    plt.plot(solution_set[2], '-o')
-    plt.xlabel('Amount of routes found (0 is the route without look-ahead)')
-    plt.ylabel('K-score')
-    plt.title('Evolution of K-score with depth first with look ahead')
-    plt.show()
+    if len(solution_set) == 3:
+        plt.plot(solution_set[2], '-')
+        plt.xlabel('Amount of routes found (0 is the route without look-ahead)')
+        plt.ylabel('K-score')
+        plt.title('Evolution of K-score with depth first with look ahead')
+        plt.show()

@@ -74,11 +74,11 @@ Nationaal
 #### Score Lower- en Upperbound
 Respectievelijk de Lower en Upper bound voor 2d:
 ```
-K: p = 1; T = 20; Min = 7*180 = 9474.0     K: p = 1; T = 7; Min = 1239; = 9736.1
+K: p = 1; T = 20; Min = 20*180 = 9240,0     K: p = 1; T = 6; Min = 1011; = 9778,9
 ```
 Respectievelijk de Lower en Upper bound voor 2e:
 ```
-K: p = 1; T = 20; Min = 7*180 = 9474.0     K: p = 1; T = 9; Min = 1551; = 9664.9
+K: p = 1; T = 20; Min = 20*180 = 9240,0     K: p = 1; T = 9; Min = 1551; = 9664.9
 ```
 
 ### Pijnpunten
@@ -115,5 +115,6 @@ python mainDavid.py
 - Timo Koster
 
 ## Dankwoord
+- Okke
 - Stack Overflow
 - Minor programmeren van de UvA

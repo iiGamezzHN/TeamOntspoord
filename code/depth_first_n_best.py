@@ -9,6 +9,7 @@ def depth_first_n_best(para, route, n_best):
     of critical tracks visited, and removes critical tracks from list of
     critical tracks when visited. Returns the n_best best routes from starting
     station as a nested list.
+    With a big network this calculation can take a couple of hours.
     """
     # Loop over all neighbours of current station
     for neighbour in para.network[route.station]:
@@ -40,12 +41,6 @@ def depth_first_n_best(para, route, n_best):
                 if (route_copy.L_route[n_stat_visited - 2] == 'Sittard' and
                         n_stat_visited == 3):
                     if route_copy.station == 'Heerlen':
-                        depth_first_n_best(para, route_copy, n_best)
-                    else:
-                        continue
-                if (route_copy.L_route[0] == 'Heerenveen' and
-                        n_stat_visited == 3):
-                    if route_copy.station == 'Groningen':
                         depth_first_n_best(para, route_copy, n_best)
                     else:
                         continue
