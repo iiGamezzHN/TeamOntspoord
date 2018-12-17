@@ -140,7 +140,7 @@ def depth_first_random(region, all, n_best, n_iterations):
             myfile.write(str(solution_set[1]) + '\n')
     else:
         plt.savefig("resultaten/depth_random" + region + 'notAll')
-        with open("resultaten/depth_random_"+region+"_all.txt", "a") as myfile:
+        with open("resultaten/depth_random_"+region+"_notAll.txt", "a") as myfile:
             myfile.write(str(solution_string))
             myfile.write(']\n')
             myfile.write(str(solution_set[1]) + '\n')
