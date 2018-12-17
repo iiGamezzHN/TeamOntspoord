@@ -6,19 +6,30 @@ from operator import itemgetter
 def main(graph, list_routes, depth, station_dict, list_crit_tracks,
          max_length, n_best):
 
-    # print("--------------------------")
-    # print("")
-    # print("")
-
     while True:
         a = bfb(graph, list_routes, depth)
-        # print("888888888888888888888")
 
         if a is not None:
-            # print(len(a))
-            # print("")
             scores = crs.calc_route_score(graph, a, station_dict, list_crit_tracks)
-            best = select_best_n(scores, n_best)
+            # scores2 = []
+            # print('hier komen scores')
+            # for i in range(len(scores[0])):
+            #     scores2.append([scores[0][i], scores[1][i][0], scores[1][i][-1]])
+            #     print([scores[0][i], scores[1][i][0], scores[1][i][-1]])
+
+            # print('----')
+            # for x in scores2:
+            #     print(x)
+
+            # print('len scores', len(scores2))
+            # for x in scores2:
+            #     print(x)
+            # print('----')
+            # best = select_best_n(scores2, n_best)
+
+            # print('len scores after n best', len(best))
+
+            # print(best)
             # for x in best:
             #     if x[0][0] == "Alphen a/d Rijn":
             #         print("asdf")
@@ -30,9 +41,11 @@ def main(graph, list_routes, depth, station_dict, list_crit_tracks,
             # print("----")
             list_routes = []
 
-            for x in best:
+            for x in scores:
                 list_routes.append(rc.Route(x[0][-1], x[0], x[2], 0,
                                    list_crit_tracks, x[1], 0))
+
+            # print('len routes made', len(list_routes))
 
             testing2 = [x.L_route for x in list_routes]
             # print(testing2)
@@ -41,7 +54,9 @@ def main(graph, list_routes, depth, station_dict, list_crit_tracks,
             if testing1 == testing2:
                 break
 
-            if all(x[-1] >= 160 for x in best):
+            if all(x[-1] >= 100 for x in scores):
+                # print('all routes > 100')
+                # print(best)
                 break
         else:
             break
@@ -52,29 +67,19 @@ def main(graph, list_routes, depth, station_dict, list_crit_tracks,
 
 def select_best_n(scores, n_best):
     # time = 0
-    routes = []
-    # print(len(scores[0]))
-    if n_best > len(scores[0]):
-        n_best = len(scores[0])
-
-    # print(scores[0])
-    # print(scores[1])
+    # routes = []
+    if n_best > len(scores):
+        n_best = len(scores)
 
     # for i in range(len(scores)):
-    #     print(scores[1][i], scores[0][i])
+    #     individual_route = scores[0][i]
+    #     individual_score = scores[1][i][0]
+    #     individual_time = scores[1][i][4]
+    #     routes.append([individual_route, individual_score, individual_time])
 
+    best = sorted(scores, key=itemgetter(1), reverse=True)[0:n_best]
 
-    for i in range(len(scores[0])):
-        individual_route = scores[0][i]
-        individual_score = scores[1][i][0]
-        individual_time = scores[1][i][4]
-        routes.append([individual_route, individual_score, individual_time])
-
-    routes = sorted(routes, key=itemgetter(1), reverse=True)[0:n_best]
-    # print(routes)
-    # print("-------")
-
-    return routes
+    return best
 
 
 def bfb(graph, list_routes, depth):

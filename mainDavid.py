@@ -23,8 +23,8 @@ import calc_route_score as crs
 import score as sc
 
 # import files using the functions from import_data.py
-import_dict = imp.open_stations('data', 'StationsNationaal.csv')
-import_list = imp.open_connections('data', 'ConnectiesNationaal.csv')
+import_dict = imp.open_stations('data', 'StationsHolland.csv')
+import_list = imp.open_connections('data', 'ConnectiesHolland.csv')
 station_dict = imp.add_connections_dict(import_dict, import_list)
 
 # adding the stations as instances of the class Station
@@ -39,10 +39,12 @@ for x in station_dict:
 
 G = nw.Network_Graph(st.Station).graph
 
-max_length = 180
-depth = 8
-n_best = 50
-list_crit_tracks = ct.crit_tracks(G, "Nationaal", False)
+print(len(G))
+
+max_length = 120
+depth = 4
+n_best = 20
+list_crit_tracks = ct.crit_tracks(G, "Holland", False)
 tot_crit_tracks = len(list_crit_tracks)
 parameters = pc.Parameters(G, max_length, tot_crit_tracks, list_stations)
 start = s2(parameters, list_crit_tracks)
@@ -62,19 +64,23 @@ while True:
         sorting.append(x.k_score_ind)
     sorting = sorted(sorting, reverse=True)
 
-    final_track = []
-    for x in final_routes:
-        if x.k_score_ind == sorting[0]:
-            station = x.station
-            L_route = x.L_route
-            tot_weight = x.tot_weight
-            n_crit_tracks = x.n_crit_tracks
-            L_crit_tracks = x.L_crit_tracks
-            k_score_ind = x.k_score_ind
-            final_track.append(rc.Route(station, L_route, tot_weight,
-                               n_crit_tracks, L_crit_tracks, k_score_ind, 0))
+    # print('sort')
+    print(len(final_routes))
+    # print('sort')
 
-    a = crs.pair_stations([final_track[0].L_route])[0]
+    final_track = []
+    # for x in final_routes[0]:
+        # if x.k_score_ind == sorting[0]:
+    station = final_routes[0].station
+    L_route = final_routes[0].L_route
+    tot_weight = final_routes[0].tot_weight
+    n_crit_tracks = final_routes[0].n_crit_tracks
+    L_crit_tracks = final_routes[0].L_crit_tracks
+    k_score_ind = final_routes[0].k_score_ind
+    final_track.append(rc.Route(station, L_route, tot_weight,
+                       n_crit_tracks, L_crit_tracks, k_score_ind, 0))
+
+    a = crs.pair_stations([final_track[0].L_route])
 
     for x in a:
         for y in list_crit_tracks:
@@ -93,12 +99,13 @@ while True:
     print(final_track[0].tot_weight)
     print(final_track[0].k_score_ind)
     print(len(final_track[0].L_crit_tracks))
+    print(final_track[0].L_crit_tracks)
     print("")
 
     # if var == 0:
     #     break
 
-    if len(tracks) == 20:
+    if len(tracks) == 7:
         print(len(list_crit_tracks))
         break
 
@@ -112,7 +119,6 @@ while True:
     route = rc.Route(start, [start], 0, 0, list_crit_tracks, 0, 0)
 
     var += 1
-    print(" ")
     print(" ")
     print(" ")
     print(" ")
