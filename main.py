@@ -164,7 +164,7 @@ if __name__ == "__main__":
             breadth_first_beam(sys.argv[1], False, 5, 10)
         else:
             try:
-                depth_first_random(sys.argv[1], all, int(sys.argv[4]),
+                breadth_first_beam(sys.argv[1], all, int(sys.argv[4]),
                                    int(sys.argv[5]))
             except:
                 print("Invalid Input: usage: python main.py region"
