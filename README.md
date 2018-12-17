@@ -121,6 +121,24 @@ n_best is an integer. If depth_first_look_ahead is run without
 any other arguments after depth_first_look_ahead it will run in its default setting.
 If region is set to Nationaal runtime can be very long, so watch out for that.
 
+Draw best solution routes (depth first met look ahead):
+```
+  python main.py region draw_routes
+```
+where region is Nationaal
+
+Hillclimber:
+```
+  python main.py region draw_hillclimber
+```
+where region is Nationaal
+
+simulated annealingr:
+```
+  python main.py region draw_simulated
+```
+where region is Nationaal
+
 ### Keuzes
 
 - In starts2.py hebben we ervoor gekozen om te beginnen bij vooral 'uitstekende'
