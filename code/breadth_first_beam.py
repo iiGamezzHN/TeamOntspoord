@@ -59,6 +59,9 @@ def bfb(graph, list_routes, depth):
         routes.append(x.L_route)  # Makes a list with all the current routes
         explored.extend(x.L_route[:-1])  # Makes a list of explored stations
 
+    # print(start)
+    # print('---------')
+
     queue = start
     depth_paths = []
 

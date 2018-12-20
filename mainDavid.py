@@ -116,34 +116,69 @@ def breadth_first_beam_main(region, all_crit, depth, n_best):
     if all_crit:
         unique = sc_n.unique(station_dict)
         score = sc_n.score(G, tracks, unique[0], unique[1])
+        print('crit')
         # print(score)
     else:
         unique = sc.unique(station_dict)
         score = sc.score(G, tracks, unique[0], unique[1])
+    # print(score)
+    #
+    # list_crit_tracks2 = ct.crit_tracks(G, 'Holland', True)
+    # a = sc_n.calc_score(G, tracks, sc_n.unique(station_dict)[1], sc_n.unique(station_dict)[1])
+    # print(a)
+
 
     return [score, depth, n_best, len(tracks), tracks]
 
 
-# breadth_first_beam_main("Holland", True, 3, 4)
-for x in range(3, 6):  # Get scores for different variables of depth, n_best
-    for y in range(5, 21, 5):
+# lala = breadth_first_beam_main("Holland", True, 4, 10)
+# print(lala)
+
+for x in range(3, 8, 2):  # Get scores for different variables of depth, n_best
+    for y in range(5, 31, 5):
+        print(x, y)
         result = breadth_first_beam_main("Holland", False, x, y)
+        # print(result)
         results.append(result)
 
 print(results)
-results = sorted(results, key=itemgetter(0), reverse=True)
+# results = sorted(results, key=itemgetter(0), reverse=True)
 print("")
 
-best = []
+val1 = []
+val2 = []
+val3 = []
 used_depth = []  # Objects in draw
+# for i in range(5, 6):
 for x in results:
-    if x[2] not in used_depth:
+    if x[1] == 3:
+        print(x)
         used_depth.append(x[2])
-        best.append(x[0][0])
+        val1.append(x[0][0])
+    elif x[1] == 5:
+        print(x)
+        val2.append(x[0][0])
+    elif x[1] == 7:
+        print(x)
+        val3.append(x[0][0])
 
-# draw.draw(used_depth, best)  # Uncomment to draw
+min = val1[-1] - 200
 
+# print(best)
 
+draw.draw2(used_depth, val1, min, val2, val3)  # Uncomment to draw
+
+# for x in results:
+#     if x[1] == 3:
+#         print(x)
+#         used_depth.append(x[2])
+#         val1.append(x[0][0])
+#     elif x[1] == 5:
+#         print(x)
+#         val2.append(x[0][0])
+#     elif x[1] == 7:
+#         print(x)
+#         val3.append(x[0][0])
 
 # with open('BFB_.txt', 'w') as f:
 #     for item in results:

@@ -83,6 +83,7 @@ def calc_score(nw, track_lists, unique_ct, list_crit_tracks):
 
 
 def pair_stations(track_lists):
+    # print(track_lists)
     track_pairs = []
 
     for track in track_lists:
